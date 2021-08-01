@@ -18,6 +18,8 @@ class CreatePharmaciesTable extends Migration
             $table->string("name")->nullable(true);
             $table->string("phone")->nullable(true);
             $table->string("address")->nullable(true);
+            $table->string("lat")->nullable(true);
+            $table->string("lng")->nullable(true);
             $table->integer("order_count")->nullable(true);
             $table->integer('balance')->nullable(true);
             $table->integer("user_id")->unsigned();

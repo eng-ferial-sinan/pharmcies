@@ -25,4 +25,10 @@ class HomeController extends Controller
     {
         return view('home');
     }
+    public function home()
+    {
+            // $this->middleware('auth');
+            return view('admin.vadmin.indexadmin');
+        
+    }
 }

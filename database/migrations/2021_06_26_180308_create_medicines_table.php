@@ -17,14 +17,12 @@ class CreateMedicinesTable extends Migration
             $table->id();
             $table->string("name");
             $table->integer("category_id")->unsigned();
-            $table->string("traite")->nullable(true);
-            $table->string("demerites")->nullable(true);
-            $table->string("relics")->nullable(true);
+            $table->text("traite")->nullable(true);
+            $table->text("demerites")->nullable(true);
+            $table->text("relics")->nullable(true);
             $table->integer("price")->default(0);
             $table->string("production_date")->nullable(true);
             $table->string("expiry_date")->nullable(true);
-
-
 
             $table->timestamps();
         });

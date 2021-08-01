@@ -13,7 +13,7 @@ class CreateSittingsTable extends Migration
      */
     public function up()
     {
-        Schema::create('sittings', function (Blueprint $table) {
+        Schema::create('settings', function (Blueprint $table) {
             $table->id();
             $table->string('nameAr');
             $table->string('nameEn');
@@ -31,6 +31,6 @@ class CreateSittingsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sittings');
+        Schema::dropIfExists('settings');
     }
 }

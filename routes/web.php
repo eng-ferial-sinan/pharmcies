@@ -18,9 +18,21 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+Route::resource('/category',App\Http\Controllers\admin\CategoryController::class);
 
+// Route::get('/category/{id}', [App\Http\Controllers\admin\CategoryController::class, 'category'])->name('category');
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home',function(){  return view('home');});
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::group(['prefix' => 'admin' ,'middleware'=>'auth' ], function () {
+//     Route::post('/category', [App\Http\Controllers\admin\CategoryController::class, 'store'])->name('category.store');
+//     Route::post('/category/{id}/delete',[App\Http\Controllers\admin\CategoryController::class, 'delete']);    
+
+// });
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'home'])->name('home');
 Route::get('/posts/create', [App\Http\Controllers\BlogController::class, 'create'])->name('posts.create');
 Route::post('/posts', [App\Http\Controllers\BlogController::class, 'store'])->name('posts.store');
 Route::get('/posts/{id}', [App\Http\Controllers\BlogController::class, 'show'])->name('posts.show');
