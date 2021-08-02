@@ -18,7 +18,12 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-Route::resource('/category',App\Http\Controllers\admin\CategoryController::class);
+Route::resource('/category',App\Http\Controllers\CategoryController::class);
+Route::resource('/pharmacy',App\Http\Controllers\PharmacyController::class);
+Route::resource('/medicine',App\Http\Controllers\MedicineController::class);
+Route::resource('/order',App\Http\Controllers\OrderController::class);
+Route::get('/setting', [App\Http\Controllers\SettingController::class, 'index']);
+Route::get('/role', App\Http\Controllers\PermissionController::class);
 
 // Route::get('/category/{id}', [App\Http\Controllers\admin\CategoryController::class, 'category'])->name('category');
 

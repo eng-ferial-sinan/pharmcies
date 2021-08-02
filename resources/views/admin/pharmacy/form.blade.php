@@ -1,4 +1,4 @@
-@extends('admin.vadmin.admin')
+@extends('admin.vadmin.lay')
 
 @section('head')   /
 بيانات   
@@ -24,24 +24,24 @@
     
                     </h3>
 
-        <form method="post" action="@if ($item->id == null) {{ route('category.store') }} @else {{ route('category.update', ['category' => $item->id]) }} @endif" enctype="multipart/form-data">
+        <form method="post" action="@if ($item->id == null) {{ route('pharmacy.store') }} @else {{ route('pharmacy.update', ['category' => $item->id]) }} @endif" enctype="multipart/form-data">
         {{ csrf_field() }}
         @if ($item->id != null)
             {{ method_field('PUT') }}
         @endif
 
        <div class="form-group">
-            {{Form::label('title','الصنف')}}
+            {{Form::label('name','الصيدلية')}}
             {{Form::text('name', $item->name, ['class' => 'form-control', 'placeholder' => '','required'=>true])}}
         </div>
-
-        
-
-        
-        
-
-        
-       
+        <div class="form-group">
+          {{Form::label('address','العنوان')}}
+          {{Form::text('address', $item->address, ['class' => 'form-control', 'placeholder' => '','required'=>true])}}
+      </div> 
+      <div class="form-group">
+        {{Form::label('order_count','رقم الطلبية')}}
+        {{Form::text('order_count', $item->order_count, ['class' => 'form-control', 'placeholder' => '','required'=>true])}}
+    </div>       
     {{Form::submit('حفظ',['class'=>'btn btn-primary'])}}    
     {!! Form::close() !!}   
    
@@ -56,7 +56,6 @@
             }
           
     </script>
- 
 @endsection
 @section('script')
 <script src="/app.js"></script>

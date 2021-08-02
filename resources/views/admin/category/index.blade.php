@@ -1,4 +1,4 @@
-@extends('admin.vadmin.admin')
+@extends('admin.vadmin.lay')
 
 @section('head')   /
 بيانات   
@@ -16,7 +16,7 @@
         <div class="col-md-12  " style="text-align: center;">
                 @can('category-create')
                 <h3>
-                <a href="/admin/category/create" class="btn btn-primary">اضافة صنف جديد </a>
+                <a href="/category/create" class="btn btn-primary">اضافة صنف جديد </a>
                 </h3>
             @endcan
 
@@ -67,7 +67,7 @@
                     <td>
 
  
-                        {!!Form::open(['action' => ['App\Http\Controllers\admin\categoryController@destroy',$category->id],'method'=>'POST', 'class'=>'pull-right','onsubmit' => 'return ConfirmDelete()'])!!}
+                        {!!Form::open(['action' => ['App\Http\Controllers\CategoryController@destroy',$category->id],'method'=>'POST', 'class'=>'pull-right','onsubmit' => 'return ConfirmDelete()'])!!}
                         {{Form::hidden('_method','DELETE')}}
                         {{Form::submit('الحذف',['class'=>'btn btn-danger'])}}
                         {!!Form::close()!!}

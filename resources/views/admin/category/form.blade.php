@@ -1,4 +1,4 @@
-@extends('admin.vadmin.admin')
+@extends('admin.vadmin.lay')
 
 @section('head')   /
 بيانات   
