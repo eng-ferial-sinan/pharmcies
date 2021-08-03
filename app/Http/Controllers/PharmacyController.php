@@ -45,6 +45,8 @@ class PharmacyController extends Controller
 
         $pharmacy =new pharmacy;
         $pharmacy->name=$request->name;
+        $pharmacy->user_id=$request->user_id;
+        $pharmacy->address=$request->address;
         $pharmacy->save();
         return redirect()->back()
                         ->with('success','تم انشاء ');  

@@ -24,7 +24,7 @@
     
                     </h3>
 
-        <form method="post" action="@if ($item->id == null) {{ route('pharmacy.store') }} @else {{ route('pharmacy.update', ['category' => $item->id]) }} @endif" enctype="multipart/form-data">
+        <form method="post" action="@if ($item->id == null) {{ route('pharmacy.store') }} @else {{ route('pharmacy.update', ['pharmacy' => $item->id]) }} @endif" enctype="multipart/form-data">
         {{ csrf_field() }}
         @if ($item->id != null)
             {{ method_field('PUT') }}
@@ -34,14 +34,18 @@
             {{Form::label('name','الصيدلية')}}
             {{Form::text('name', $item->name, ['class' => 'form-control', 'placeholder' => '','required'=>true])}}
         </div>
-        {{-- <div class="form-group">
+        <div class="form-group">
           {{Form::label('address','العنوان')}}
           {{Form::text('address', $item->address, ['class' => 'form-control', 'placeholder' => '','required'=>true])}}
       </div> 
-      <div class="form-group">
-        {{Form::label('order_count','رقم الطلبية')}}
-        {{Form::text('order_count', $item->order_count, ['class' => 'form-control', 'placeholder' => '','required'=>true])}}
-    </div>        --}}
+           @php
+               $users = \App\Models\User::where('user_type','صيدلاني')->pluck('name', 'id')->toArray();
+           @endphp
+            {{-- 
+            // $users=\App\User::all();
+            // $users = $users->pluck('name', 'id')->toArray();
+    
+            //  --}}
     {{Form::submit('حفظ',['class'=>'btn btn-primary'])}}    
     {!! Form::close() !!}   
    

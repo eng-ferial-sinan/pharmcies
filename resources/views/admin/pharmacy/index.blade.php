@@ -71,7 +71,7 @@
                       <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                     </div>
                     <div class="modal-body">
-                    {!! Form::open(['action' => ['App\Http\Controllers\admin\PharmacyController@update',$pharmacy->id], 'method' => 'POST','enctype'=>'multipart/form-data']) !!}
+                    {!! Form::open(['action' => ['App\Http\Controllers\PharmacyController@update',$pharmacy->id], 'method' => 'POST','enctype'=>'multipart/form-data']) !!}
                     
            <div class="form-group">
 
@@ -122,7 +122,7 @@
               @can('pharmacy-delete')
 
               <td>
-                    {!!Form::open(['action' => ['App\Http\Controllers\admin\PharmacyController@destroy',$pharmacy->id],'method'=>'POST', 'class'=>'pull-right','onsubmit' => 'return ConfirmDelete()'])!!}
+                    {!!Form::open(['action' => ['App\Http\Controllers\PharmacyController@destroy',$pharmacy->id],'method'=>'POST', 'class'=>'pull-right','onsubmit' => 'return ConfirmDelete()'])!!}
                     {{Form::hidden('_method','DELETE')}}
                        <button class ="btn btn-danger mr-3 ml-3" type="submit"><i class="fa fa-md fa-trash"></i>
                        </button>
