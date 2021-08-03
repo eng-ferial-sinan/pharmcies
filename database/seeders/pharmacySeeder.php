@@ -26,6 +26,8 @@ class pharmacySeeder extends Seeder
             'balance' => Str::random(10),
             'order_count' =>Str ::random(10),
             'user_id' => rand(10,50),
+            'created_at' =>now(),
+            'updated_at' => now(),
 
         ]);
     }

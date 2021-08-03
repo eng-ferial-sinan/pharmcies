@@ -17,6 +17,8 @@ class CreatePermissionsTable extends Migration
             $table->id();
             $table->string("name")->nullable(true);
             $table->timestamps();
+            $table->softDeletes(); 
+
         });
     }
 

@@ -18,28 +18,7 @@ switch($name)
     case "user-create": $name = "انشاء مستخدم جديد";break;
     case "user-edit": $name = "تعديل  المستخدم  ";break;
     case "user-delete": $name = "حذف المستخدم";break;
-    case "special-list": $name = " عرض التخصصات";break;
-    case "special-create": $name = "انشاءالتخصصات ";break;
-    case "special-edit": $name = "تعديل التخصصات";break;
-    case "special-delete": $name = "حذف التخصصات";break;
-    case "collage-list": $name = "عرض الكليات";break;
-    case "collage-create": $name = "اضافة الكليات ";break;
-    case "collage-edit": $name = "تعديل الكليات";break;
-    case "collage-delete": $name = "حذف الكليات";break;
-    case "university-list": $name = "عرض الجامعة";break;
-    case "university-create": $name = "انشاءالجامعة ";break;
-    case "university-edit": $name = "تعديل الجامعة";break;
-    case "university-delete": $name = "حذف الجامعة";break;
-    case "question-list": $name = "عرض الاسئلة";break;
-    case "question-create": $name = "انشاءالاسئلة ";break;
-    case "question-edit": $name = "تعديل الاسئلة";break;
-    case "question-delete": $name = "حذف الاسئلة";break;
-    case "subject-list": $name = "عرض المواد";break;
-    case "subject-create": $name = "انشاءالمواد ";break;
-    case "subject-edit": $name = "تعديل المواد";break;
-    case "subject-delete": $name = "حذف المواد";break;
-    case "student-create": $name = "انشاء حساب طالب ";break;
-
+    
 }
 
         return  $name;
@@ -63,7 +42,7 @@ switch($name)
            
        </div></div>
        
-       @if(count($roles)>0)
+       {{-- @if(count($roles)>0) --}}
        <div class="row">
         <div class="col-md-12">
           <div class="tile">
@@ -83,18 +62,18 @@ switch($name)
                    </tr>
                 </thead>
                 <tbody>
-                @foreach($roles as $role)
+                @foreach($permissions as $permission)
                   <tr>
-                    <td>{{$role->name}}</td>
+                    <td>{{$permission->name}}</td>
                   
                     <td>
                         <?php
-                        $rolePermissions = \Spatie\Permission\Models\Permission::join("role_has_permissions","role_has_permissions.permission_id","=","permissions.id")
-            ->where("role_has_permissions.role_id",$role->id)
+                        $Permissions = \Spatie\Permission\Models\Permission::join("Permission","Permission.permission_id","=","permissions.id")
+            ->where("Permission.user_id",$user->id)
             ->get();
             ?>
-                  @if(!empty($rolePermissions))
-                        @foreach($rolePermissions as $Permission)
+                  @if(!empty($Permissions))
+                        @foreach($Permissions as $Permission)
                             <label class="  badge-success btn btn-success " >{{roleName1($Permission->name)  }},</label>
                         @endforeach
                     @endif
@@ -116,19 +95,19 @@ switch($name)
                       <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                     </div>
                     <div class="modal-body">
-                    {!! Form::open(['action' => ['App\Http\Controllers\Admin\RoleController@update',$role->id], 'method' => 'POST','enctype'=>'multipart/form-data']) !!}
+                    {!! Form::open(['action' => ['App\Http\Controllers\PermissionController@update',$role->id], 'method' => 'POST','enctype'=>'multipart/form-data']) !!}
                     <div class="form-group">
                         {!! Form::text('name', $role->name, array('placeholder' => 'Name','class' => 'form-control')) !!}
         </div>
         <div class="form-group">
 <?php
           $permission = \Spatie\Permission\Models\Permission::all();
-        $rolePermissions = \DB::table("role_has_permissions")->where("role_has_permissions.role_id",$role->id)
-            ->pluck('role_has_permissions.permission_id','role_has_permissions.permission_id')
+        $Permissions = \DB::table("permissions")->where("permissions.user_id",$user->id)
+            ->pluck('permissions.permission_id','permissions.permission_id')
            ->all();
        ?>
         @foreach($permission as $value)
-        <label>{{ Form::checkbox('permission[]', $value->id, in_array($value->id, $rolePermissions) ? true : false, array('class' => 'name')) }}
+        <label>{{ Form::checkbox('permission[]', $value->id, in_array($value->id, $Permissions) ? true : false, array('class' => 'name')) }}
             {{roleName1($value->name)  }}</label>
 
             @endforeach
@@ -152,14 +131,15 @@ switch($name)
                 @endcan
 
 
-                @can('role-delete')
+                {{-- @can('role-delete') --}}
                     <td>
-                    {!!Form::open(['action' => ['App\Http\Controllers\Admin\RoleController@destroy',$role->id],'method'=>'POST', 'class'=>'pull-right','onsubmit' => 'return ConfirmDelete()'])!!}
+                    {{-- {!!Form::open(['action' => ['App\Http\Controllers\RoleController@destroy',$role->id],'method'=>'POST', 'class'=>'pull-right','onsubmit' => 'return ConfirmDelete()'])!!}
                     {{Form::hidden('_method','DELETE')}}
                        <button class ="btn btn-danger mr-3 ml-3" type="submit"><i class="fa fa-md fa-trash"></i>
                        </button>
-                       {!!Form::close()!!}</td>
-                       @endcan
+                       {!!Form::close()!!} --}}
+                      </td>
+                       {{-- @endcan --}}
 
                   </tr>
                    
@@ -196,7 +176,7 @@ switch($name)
                       <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                     </div>
                     <div class="modal-body">
-                    {!! Form::open(['action' => 'App\Http\Controllers\Admin\RoleController@store', 'method' => 'POST','enctype'=>'multipart/form-data']) !!}
+                    {!! Form::open(['action' => 'App\Http\Controllers\PermissionsController@store', 'method' => 'POST','enctype'=>'multipart/form-data']) !!}
             
                     <div class="form-group">
                         {!! Form::text('name', null, array('placeholder' => 'الاسم','class' => 'form-control')) !!}

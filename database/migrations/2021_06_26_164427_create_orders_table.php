@@ -22,6 +22,8 @@ class CreateOrdersTable extends Migration
             $table->integer("user_id")->unsigned();
             
             $table->timestamps();
+            $table->softDeletes(); 
+
         });
     }
 

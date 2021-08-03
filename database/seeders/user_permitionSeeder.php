@@ -19,6 +19,8 @@ class user_permitionSeeder extends Seeder
         DB::table('user_permissions')->insert([
             'user_id' =>rand(10,50),
             'permission_id' =>rand(10,50),
+            'created_at' =>now(),
+            'updated_at' => now(),
         ]);
     }
 }

@@ -20,6 +20,7 @@ class statusSeeder extends Seeder
          ['id'=>4,'name'=>"تم التوصيل "],
          ['id'=>5,'name'=>"تم الاستلام "],
          ['id'=>6,'name'=>" الغاء الطلبية"]
+          
         ]);
        
     }

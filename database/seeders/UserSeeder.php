@@ -24,7 +24,8 @@ class UserSeeder extends Seeder
             'url' => Str::random(20),
             'address' => Str::random(10),
             'user_type' => rand(10,50),
-            
+            'created_at' =>now(),
+            'updated_at' => now(),
         ]);
     }
 }

@@ -22,6 +22,7 @@ Route::resource('/category',App\Http\Controllers\CategoryController::class);
 Route::resource('/pharmacy',App\Http\Controllers\PharmacyController::class);
 Route::resource('/medicine',App\Http\Controllers\MedicineController::class);
 Route::resource('/order',App\Http\Controllers\OrderController::class);
+Route::post('/setting',[App\Http\Controllers\SettingController::class, 'update']);
 Route::get('/setting', [App\Http\Controllers\SettingController::class, 'index']);
 Route::resource('/role', App\Http\Controllers\PermissionController::class);
 Route::post('/profile/updated', [App\Http\Controllers\UserController::class, 'profile']);
@@ -29,7 +30,7 @@ Route::post('/profile/updated/saveimage', [App\Http\Controllers\UserController::
 Route::resource('/member',App\Http\Controllers\UserController::class);
 Route::delete('/member/{id}/froceDestroy', [App\Http\Controllers\UserController::class, 'froceDestroy']);
 Route::get('/member/{id}/restorUser', [App\Http\Controllers\UserController::class, 'restorUser']);
-
+Route::get('/members/{id}', 'UserController@index1')->middleware('permission:user-list');
 // Route::get('/category/{id}', [App\Http\Controllers\admin\CategoryController::class, 'category'])->name('category');
 
 Route::get('/home',function(){  return view('home');});

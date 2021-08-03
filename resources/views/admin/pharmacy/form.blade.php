@@ -34,14 +34,14 @@
             {{Form::label('name','الصيدلية')}}
             {{Form::text('name', $item->name, ['class' => 'form-control', 'placeholder' => '','required'=>true])}}
         </div>
-        <div class="form-group">
+        {{-- <div class="form-group">
           {{Form::label('address','العنوان')}}
           {{Form::text('address', $item->address, ['class' => 'form-control', 'placeholder' => '','required'=>true])}}
       </div> 
       <div class="form-group">
         {{Form::label('order_count','رقم الطلبية')}}
         {{Form::text('order_count', $item->order_count, ['class' => 'form-control', 'placeholder' => '','required'=>true])}}
-    </div>       
+    </div>        --}}
     {{Form::submit('حفظ',['class'=>'btn btn-primary'])}}    
     {!! Form::close() !!}   
    

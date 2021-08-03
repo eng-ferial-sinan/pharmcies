@@ -23,6 +23,8 @@ class CreateDetailsTable extends Migration
             $table->integer("order_id")->unsigned();
             
             $table->timestamps();
+            $table->softDeletes(); 
+
         });
     }
 

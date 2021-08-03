@@ -24,6 +24,8 @@ class CreatePharmaciesTable extends Migration
             $table->integer('balance')->nullable(true);
             $table->integer("user_id")->unsigned();
             $table->timestamps();
+            $table->softDeletes(); 
+
         });
     }
 

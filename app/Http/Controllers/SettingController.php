@@ -89,22 +89,15 @@ class SettingController extends Controller
         $info->address =  $request->input('address');
         $info->phone =  $request->input('phone');
         $info->email =  $request->input('email');
-        $info->twiter =  $request->input('twiter');
-        $info->telgrame =  $request->input('telgrame');
-        $info->instagram =  $request->input('instagram');
-        $info->massenger =  $request->input('massenger');
-        $info->facebook =  $request->input('facebook');
-        $info->youtub =  $request->input('youtub');
-        $info->whats =  $request->input('whats');
-      
-        if($request->hasFile("url")){
-            $image=$request->file('url');
-            $name=time().$image->getClientOriginalName();                
-            Image::make($image->getRealPath())->interlace()->resize(230, 66)->save(public_path('/images/'. $name), 80);
-           $info->url=url('/images/'.$name);
-                      // $smallpath= "/storage/users_thumb_".$fileNameToStore;
-                // Image::make($imagename)->resize(450, 350)->save( public_path($smallpath),100 ); 
-            }
+       
+        // if($request->hasFile("url")){
+        //     $image=$request->file('url');
+        //     $name=time().$image->getClientOriginalName();                
+        //     Image::make($image->getRealPath())->interlace()->resize(230, 66)->save(public_path('/images/'. $name), 80);
+        //    $info->url=url('/images/'.$name);
+        //               // $smallpath= "/storage/users_thumb_".$fileNameToStore;
+        //         // Image::make($imagename)->resize(450, 350)->save( public_path($smallpath),100 ); 
+        //     }
             
 
         $info->save();
@@ -113,12 +106,12 @@ class SettingController extends Controller
     }
     public function update1(Request $request)
     {
-        $info = setting :: first(); 
-        $info->f_title =  $request->input('f_title');
-        $info->s_title =  $request->input('s_title');
-        $info->desc =  $request->input('desc');
-        $info->save();
-        return back()->with('success','تم حفظ  بنجاح');
+        // $info = setting :: first(); 
+        // $info->f_title =  $request->input('f_title');
+        // $info->s_title =  $request->input('s_title');
+        // $info->desc =  $request->input('desc');
+        // $info->save();
+        // return back()->with('success','تم حفظ  بنجاح');
     
     }
 

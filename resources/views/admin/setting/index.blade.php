@@ -14,7 +14,7 @@
      تعديل  البيانات الاساسية للموقع :
 </h5>
  
-  <form action="/setting" method="POST" class="form-horizontal" enctype="multipart/form-data">
+  <form action="/setting" method="GET" class="form-horizontal" enctype="multipart/form-data">
  {{ csrf_field() }}
              
         <div class="form-row">
@@ -59,13 +59,13 @@
 
 
 
-             <div class="form-group">
+             {{-- <div class="form-group">
             <label for="asolgan" class="font-weight-bold text-right js"> شعار الشركة    </label>
                 <img src="{{$info->url}}" class="img-rounded" height="50" width="70" alt="{{$info->nameAr}}">
                  <br/>
                   {{Form::label('url','صورة معبرة')}}
                    {{Form::file('url')}}
-               </div>
+               </div> --}}
 
 
         <div class="form-group">

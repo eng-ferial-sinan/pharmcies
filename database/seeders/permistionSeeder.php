@@ -18,7 +18,8 @@ class permistionSeeder extends Seeder
         //
         DB::table('permissions')->insert([
             'name' => Str::random(10),
-            
+            'created_at' =>now(),
+            'updated_at' => now(),
 
         ]);
     }

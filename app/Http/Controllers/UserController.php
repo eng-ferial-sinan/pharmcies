@@ -192,7 +192,44 @@ class UserController extends Controller
         return redirect()->back()
                         ->with('success','User updated successfully');
     }
+    public function index1(Request $request,$id)
+    {
 
+        if($id!=0)
+        {
+            $items= User::withTrashed()->whereHas("roles", function($q) use($id){ 
+                $q->where("id",$id); })->orderBy('id','asc');
+        
+        }else
+        {
+        $items= User::withTrashed()->orderBy('id','asc');
+        
+        }
+    
+        $users=$items->pluck('name','id')->all();
+            $filter = $request->all() ;
+
+    
+        // $st=isset($request['myselect'])?$request['myselect']:'-1';
+        // dd($st); 
+        // $user=$user::orderBy('id','asc');
+
+        if(isset($filter['user_id'])) 
+        {     
+        $items=$items->where('id',$filter['user_id'] ) ;
+        }
+
+        if (is_array($filter) && isset($filter['search'])) {
+            $items= $items->where(function ($query) use ($filter) {
+                $q = '%' . $filter['search'] . '%';
+                return $query->where('name', 'LIKE', $q)->orWhere('phone', 'LIKE', $q);
+            });
+        }
+        $items=$items->paginate(10); 
+
+        return view('admin.users.list')->with('items',$items)->with('filter',$filter)->with('id',$id)->with('users',$users)  ;
+
+    }
     /**
      * Remove the specified resource from storage.
      *

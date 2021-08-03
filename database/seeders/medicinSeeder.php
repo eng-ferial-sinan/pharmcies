@@ -25,7 +25,8 @@ class medicinSeeder extends Seeder
             'price' => rand(10,50),
             'production_date' => Str::random(10),
             'expiry_date' => Str::random(10),
-
+            'created_at' =>now(),
+            'updated_at' => now(),
             
 
         ]);

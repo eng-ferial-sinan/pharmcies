@@ -74,10 +74,23 @@
        <li class="treeview"><a class="app-menu__item {{{ (Request::is('member*') ? 'active' : '') }}}" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-user">
         </i><span class="app-menu__label">  التحكم بالاعضاء</span><i class="treeview-indicator fa fa-angle-left"></i></a>
           <ul class="treeview-menu">
-          <li><a class="treeview-item  mr-2" href="#"><i class="icon fa fa-plus-square "></i> الكل</a></li>
+          <li><a class="treeview-item  mr-2" href="/members/0"><i class="icon fa fa-plus-square "></i> الكل</a></li>
             
         </ul>
         </li>
+        @can('user-list')
+        <li class="treeview"><a class="app-menu__item {{{ (Request::is('admin/member*') ? 'active' : '') }}}" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-user">
+         </i><span class="app-menu__label">  التحكم بالاعضاء</span><i class="treeview-indicator fa fa-angle-left"></i></a>
+           <ul class="treeview-menu">
+           <li><a class="treeview-item  mr-2" href="/admin/members/0"><i class="icon fa fa-plus-square "></i> الكل</a></li>
+ 
+           @foreach(\Spatie\Permission\Models\Role::orderBy('name','asc')->get() as $type)
+              <li><a class="treeview-item  mr-2" href="/admin/members/{{$type->id}}" rel="noopener"><i class="icon fa fa-edit"></i> {{$type->name}}</a></li>
+              @endforeach
+ 
+           </ul>
+         </li>
+          @endcan
         {{-- @can('user-list')
 
         <li>

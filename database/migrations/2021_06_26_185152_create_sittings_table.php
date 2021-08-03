@@ -21,6 +21,8 @@ class CreateSittingsTable extends Migration
             $table->string('address')->nullable($value = true); 
             $table->string('phone')->nullable($value = true); 
             $table->timestamps();
+            $table->softDeletes(); 
+
         });
     }
 
