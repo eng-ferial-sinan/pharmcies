@@ -23,7 +23,12 @@ Route::resource('/pharmacy',App\Http\Controllers\PharmacyController::class);
 Route::resource('/medicine',App\Http\Controllers\MedicineController::class);
 Route::resource('/order',App\Http\Controllers\OrderController::class);
 Route::get('/setting', [App\Http\Controllers\SettingController::class, 'index']);
-Route::get('/role', App\Http\Controllers\PermissionController::class);
+Route::resource('/role', App\Http\Controllers\PermissionController::class);
+Route::post('/profile/updated', [App\Http\Controllers\UserController::class, 'profile']);
+Route::post('/profile/updated/saveimage', [App\Http\Controllers\UserController::class, 'saveimage']);
+Route::resource('/member',App\Http\Controllers\UserController::class);
+Route::delete('/member/{id}/froceDestroy', [App\Http\Controllers\UserController::class, 'froceDestroy']);
+Route::get('/member/{id}/restorUser', [App\Http\Controllers\UserController::class, 'restorUser']);
 
 // Route::get('/category/{id}', [App\Http\Controllers\admin\CategoryController::class, 'category'])->name('category');
 

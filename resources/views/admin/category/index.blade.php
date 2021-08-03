@@ -42,9 +42,9 @@
                     <th>-</th>
                     @endcan
 
-                    {{-- @can('category-delete') --}}
+                    @can('category-delete')
                     <th>-</th>
-                    {{-- @endcan --}}
+                    @endcan
                 </tr>
                 </thead>
                 <tbody>  

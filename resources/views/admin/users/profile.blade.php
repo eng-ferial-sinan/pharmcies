@@ -13,6 +13,21 @@
 @section('content')
 <!--link rel="stylesheet" href="/date/css/style.css"-->
  
+@php
+   function roleName1($name)
+    {
+         
+switch($name)
+{
+    case "admin": $name = "مشرف الموقع"; break;
+    case "delegate": $name = "مندوب  ";break;
+  
+}
+
+        return  $name;
+   
+    }
+@endphp
 
       
         <div class="row">

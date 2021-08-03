@@ -1,4 +1,3 @@
-
  
  <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
     <aside class="app-sidebar">
@@ -24,15 +23,7 @@
      @endcan --}}
           
 
-     <li class="treeview"><a class="app-menu__item {{{ (Request::is('/basic*') ? 'active' : '') }}}" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-calendar-check-o">
-     </i><span class="app-menu__label"> 'طلبيات' </span><i class="treeview-indicator fa fa-angle-left"></i></a>
-     <ul class="treeview-menu">
-       {{-- <li><a class="treeview-item  mr-2" href="order"><i class="icon fa fa-plus-square "></i> إضافة طلبية</a></li> --}}
-       <li><a class="treeview-item  mr-2" href="/order"><i class="icon fa fa-plus-square "></i> الكل</a></li>
-       </ul>
-     </li>
-     
-    </li>
+    
 
         <li class="treeview"><a class="app-menu__item {{{ (Request::is('/basic*') ? 'active' : '') }}}" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-calendar-check-o">
         </i><span class="app-menu__label">  الصيدليات </span><i class="treeview-indicator fa fa-angle-left"></i></a>
@@ -60,9 +51,17 @@
        </li>
        
       </li>
-          
-
       <li class="treeview"><a class="app-menu__item {{{ (Request::is('/basic*') ? 'active' : '') }}}" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-calendar-check-o">
+      </i><span class="app-menu__label"> طلبيات </span><i class="treeview-indicator fa fa-angle-left"></i></a>
+      <ul class="treeview-menu">
+        {{-- <li><a class="treeview-item  mr-2" href="order"><i class="icon fa fa-plus-square "></i> إضافة طلبية</a></li> --}}
+        <li><a class="treeview-item  mr-2" href="/order"><i class="icon fa fa-plus-square "></i> الكل</a></li>
+        </ul>
+      </li>
+      
+     </li>      
+
+      {{-- <li class="treeview"><a class="app-menu__item {{{ (Request::is('/basic*') ? 'active' : '') }}}" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-calendar-check-o">
       </i><span class="app-menu__label"> المناديب </span><i class="treeview-indicator fa fa-angle-left"></i></a>
       <ul class="treeview-menu">
         <li><a class="treeview-item  mr-2" href="#"><i class="icon fa fa-plus-square "></i> إضافة مندوب</a></li>
@@ -70,7 +69,7 @@
         </ul>
       </li>
       
-     </li>
+     </li> --}}
           
        <li class="treeview"><a class="app-menu__item {{{ (Request::is('member*') ? 'active' : '') }}}" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-user">
         </i><span class="app-menu__label">  التحكم بالاعضاء</span><i class="treeview-indicator fa fa-angle-left"></i></a>
@@ -86,7 +85,7 @@
          <ul class="nav nav-second-level">
            
              <li><a  href="/admin/member"><i class="icon fa fa-plus"></i> الكل</a></li>
-           @foreach(\Spatie\Permission\Models\Role::orderBy('name','asc')->get() as $type)
+           @foreach(\Spatie\Permission\Models\permission::orderBy('name','asc')->get() as $type)
            <li>
                  <a href="/admin/members/{{$type->id}}"><i class="icon fa fa-plus"></i> {{$type->name}}</a>
              </li>

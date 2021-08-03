@@ -29,6 +29,10 @@
                 <thead>
                   <tr>
                     <th>الاسم</th>
+                    <th>الصنف</th>
+                    <th>السعر</th>
+                    <th>تاريخ الانتاج</th>
+                    <th>تاريخ الانتهاء</th>
                     @can('role-edit')
                     <th>تعديل</th>
                     @endcan
@@ -43,6 +47,10 @@
                  <tr>
                    
                     <td>{{$medicine->name}}</td>
+                    <td>{{$medicine->category_id}}</td>
+                    <td>{{$medicine->price}}</td>
+                    <td>{{$medicine->production_date}}</td>
+                    <td>{{$medicine->expiry_date}}</td>
                     @can('role-edit')
                     <td> <a  href="" data-toggle="modal" data-target="#edit{{$medicine->id}}" class="btn btn-warning mr-3 ml-2">
                                        <i class="fa fa-edit fa-2x"></i>

@@ -23,7 +23,6 @@ $info= sitinfo();
 
 
 
-
   </head>
   <body class="app sidebar-mini rtl">
  
