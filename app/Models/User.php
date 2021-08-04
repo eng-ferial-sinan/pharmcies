@@ -42,9 +42,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    public function user()
+    public function pharmacy()
     {
-        return $this->belongsTo('App\User');
+        return $this->hasOne('App\Models\Pharmacy');
     }
 
     public static function hasPermission($name)
@@ -61,17 +61,17 @@ class User extends Authenticatable
     }
     public function apiTokens()
     {
-    	return $this->hasOne(ApiTokenUser::class);
+    	return $this->hasOne(usertoken::class);
     }
 
     public function generateToken()
     {
         $token = bin2hex(random_bytes(16));
-        while (ApiTokenUser::where('token', $token)->count() > 0) {
+        while (usertoken::where('token', $token)->count() > 0) {
             $token = bin2hex(random_bytes(16));
         }
-        ApiTokenUser::where('user_id', $this->id)->delete();
-        return ApiTokenUser::create([
+        usertoken::where('user_id', $this->id)->delete();
+        return usertoken::create([
             'token' => $token,
             'user_id' => $this->id
         ]);

@@ -38,5 +38,7 @@ class HomeController extends Controller
         return response()->json( array('data'=>$data,'deleted'=>$deleted )  );
 
     }
+
+    
     
 }

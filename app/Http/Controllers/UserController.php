@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\admin;
+namespace App\Http\Controllers;
 use Auth;
 use File ;
 use Image;
@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\PermissionController;
 
 class UserController extends Controller
 {

@@ -32,6 +32,7 @@ Route::delete('/member/{id}/froceDestroy', [App\Http\Controllers\UserController:
 Route::get('/member/{id}/restorUser', [App\Http\Controllers\UserController::class, 'restorUser']);
 Route::get('/members/{id}', 'UserController@index1')->middleware('permission:user-list');
 // Route::get('/category/{id}', [App\Http\Controllers\admin\CategoryController::class, 'category'])->name('category');
+Route::get('/members/{id}', [App\Http\Controllers\UserController::class, 'user'])->middleware('permission:user-list');
 
 Route::get('/home',function(){  return view('home');});
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
