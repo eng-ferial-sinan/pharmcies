@@ -37,4 +37,28 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+    // public function login(Request $request){
+    //     $data=$request->all();
+    //     $loginType=$request->loginType?$request->loginType:"normal";
+    //     $result=false;
+    //     if($loginType=="social")
+    //     {
+    //      $User=User::where('email',$data['email'])->where('block',0)->where('hold',0)-> first();
+    //      if($User)
+    //      { 
+    //         $result=Auth::guard('app_users')->attempt(['email'=>$data['email'],'password'=>$data['password'],'block'=>0,'hold'=>0]);
+
+    //      } 
+    //      $response=['success'=>$result ];
+    //      if($result)
+    //      {
+    //          $User=Auth::guard('app_users')->user();
+    //          $token=$User->generateToken();
+    //          $response['token']=$token->token;
+    //          $response['user']=$user;
+    //          $response['user']['addresses']=$user->addresses;
+    //      }
+    //      return response()->json($response);
+    //     }
+    //     }
 }

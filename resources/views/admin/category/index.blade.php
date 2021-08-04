@@ -55,7 +55,7 @@
                 
                     {{-- @can('category-edit') --}}
                     <td>
-                        <a href="/admin/category/{{$category->id}}/edit" class="btn btn-default">
+                        <a href="/category/{{$category->id}}/edit" class="btn btn-default">
                         <i class="fa fa-edit"></i>
                         التحرير</a>
                     </td>

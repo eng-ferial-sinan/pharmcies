@@ -59,5 +59,21 @@ class User extends Authenticatable
 
         return $ret;
     }
+    public function apiTokens()
+    {
+    	return $this->hasOne(ApiTokenUser::class);
+    }
 
+    public function generateToken()
+    {
+        $token = bin2hex(random_bytes(16));
+        while (ApiTokenUser::where('token', $token)->count() > 0) {
+            $token = bin2hex(random_bytes(16));
+        }
+        ApiTokenUser::where('user_id', $this->id)->delete();
+        return ApiTokenUser::create([
+            'token' => $token,
+            'user_id' => $this->id
+        ]);
+    }
 }

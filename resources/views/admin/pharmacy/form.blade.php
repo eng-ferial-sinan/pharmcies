@@ -41,11 +41,14 @@
            @php
                $users = \App\Models\User::where('user_type','صيدلاني')->pluck('name', 'id')->toArray();
            @endphp
-            {{-- 
-            // $users=\App\User::all();
-            // $users = $users->pluck('name', 'id')->toArray();
-    
-            //  --}}
+<?php
+// $users = \App\Models\User::whereHas("roles", function($q){ 
+// $q->where("name",'صيدلاني'); })->pluck('name', 'id')->toArray();
+?>
+     <div class="form-group">
+        {{Form::label('user_id','المستخدم')}}
+        {{Form::select('user_id', $users,$item->user_id, ['class' => 'form-control js-example-basic-single', 'placeholder' => ' الاسم ','required'=>true])}}
+    </div>
     {{Form::submit('حفظ',['class'=>'btn btn-primary'])}}    
     {!! Form::close() !!}   
    
