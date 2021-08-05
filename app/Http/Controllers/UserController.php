@@ -109,6 +109,21 @@ class UserController extends Controller
          return  back()-> with('success','تم حفظ التعديلات ');    
    
     }
+    public function profiles()
+    {
+        $users= User::find(auth()->user()->id);
+        // dd($users->url);
+        return view('admin.users.profile')->with('user',$users);
+    }
+    //تخزين userId الخاص باموقع onesignel
+    public function store_user_id(Request $request)
+    {
+        $User =User::find(auth()->user()->id);
+        $User->api_token = $request->input('user_id') ;
+        $User->save() ;   
+        return true;
+    }
+    
     public function saveimage(Request $request)
     {
          if($request->hasFile('myimg'))

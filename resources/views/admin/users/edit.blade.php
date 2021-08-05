@@ -7,7 +7,7 @@
 {{$user->name }}
 
                     </h3>
-   {!! Form::open(['action' => ['App\Http\Controllers\admin\UserController@update',$user->id], 'method' => 'POST','enctype'=>'multipart/form-data']) !!}
+   {!! Form::open(['action' => ['App\Http\Controllers\UserController@update',$user->id], 'method' => 'POST','enctype'=>'multipart/form-data']) !!}
     
        <div class="form-group">
             {{Form::label('title','الاسم')}}

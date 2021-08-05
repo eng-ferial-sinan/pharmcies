@@ -70,14 +70,14 @@
       </li>
       
      </li> --}}
-          
-       <li class="treeview"><a class="app-menu__item {{{ (Request::is('member*') ? 'active' : '') }}}" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-user">
-        </i><span class="app-menu__label">  التحكم بالاعضاء</span><i class="treeview-indicator fa fa-angle-left"></i></a>
-          <ul class="treeview-menu">
-          <li><a class="treeview-item  mr-2" href="/members/0"><i class="icon fa fa-plus-square "></i> الكل</a></li>
-            
-        </ul>
-        </li>
+     <li class="treeview"><a class="app-menu__item {{{ (Request::is('member*') ? 'active' : '') }}}" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-user">
+    </i><span class="app-menu__label">  التحكم بالاعضاء</span><i class="treeview-indicator fa fa-angle-left"></i></a>
+      <ul class="treeview-menu">
+      <li><a class="treeview-item  mr-2" href="/member"><i class="icon fa fa-plus-square "></i> الكل</a></li>
+        
+    </ul>
+    </li>
+
         {{-- @can('user-list')
         <li class="treeview"><a class="app-menu__item {{{ (Request::is('admin/member*') ? 'active' : '') }}}" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-user">
          </i><span class="app-menu__label">  التحكم بالاعضاء</span><i class="treeview-indicator fa fa-angle-left"></i></a>
@@ -107,12 +107,12 @@
          <!-- /.nav-second-level -->
      </li>
      @endcan    --}}
-        <li class="treeview"><a class="app-menu__item {{{ (Request::is('role*') ? 'active' : '') }}}" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-user">
-        </i><span class="app-menu__label">  التحكم بالصلاحيات</span><i class="treeview-indicator fa fa-angle-left"></i></a>
-          <ul class="treeview-menu">
-          <li><a class="treeview-item  mr-2" href="/role"><i class="icon fa fa-plus-square "></i> الكل</a></li>
-          </ul>
-        </li>
+     <li class="treeview"><a class="app-menu__item {{{ (Request::is('role*') ? 'active' : '') }}}" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-user">
+    </i><span class="app-menu__label">  التحكم بالصلاحيات</span><i class="treeview-indicator fa fa-angle-left"></i></a>
+      <ul class="treeview-menu">
+      <li><a class="treeview-item  mr-2" href="/roles"><i class="icon fa fa-plus-square "></i> الكل</a></li>
+      </ul>
+    </li>
 
         <li class="treeview"><a class="app-menu__item {{{ (\Request::is('setting/*') ? 'active' : '') }}}" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-cog"></i><span class="app-menu__label">  اعدادت </span><i class="treeview-indicator fa fa-angle-left"></i></a>
           <ul class="treeview-menu">

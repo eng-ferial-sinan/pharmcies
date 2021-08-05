@@ -32,13 +32,13 @@ switch($name)
                 <div class="row">
                 <div class="col-md-12">
 
-                  @can('role-create')
+                  {{-- @can('role-create') --}}
 
        <a href="" data-toggle="modal" data-target="#add" class="btn btn-info float-left">
                                        <i class="fa fa-plus fa-2x"></i> اضافة نوع جديد 
                         
                                 </a>
-                                @endcan
+                                {{-- @endcan --}}
            
        </div></div>
        
@@ -52,12 +52,12 @@ switch($name)
                   <tr>
                     <th>الاسم</th>
                     <th>الصلاحيات</th>
-                    @can('role-edit')
+                    {{-- @can('role-edit') --}}
                     <th>-</th>
-                    @endcan
-                    @can('role-delete')
+                    {{-- @endcan --}}
+                    {{-- @can('role-delete') --}}
                     <th>-</th>
-                    @endcan
+                    {{-- @endcan --}}
 
                    </tr>
                 </thead>
@@ -68,7 +68,7 @@ switch($name)
                   
                     <td>
                         <?php
-                        $Permissions = \Spatie\Permission\Models\Permission::join("Permission","Permission.permission_id","=","permissions.id")
+                        $Permissions =  App\Models\permission::join("Permission","Permission.permission_id","=","permissions.id")
             ->where("Permission.user_id",$user->id)
             ->get();
             ?>
@@ -78,7 +78,7 @@ switch($name)
                         @endforeach
                     @endif
                      </td>
-                     @can('role-edit')
+                     {{-- @can('role-edit') --}}
 
             <td> 
               <a  href="" data-toggle="modal" data-target="#edit{{$role->id}}" class="btn btn-warning mr-3 ml-2">
@@ -101,7 +101,7 @@ switch($name)
         </div>
         <div class="form-group">
 <?php
-          $permission = \Spatie\Permission\Models\Permission::all();
+          $permission =  App\Models\permission::all();
         $Permissions = \DB::table("permissions")->where("permissions.user_id",$user->id)
             ->pluck('permissions.permission_id','permissions.permission_id')
            ->all();
@@ -128,16 +128,16 @@ switch($name)
             </div>
              
                 </td>
-                @endcan
+                {{-- @endcan --}}
 
 
                 {{-- @can('role-delete') --}}
                     <td>
-                    {{-- {!!Form::open(['action' => ['App\Http\Controllers\RoleController@destroy',$role->id],'method'=>'POST', 'class'=>'pull-right','onsubmit' => 'return ConfirmDelete()'])!!}
+                    {!!Form::open(['action' => ['App\Http\Controllers\PermissionController@destroy',$role->id],'method'=>'POST', 'class'=>'pull-right','onsubmit' => 'return ConfirmDelete()'])!!}
                     {{Form::hidden('_method','DELETE')}}
                        <button class ="btn btn-danger mr-3 ml-3" type="submit"><i class="fa fa-md fa-trash"></i>
                        </button>
-                       {!!Form::close()!!} --}}
+                       {!!Form::close()!!}
                       </td>
                        {{-- @endcan --}}
 
@@ -155,9 +155,9 @@ switch($name)
         </div>
       </div>
  
-                    @else
+                    {{-- @else
                         <p> لا توجد بيانات حالياً</p>
-                    @endif
+                    @endif --}}
         </div>
 
 
@@ -176,7 +176,7 @@ switch($name)
                       <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                     </div>
                     <div class="modal-body">
-                    {!! Form::open(['action' => 'App\Http\Controllers\PermissionsController@store', 'method' => 'POST','enctype'=>'multipart/form-data']) !!}
+                    {!! Form::open(['action' => 'App\Http\Controllers\PermissionController@store', 'method' => 'POST','enctype'=>'multipart/form-data']) !!}
             
                     <div class="form-group">
                         {!! Form::text('name', null, array('placeholder' => 'الاسم','class' => 'form-control')) !!}
@@ -184,7 +184,7 @@ switch($name)
         <div class="form-group">
             
             <?php
-            $permission = \Spatie\Permission\Models\Permission::where('id','!=',18)->get();
+            $permission = App\Models\Permission::where('id','!=',18)->get();
 
         ?>
             @foreach($permission as $value)

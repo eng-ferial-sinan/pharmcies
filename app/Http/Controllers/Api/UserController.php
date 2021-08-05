@@ -8,6 +8,7 @@ use App\Models\medicine ;
 use App\Models\Category;
 use App\Models\User;
 use App\Models\Pharmacy;
+use App\Models\Order;
 use App\Models\usertoken;
 use App\Http\Controllers\Controller;
 use DB ;
@@ -125,14 +126,27 @@ class UserController extends Controller
              }
 
              public function dataUser(Request $request)
-             {
+             { 
+                $masseges=array() ;
                 $response['status']=false;
                 $token=$request->header('token');
+
                 $usertoken=usertoken::where('token',$token)->first();
                 if($usertoken)
                 {
                  $user_id=$usertoken->user_id;
                  $user=User::find($user_id);
+        //          if (!is_null($user)) {
+        //             $masseges[]="  المستخدم محذوف";
+        //             return response()->json(['status'=>$status ,'token'=>array() ,'messages'=>$masseges]);
+        
+        //         }
+        //         if(is_null($user) and $request->input('user_id'))
+        // {
+        //     $masseges[]=" المستخدم غير موجود";
+        //     return response()->json(['status'=>$status ,'token'=>array() ,'messages'=>$masseges]);
+
+        // }
                  $response['token']=$token;
                  $response['user']=$user;
                  if($user->pharmacy)
@@ -140,8 +154,187 @@ class UserController extends Controller
                  $response['status']=true;
                 }
                 return response()->json($response);
+                // return response()->json(['status'=>$status ,'token'=>$user ,'messages'=>$masseges]);
 
 
              }
-    
+             public function store(Request $request)
+             {
+                 $status=0 ;
+                 $masseges=array() ;
+                 $validator = Validator::make($request->all(), [
+              
+                    'image' => 'image',
+                    ]);
+               
+         
+                 if ($validator->fails()) {
+                     return response()->json(['status'=>$status ,'data'=>array() ,'messages'=>$validator->errors()->all()],200);
+         
+                 }
+         
+                 // $data=json_decode( $request['user_id'] ); 
+                 // dd($data);
+                 $user = User::withTrashed()->whereNotNull('deleted_at')->where('user_id',$request['user_id'])->first();      
+                 if (!is_null($user)) {
+                     $masseges[]="  المستخدم محذوف";
+                     return response()->json(['status'=>$status ,'data'=>array() ,'messages'=>$masseges]);
+         
+                 }
+                 $user = User::where('phone',$request['phone'])->first(); 
+                 $filename=null;
+                 $largepath="";
+                 $response_data=array() ;
+                 if(is_null($user) )
+                 {
+                  if($request->hasFile('image'))
+                 {   
+                     $media=$request->file('image') ;
+                     $filename = 'super_'.time().'.jpg';             
+                     $largepath=  '/storage/'.$filename;
+                     Image::make($media)->save( public_path($largepath) );
+                     $md5=    md5_file(public_path($largepath)); 
+                 }
+                        $user = new User;
+                        $user->id=isset($request['id'])? $request['id'] :"";
+                        $user->name=isset($request['name'])? $request['name'] :"";
+                        $user->email=isset($request['email'])? $request['email'] :"";
+                        $user->address=isset($request['address'])? $request['address'] :"";
+                        $user->phone=isset($request['phone'])? $request['phone'] :"";                                   
+                        $user->password=Hash::make(isset($request['phone'])? $request['phone'] :'password');
+                        $user->url=$largepath;
+                        $user->save();
+                        $user->assignRole('مندوب');
+         
+                         $status= 1 ;
+                        
+                         $response_data['user_id'] = User::select('id as idx','name','address','url','phone','updated_at as date')->where('id',$user->id)->first();      
+                         // $user=User::select('id as idx','firebase_id as id','email','name','url','phone','updated_at as date')
+                         // ->where('firebase_id','=',$data->id)->first() ; 
+         
+                        //  $response_data['addresses']= Address::where('user_id','=',$user->id)->get() ;   
+                             
+                        //      $response_data['purchase']=order::where('user_id',$user->id)->get() ;                      
+                        //      $purchase_ids =$response_data['purchase']->pluck('id')->all();     
+                            //  $response_data['replies']=reply::whereIn('order_id',$purchase_ids)->get() ; 
+                            //  $replies_id =$response_data['replies']->pluck('acount_id')->all();     
+                            //  $response_data['user'] = User::select('id','name','address','url','phone','updated_at as date')
+                            //  ->whereIn('id',$replies_id)->get();      
+                             
+                            //  unset($response_data['id']['idx']);               
+                         $masseges[]="تم اضافة مستخدم جديد";
+                 }else {
+                     if($request->hasFile('image'))
+                     {   
+                         $media=$request->file('image') ;
+                         $filename = 'super_'.time().'.jpg';             
+                         $largepath=  '/storage/'.$filename;
+                         Image::make($media)->save( public_path($largepath) );
+                         File::delete(public_path().$user->url);
+                         $md5=    md5_file(public_path($largepath)); 
+                     }
+                                        if($filename!=null) $user->url= $largepath;                          
+                                        if(isset($request['name'])  ) $user->name=$request['name'];                                     
+                                        if(isset($request['email'])  ) $user->email=$request['email'];                                     
+                                        if(isset($request['address'])  ) $user->address=$request['address'];                                     
+                                        if(isset($request['id'])  ) $user->user_id=isset($request['id'])? $request['id'] :"";
+         
+                                              $user->save();
+                                           
+         
+                     $status= 1 ;
+                     $response_data['user'] = User::select('id','email','address','name','url','phone','updated_at as date')->where('id',$user->id)->first();
+                     // $response_data1=User::select('firebase_id as id','email','name','url','phone','updated_at as date')->where('id',$user->id)->first();
+                     $masseges[]="تم تعديل بيانات مستخدم بنجاح";     
+                 }
+                                         
+                 return response()->json(['status'=>$status ,'data'=>$response_data ,'messages'=>$masseges]);
+             }
+         
+             public function update(Request $request, $id=null)
+             {
+                 $data=json_decode( ($request->input('user')) ); 
+             //    dd($request); 
+                 // return response()->json($request);
+                 $user = User::where('email',$data->id)->first();      
+                 $id='0' ;
+                 $largepath="";
+                 $filename=null;
+                 if(!is_null($user) and $request->input('account'))
+                 {
+                  if($request->hasFile('image'))
+                 {   
+                     $media=$request->file('image') ;
+                     $filename = 'super_'.time().'.jpg';             
+                     $largepath=  '/storage/'.$filename;
+                     Image::make($media)->save( public_path($largepath) );
+                     File::delete(public_path().$user->url);
+                     $md5=    md5_file(public_path($largepath)); 
+                 }
+                                    if($filename==null){                           
+                                         $user->name=$data->name;                                     
+                                        // $user->phone=$data->phone;                               
+                                         $user->save();
+                                     }else 
+                                          {
+                                             $user->name=$data->name;  
+                                            //  $user->token=isset($request['token'])? $request['token'] :$user->token;                                                                  
+                                             $user->url= $largepath;
+                                             $user->save();
+                                           }
+                                           $user->assignRole('مندوب');
+         
+                  
+              $user = User::select('email as id','name','address',DB::raw("concat('".url('/')."',url) as url"),'phone','updated_at as date')->where('id',$user->id)->first();      
+         
+                 }else {
+                     $id="1" ;
+                     $user =1 ;
+                 }
+                                         
+                 return response()->json(['user'=>$user]);
+             }
+         
+
+             public function updateToken(Request $request)
+             {
+                    $status=0 ;
+                     $masseges=array() ;
+                     $validator = Validator::make($request->all(), [
+                         'token' => 'required',
+                         'user_id' => 'required',
+                     ]);
+         
+                     if ($validator->fails()) {
+                         return response()->json(['status'=>$status ,'data'=>array() ,'messages'=>$validator->errors()->all()],200);
+         
+                     }
+         
+                             $data= $request->all();  
+                             $user = User::where('user_id',$data['user_id'])->first();      
+                             $response_data1=null ;
+                             if(!is_null($user)) {
+                                   
+                                 if(isset($data['token']) and !empty($data['token']) ) 
+                                     {                         
+                                         // dd($data['token']);
+                                      $user->token=$data['token'];                                     
+                                       $user->save();
+                                     }                       
+         
+                                 $status= 1 ;
+                                 $response_data1=User::select('id','email','name','address','url','phone','updated_at as date')->where('id',$user->id)->first();
+                                 $masseges[]="تم تحديث توكن المستخدم بنجاح";
+                                 
+                 
+         
+                             }
+                             else
+                             {
+                                 $masseges[]="  المستخدم غير موجود  ";
+                             }
+         return response()->json(['status'=>$status ,'data'=>$response_data1 ,'messages'=>$masseges]);
+         
+         }
+         
 }

@@ -11,10 +11,10 @@
          
         </a>
           <ul class="dropdown-menu settings-menu dropdown-menu-left">
-            @can('role-list')
-            <li><a class="dropdown-item" href="/admin/setting/"><i class="fa fa-cog fa-lg"></i> اعدادات</a></li>
-            @endcan
-            <li><a class="dropdown-item" href="/admin/user/profile/"><i class="fa fa-user fa-lg"></i> البروفايل</a></li>
+            {{-- @can('role-list') --}}
+            <li><a class="dropdown-item" href="/setting/"><i class="fa fa-cog fa-lg"></i> اعدادات</a></li>
+            {{-- @endcan --}}
+            <li><a class="dropdown-item" href="/user/profile"><i class="fa fa-user fa-lg"></i> البروفايل</a></li>
             <li>
             <a  class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();" id="navbar-static-login" class="nav-link waves-effect waves-light" >
 

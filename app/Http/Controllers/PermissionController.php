@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\permission;
+use App\Models\Permission;
 use App\Http\Controllers\PermissionController;
-
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 class PermissionController extends Controller
 {
     //
@@ -19,8 +20,9 @@ class PermissionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {    
-        $permission = permission::all();
+    {     $permissions = Permission::orderBy('id','DESC')->get();
+        return view('admin.roles.index',compact('roles'));
+        $permission = Permission::all();
         return view('admin.roles.index')->with('$permissions',$permission);
       
           
@@ -50,12 +52,12 @@ class PermissionController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required|unique:roles,name',
-            'permission' => 'required',
+            'name' => 'required|string|,name',
+            // 'permission' => 'required',
         ]);
         // dd($request->input('permission'));
         $role = Role::create(['name' => $request->input('name')]);
-        $role->syncPermissions($request->input('permission'));
+        // $role->syncPermissions($request->input('permission'));
 
 
         return redirect()->route('roles.index')
@@ -96,7 +98,7 @@ class PermissionController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
-            'permission' => 'required',
+            // 'permission' => 'required',
         ]);
 
 
@@ -105,7 +107,7 @@ class PermissionController extends Controller
         $role->save();
 
 
-        $role->syncPermissions($request->input('permission'));
+        // $role->syncPermissions($request->input('permission'));
 
 
         return redirect()->route('roles.index')
@@ -121,7 +123,7 @@ class PermissionController extends Controller
      */
     // public function destroy($id)
     // {
-    //     DB::table("roles")->where('id',$id)->delete();
+    //     DB::table("permissions")->where('id',$id)->delete();
     //     return redirect()->route('roles.index')
     //                     ->with('success','تم حذف نوع المستخدم');
     // }
