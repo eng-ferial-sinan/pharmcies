@@ -10,16 +10,16 @@
                 <div class="container">
                   <div class="row">
                 <div class="col-md-12">
-                  @can('pharmacy-create')
+                  {{-- @can('pharmacy-create') --}}
 
        <a href="" data-toggle="modal" data-target="#add" class="btn btn-info float-left">
                                        <i class="fa fa-plus fa-2x"></i> اضافة صيدلية جديدة
                                        </a>
-                                       @endcan
+                                       {{-- @endcan --}}
 
        </div></div>
 
-       @if(count($pharmacys)>0)
+       @if(count($items)>0)
        <div class="row">
         <div class="col-md-12">
           <div class="tile">
@@ -32,12 +32,12 @@
                     <th>الصيدلية</th>
                     <th>العنوان</th>
                     <th>رقم الطلبية</th>
-                    @can('pharmacy-edit')
+                    {{-- @can('pharmacy-edit') --}}
                     <th>تعديل</th>
-                    @endcan
-                    @can('pharmacy-delete')
+                    {{-- @endcan --}}
+                    {{-- @can('pharmacy-delete') --}}
                     <th>حذف</th>
-                    @endcan
+                    {{-- @endcan --}}
 
                   </tr>
                 </thead>
@@ -89,11 +89,11 @@
         {{Form::text('address', $pharmacy->address, ['class' => 'form-control', 'placeholder' => ''])}}
        </div>  
       <div class="form-group">
-      {{Form::label('lat','الصيدلية')}}
+      {{Form::label('lat','الطول')}}
       {{Form::text('lat', $pharmacy->lat, ['class' => 'form-control', 'placeholder' => ''])}}
      </div>
      <div class="form-group">
-      {{Form::label('lng','الصيدلية')}}
+      {{Form::label('lng','العرض')}}
       {{Form::text('lng', $pharmacy->lng, ['class' => 'form-control', 'placeholder' => ''])}}
      </div>
      <div class="form-group">
@@ -101,7 +101,7 @@
       {{Form::text('order_count', $pharmacy->order_count, ['class' => 'form-control', 'placeholder' => ''])}}
      </div>
      <div class="form-group">
-      {{Form::label('balance','ميزان')}}
+      {{Form::label('balance','وزن')}}
       {{Form::text('balance', $pharmacy->balance, ['class' => 'form-control', 'placeholder' => ''])}}
      </div>
             {{Form::hidden('_method','PUT')}}

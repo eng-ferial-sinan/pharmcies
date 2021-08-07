@@ -21,7 +21,8 @@ class PermissionController extends Controller
      */
     public function index()
     {     $permissions = Permission::orderBy('id','DESC')->get();
-        return view('admin.roles.index',compact('roles'));
+        // ,compact('roles')
+        return view('admin.roles.index');
         $permission = Permission::all();
         return view('admin.roles.index')->with('$permissions',$permission);
       

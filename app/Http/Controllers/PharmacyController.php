@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Pharmacy;
+use App\Models\User;
+
 class PharmacyController extends Controller
 {
     //
@@ -12,10 +14,21 @@ class PharmacyController extends Controller
         $this->middleware('auth');
        
     }
-    public function index()
-    {
-        $pharmacy = pharmacy::all();
-      return view('admin.pharmacy.index')->with('pharmacys',$pharmacy);
+    public function index(Request $request)
+    {        $users = \App\Models\User::where('user_type','صيدلاني')->pluck('name', 'id')->toArray();
+
+        $filter = $request->all() ;
+
+        // $pharmacy = pharmacy::all();
+              $user = \App\Models\User::where('user_type','صيدلاني')->orderBy('id','asc');
+
+        if(isset($filter['users_id'])) 
+        {     if($filter['users_id'][0] != null)
+                $user=$user->whereIn('id',$filter['users_id'] ) ;
+        }
+        $user=$user->paginate(10); 
+
+      return view('admin.pharmacy.index')->with('items',$user)->with('filter',$filter) ->with('users',$users);
     
         
     }

@@ -9,7 +9,7 @@
 
 @section('content')
 
- 
+<div class="container"> 
 
 
     <div class="row">
@@ -23,28 +23,25 @@
     </div>
 </div>
 
- <div class="row">
-    <div class="col-md-12">
-        <div class="panel panel-default">
-            {{-- <div class="panel-heading">
-                DataTables Advanced Tables
-            </div> --}}
-            <!-- /.panel-heading -->
-            <div class="panel-body">
-                {{-- <div class="table-responsive"> --}}
-                    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+@if(count($categorys)>0)
+<div class="row">
+ <div class="col-md-12">
+   <div class="tile">
+     <div class="tile-body">
+       <div class="table-responsive">
+       <table class="table table-hover table-bordered " id="sampleTable">
                         <thead>
                        <tr>
                     <th>#</th>
                     <th>الصنف</th>
                     {{-- <th>البيانات </th> --}}
-                    @can('category-edit')
+                    {{-- @can('category-edit') --}}
                     <th>-</th>
-                    @endcan
+                    {{-- @endcan --}}
 
-                    @can('category-delete')
+                    {{-- @can('category-delete') --}}
                     <th>-</th>
-                    @endcan
+                    {{-- @endcan --}}
                 </tr>
                 </thead>
                 <tbody>  
@@ -82,12 +79,16 @@
                     </tbody>
 
                 </table>
+            </div>
         </div>
+      </div>
+      </div>
     </div>
-</div>
-    </div>
-
+    @else
+    <p> لا توجد بيانات حالياً</p>
+@endif
                 
+</div>
     
 
 <script>      

@@ -68,7 +68,7 @@ switch($name)
                   
                     <td>
                         <?php
-                        $Permissions =  App\Models\permission::join("Permission","Permission.permission_id","=","permissions.id")
+                        $Permissions = App\Models\Permission::join("Permission","Permission.permission_id","=","permissions.id")
             ->where("Permission.user_id",$user->id)
             ->get();
             ?>
@@ -101,7 +101,7 @@ switch($name)
         </div>
         <div class="form-group">
 <?php
-          $permission =  App\Models\permission::all();
+          $permission =  App\Models\Permission::all();
         $Permissions = \DB::table("permissions")->where("permissions.user_id",$user->id)
             ->pluck('permissions.permission_id','permissions.permission_id')
            ->all();

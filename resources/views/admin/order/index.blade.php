@@ -29,12 +29,14 @@
                 <thead>
                   <tr>
                     <th>رقم الطلبية</th>
-                    @can('role-edit')
+                    {{-- <th>رقم الصيدلية</th> --}}
+                    <th>حالة الطلبية</th>
+                    {{-- @can('role-edit') --}}
                     <th>تعديل</th>
-                    @endcan
-                    @can('role-delete')
+                    {{-- @endcan --}}
+                    {{-- @can('role-delete') --}}
                     <th>حذف</th>
-                    @endcan
+                    {{-- @endcan --}}
 
                   </tr>
                 </thead>
@@ -43,6 +45,8 @@
                  <tr>
                    
                     <td>{{$order->id}}</td>
+                    {{-- <td>{{$order->pharmacy_id}}</td> --}}
+                    <td>{{$order->status_id}}</td>
                     {{-- @can('role-edit') --}}
                     <td> <a  href="" data-toggle="modal" data-target="#edit{{$order->id}}" class="btn btn-warning mr-3 ml-2">
                                        <i class="fa fa-edit fa-2x"></i>
