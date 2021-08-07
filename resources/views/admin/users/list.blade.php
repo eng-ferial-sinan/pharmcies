@@ -17,14 +17,12 @@
         <div class="col-md-12 col-md-offset-2 dir_rtl" style="text-align: center;">
             <div class="panel panel-default">
                 <div class="panel-heading"></div>
-                @can('user-create')
                 <div class="panel-body" >
                 <h3>
                 <a href="/member/create" class="btn btn-primary">انشاء 
                  عضو</a>
                 </h3>
             </div>
-            @endcan
 
         </div>
     </div>

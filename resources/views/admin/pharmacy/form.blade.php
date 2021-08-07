@@ -39,15 +39,23 @@
           {{Form::text('address', $item->address, ['class' => 'form-control', 'placeholder' => '','required'=>true])}}
       </div> 
            @php
-               $users = \App\Models\User::where('user_type','صيدلاني')->pluck('name', 'id')->toArray();
+               $users = \App\Models\User::where('user_type',2)->pluck('name', 'id')->toArray();
            @endphp
 <?php
 // $users = \App\Models\User::whereHas("roles", function($q){ 
 // $q->where("name",'صيدلاني'); })->pluck('name', 'id')->toArray();
 ?>
-     <div class="form-group">
+{{-- <div class="form-group col-2">
+  {{Form::label('users_id','المستخدم')}}
+  {{Form::select('users_id[]',$users,(isset($filter['users_id'])?$filter['users_id']:'') , [ 'multiple'=>"multiple" ,'class' => 'form-control select2','id'=>'demoSelect' ])}}
+</div> --}}
+     {{-- <div class="form-group">
         {{Form::label('user_id','المستخدم')}}
         {{Form::select('user_id', $users,$item->user_id, ['class' => 'form-control js-example-basic-single', 'placeholder' => ' الاسم ','required'=>true])}}
+    </div> --}}
+    <div class="form-group col-3" >
+      {{Form::label('user_id','المستخدم')}}
+      {{Form::select('user_id', $users,(isset($filter['user_id'])?$filter['user_id']:''), ['class' => 'custom-select newRead js-example-basic-single','id' => 'custmer_id', 'placeholder' => ' المستخدم'])}}
     </div>
     {{Form::submit('حفظ',['class'=>'btn btn-primary'])}}    
     {!! Form::close() !!}   

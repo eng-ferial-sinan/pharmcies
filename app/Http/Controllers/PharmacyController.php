@@ -15,20 +15,26 @@ class PharmacyController extends Controller
        
     }
     public function index(Request $request)
-    {        $users = \App\Models\User::where('user_type','صيدلاني')->pluck('name', 'id')->toArray();
-
-        $filter = $request->all() ;
-
-        // $pharmacy = pharmacy::all();
-              $user = \App\Models\User::where('user_type','صيدلاني')->orderBy('id','asc');
-
-        if(isset($filter['users_id'])) 
-        {     if($filter['users_id'][0] != null)
-                $user=$user->whereIn('id',$filter['users_id'] ) ;
+    {        
+        
+      if( ! auth()->user()->hasPermission('Pharmacy-list'))
+      {
+          return redirect()->back()->with('error','ليس من صلاحياتك');
+        
         }
-        $user=$user->paginate(10); 
+        // $users = \App\Models\User::where('user_type','صيدلاني')->pluck('name', 'id')->toArray();
+        // $filter = $request->all() ;
 
-      return view('admin.pharmacy.index')->with('items',$user)->with('filter',$filter) ->with('users',$users);
+        $pharmacy = pharmacy::all();
+        //       $user = \App\Models\User::where('user_type','صيدلاني')->orderBy('id','asc');
+
+        // if(isset($filter['users_id'])) 
+        // {     if($filter['users_id'][0] != null)
+        //         $user=$user->whereIn('id',$filter['users_id'] ) ;
+        // }
+        // $user=$user->paginate(10); 
+
+      return view('admin.pharmacy.index')->with('pharmacies',$pharmacy);
     
         
     }

@@ -36,11 +36,16 @@
                     <th>الصنف</th>
                     {{-- <th>البيانات </th> --}}
                     {{-- @can('category-edit') --}}
-                    <th>-</th>
-                    {{-- @endcan --}}
+                    {{-- @if (auth()->user()->hasPermission('category-edit')) --}}
 
+                    <th>-</th>
+                    {{-- @endif --}}
+
+                    {{-- @endcan --}}
+                    {{-- @if (auth()->user()->hasPermission('category-delete')) --}}
                     {{-- @can('category-delete') --}}
                     <th>-</th>
+                    {{-- @endif --}}
                     {{-- @endcan --}}
                 </tr>
                 </thead>
@@ -49,16 +54,20 @@
                     <tr>
                     <td>{{$category->id}} </td>
                     <td>{{$category->name}}</a></td>
-                
+
+                    {{-- @if (auth()->user()->hasPermission('category-edit')) --}}
+            
                     {{-- @can('category-edit') --}}
                     <td>
                         <a href="/category/{{$category->id}}/edit" class="btn btn-default">
                         <i class="fa fa-edit"></i>
                         التحرير</a>
                     </td>
+                    {{-- @endif --}}
                      
                     {{-- @endcan --}}
                     
+                    {{-- @if (auth()->user()->hasPermission('category-delete')) --}}
                 
                     {{-- @can('category-delete') --}}
                     <td>
@@ -71,6 +80,8 @@
                        
                         
                     </td>
+                    {{-- @endif --}}
+
                     {{-- @endcan --}}
       
                 </tr>

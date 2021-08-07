@@ -24,14 +24,16 @@
           
 
     
-
-        <li class="treeview"><a class="app-menu__item {{{ (Request::is('/basic*') ? 'active' : '') }}}" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-calendar-check-o">
-        </i><span class="app-menu__label">  الصيدليات </span><i class="treeview-indicator fa fa-angle-left"></i></a>
-        <ul class="treeview-menu">
-          <li><a class="treeview-item  mr-2" href="/pharmacy/create"><i class="icon fa fa-plus-square "></i> إضافة صيدلية</a></li>
-          <li><a class="treeview-item  mr-2" href="/pharmacy"><i class="icon fa fa-plus-square "></i> الكل</a></li>
-          </ul>
-        </li>
+       @if (auth()->user()->hasPermission('Pharmacy-list'))
+       <li class="treeview"><a class="app-menu__item {{{ (Request::is('/basic*') ? 'active' : '') }}}" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-calendar-check-o">
+      </i><span class="app-menu__label">  الصيدليات </span><i class="treeview-indicator fa fa-angle-left"></i></a>
+      <ul class="treeview-menu">
+        <li><a class="treeview-item  mr-2" href="/pharmacy/create"><i class="icon fa fa-plus-square "></i> إضافة صيدلية</a></li>
+        <li><a class="treeview-item  mr-2" href="/pharmacy"><i class="icon fa fa-plus-square "></i> الكل</a></li>
+        </ul>
+      </li>
+       @endif
+      
         
        </li>
        <li class="treeview"><a class="app-menu__item {{{ (Request::is('/basic*') ? 'active' : '') }}}" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-calendar-check-o">
@@ -107,12 +109,7 @@
          <!-- /.nav-second-level -->
      </li>
      @endcan    --}}
-     <li class="treeview"><a class="app-menu__item {{{ (Request::is('role*') ? 'active' : '') }}}" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-user">
-    </i><span class="app-menu__label">  التحكم بالصلاحيات</span><i class="treeview-indicator fa fa-angle-left"></i></a>
-      <ul class="treeview-menu">
-      <li><a class="treeview-item  mr-2" href="/roles"><i class="icon fa fa-plus-square "></i> الكل</a></li>
-      </ul>
-    </li>
+     
 
         <li class="treeview"><a class="app-menu__item {{{ (\Request::is('setting/*') ? 'active' : '') }}}" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-cog"></i><span class="app-menu__label">  اعدادت </span><i class="treeview-indicator fa fa-angle-left"></i></a>
           <ul class="treeview-menu">

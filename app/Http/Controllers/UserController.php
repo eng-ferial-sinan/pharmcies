@@ -5,14 +5,12 @@ use Auth;
 use File ;
 use Image;
 use \App\Models\User;
-use \App\Models\Permission;
+use \App\Models\user_permission;
+use \App\Models\permission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\PermissionController;
 
 class UserController extends Controller
 {
@@ -57,8 +55,8 @@ class UserController extends Controller
     {
         //
         // dd($groups);
-                $roles = Role::pluck('name','name')->all();
-        return view('admin.users.create',compact('roles'));
+                $permission = permission::all();
+        return view('admin.users.create',compact('permission'));
 
     //   return view('users.create');
     }
@@ -76,17 +74,24 @@ class UserController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|confirmed',
-            'roles' => 'required'
         ]);
 
+        $user = new User;
+        $user->name=$request->name;
+        $user->phone=$request->phone;
+        $user->email=$request->email;
+        $user->user_type=$request->user_type;
+        $user->password=Hash::make($request['password']);;
+        $user->address=isset($request->address)??'';
+        $user->save();
 
-        $input = $request->all();
-        // dd($request->input('roles'));
-        $input['password'] = Hash::make($input['password']);
-    
-        $user = User::create($input);
-        $user->assignRole($request->input('roles'));
-       
+        foreach($request->permission as $value )
+        {
+            $user_permission =new user_permission;
+            $user_permission->user_id=$user->id;
+            $user_permission->permission_id=$value;
+            $user_permission->save();
+        }
         
 
         return redirect()->back()

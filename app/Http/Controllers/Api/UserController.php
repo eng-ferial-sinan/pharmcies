@@ -163,8 +163,7 @@ class UserController extends Controller
                  $status=0 ;
                  $masseges=array() ;
                  $validator = Validator::make($request->all(), [
-              
-                    'image' => 'image',
+                    'image' => 'image', 
                     ]);
                
          
@@ -175,7 +174,7 @@ class UserController extends Controller
          
                  // $data=json_decode( $request['user_id'] ); 
                  // dd($data);
-                 $user = User::withTrashed()->whereNotNull('deleted_at')->where('user_id',$request['user_id'])->first();      
+                 $user = User::withTrashed()->whereNotNull('deleted_at')->where('id',$request['id'])->first();      
                  if (!is_null($user)) {
                      $masseges[]="  المستخدم محذوف";
                      return response()->json(['status'=>$status ,'data'=>array() ,'messages'=>$masseges]);
@@ -208,7 +207,7 @@ class UserController extends Controller
          
                          $status= 1 ;
                         
-                         $response_data['user_id'] = User::select('id as idx','name','address','url','phone','updated_at as date')->where('id',$user->id)->first();      
+                         $response_data['id'] = User::select('id as idx','name','address','url','phone','updated_at as date')->where('id',$user->id)->first();      
                          // $user=User::select('id as idx','firebase_id as id','email','name','url','phone','updated_at as date')
                          // ->where('firebase_id','=',$data->id)->first() ; 
          
@@ -237,7 +236,7 @@ class UserController extends Controller
                                         if(isset($request['name'])  ) $user->name=$request['name'];                                     
                                         if(isset($request['email'])  ) $user->email=$request['email'];                                     
                                         if(isset($request['address'])  ) $user->address=$request['address'];                                     
-                                        if(isset($request['id'])  ) $user->user_id=isset($request['id'])? $request['id'] :"";
+                                        // if(isset($request['id'])  ) $user->user_id=isset($request['id'])? $request['id'] :"";
          
                                               $user->save();
                                            
@@ -260,7 +259,7 @@ class UserController extends Controller
                  $id='0' ;
                  $largepath="";
                  $filename=null;
-                 if(!is_null($user) and $request->input('account'))
+                 if(!is_null($user) and $request->input('id'))
                  {
                   if($request->hasFile('image'))
                  {   
@@ -311,7 +310,7 @@ class UserController extends Controller
                      }
          
                              $data= $request->all();  
-                             $user = User::where('user_id',$data['user_id'])->first();      
+                             $user = usertoken::where('user_id',$data['user_id'])->first();      
                              $response_data1=null ;
                              if(!is_null($user)) {
                                    
@@ -325,9 +324,7 @@ class UserController extends Controller
                                  $status= 1 ;
                                  $response_data1=User::select('id','email','name','address','url','phone','updated_at as date')->where('id',$user->id)->first();
                                  $masseges[]="تم تحديث توكن المستخدم بنجاح";
-                                 
-                 
-         
+                                
                              }
                              else
                              {

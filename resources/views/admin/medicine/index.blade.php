@@ -91,8 +91,9 @@
               </td>
               @endcan
 
+              {{-- @if (auth()->user()->hasPermission('medicine-delete')) --}}
 
-              @can('role-delete')
+              {{-- @can('role-delete') --}}
               <td>
                     {!!Form::open(['action' => ['App\Http\Controllers\MedicineController@destroy',$medicine->id],'method'=>'POST', 'class'=>'pull-right','onsubmit' => 'return ConfirmDelete()'])!!}
                     {{Form::hidden('_method','DELETE')}}
@@ -100,7 +101,8 @@
                        </button>
                        {!!Form::close()!!}
                     </td>
-                    @endcan
+                    {{-- @endif --}}
+                    {{-- @endcan --}}
 
                     
                   </tr>

@@ -11,15 +11,17 @@
                   <div class="row">
                 <div class="col-md-12">
                   {{-- @can('pharmacy-create') --}}
+                  @if (auth()->user()->hasPermission('pharmacy-create'))
 
        <a href="" data-toggle="modal" data-target="#add" class="btn btn-info float-left">
                                        <i class="fa fa-plus fa-2x"></i> اضافة صيدلية جديدة
                                        </a>
+                                       @endif
                                        {{-- @endcan --}}
 
        </div></div>
 
-       @if(count($items)>0)
+       @if(count($pharmacies)>0)
        <div class="row">
         <div class="col-md-12">
           <div class="tile">
@@ -32,17 +34,23 @@
                     <th>الصيدلية</th>
                     <th>العنوان</th>
                     <th>رقم الطلبية</th>
+              {{-- @if (auth()->user()->hasPermission('pharmacy-edit')) --}}
+                    
                     {{-- @can('pharmacy-edit') --}}
                     <th>تعديل</th>
                     {{-- @endcan --}}
+                    {{-- @endif --}}
                     {{-- @can('pharmacy-delete') --}}
+              {{-- @if (auth()->user()->hasPermission('pharmacy-delete')) --}}
+
                     <th>حذف</th>
                     {{-- @endcan --}}
+                    {{-- @endif --}}
 
                   </tr>
                 </thead>
                 <tbody>
-                @foreach($pharmacys as $pharmacy)
+                @foreach($pharmacies as $pharmacy)
                  <tr>
                   <td>{{$pharmacy->id}} </td>
                     <td>{{$pharmacy->name}}</td>
@@ -54,7 +62,6 @@
                         </a> --}}
                         
                     </td>
-                    @can('pharmacy-edit')
 
                     <td> <a  href="" data-toggle="modal" data-target="#edit{{$pharmacy->id}}" class="btn btn-warning mr-3 ml-2">
                                        <i class="fa fa-edit fa-2x"></i>
@@ -88,20 +95,20 @@
         {{Form::label('address','العنوان')}}
         {{Form::text('address', $pharmacy->address, ['class' => 'form-control', 'placeholder' => ''])}}
        </div>  
-      <div class="form-group">
+      {{-- <div class="form-group">
       {{Form::label('lat','الطول')}}
       {{Form::text('lat', $pharmacy->lat, ['class' => 'form-control', 'placeholder' => ''])}}
      </div>
      <div class="form-group">
       {{Form::label('lng','العرض')}}
       {{Form::text('lng', $pharmacy->lng, ['class' => 'form-control', 'placeholder' => ''])}}
-     </div>
+     </div> --}}
      <div class="form-group">
       {{Form::label('order_count','رقم الطلبية')}}
       {{Form::text('order_count', $pharmacy->order_count, ['class' => 'form-control', 'placeholder' => ''])}}
      </div>
      <div class="form-group">
-      {{Form::label('balance','وزن')}}
+      {{Form::label('balance','الميزانية')}}
       {{Form::text('balance', $pharmacy->balance, ['class' => 'form-control', 'placeholder' => ''])}}
      </div>
             {{Form::hidden('_method','PUT')}}
@@ -118,9 +125,7 @@
             </div>
 
               </td>
-              @endcan
-              @can('pharmacy-delete')
-
+            
               <td>
                     {!!Form::open(['action' => ['App\Http\Controllers\PharmacyController@destroy',$pharmacy->id],'method'=>'POST', 'class'=>'pull-right','onsubmit' => 'return ConfirmDelete()'])!!}
                     {{Form::hidden('_method','DELETE')}}
@@ -129,7 +134,6 @@
                        {!!Form::close()!!}
                     </td>
                       
-                    @endcan
 
                   </tr>
                    
