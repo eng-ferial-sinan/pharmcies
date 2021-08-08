@@ -21,7 +21,8 @@ class OrderSeeder extends Seeder
             'total_pice' => rand(10,50),
             'pharmacy_id' => rand(10,50),
             'user_id' => rand(10,50),
-            
+            'created_at' =>now(),
+            'updated_at' => now(),
 
         ]);
     }

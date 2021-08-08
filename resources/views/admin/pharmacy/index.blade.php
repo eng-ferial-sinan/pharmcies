@@ -10,16 +10,18 @@
                 <div class="container">
                   <div class="row">
                 <div class="col-md-12">
-                  @can('question-create')
+                  {{-- @can('pharmacy-create') --}}
+                  @if (auth()->user()->hasPermission('pharmacy-create'))
 
        <a href="" data-toggle="modal" data-target="#add" class="btn btn-info float-left">
                                        <i class="fa fa-plus fa-2x"></i> اضافة صيدلية جديدة
                                        </a>
-                                       @endcan
+                                       @endif
+                                       {{-- @endcan --}}
 
        </div></div>
 
-       {{-- @if(count($Questions)>0) --}}
+       @if(count($pharmacies)>0)
        <div class="row">
         <div class="col-md-12">
           <div class="tile">
@@ -28,126 +30,38 @@
               <table class="table table-hover table-bordered " id="sampleTable">
                 <thead>
                   <tr>
+                    <th>#</th>
                     <th>الصيدلية</th>
                     <th>العنوان</th>
                     <th>رقم الطلبية</th>
-                    @can('question-edit')
+              {{-- @if (auth()->user()->hasPermission('pharmacy-edit')) --}}
+                    
+                    {{-- @can('pharmacy-edit') --}}
                     <th>تعديل</th>
-                    @endcan
-                    @can('question-delete')
+                    {{-- @endcan --}}
+                    {{-- @endif --}}
+                    {{-- @can('pharmacy-delete') --}}
+              {{-- @if (auth()->user()->hasPermission('pharmacy-delete')) --}}
+
                     <th>حذف</th>
-                    @endcan
+                    {{-- @endcan --}}
+                    {{-- @endif --}}
 
                   </tr>
                 </thead>
                 <tbody>
                 @foreach($pharmacies as $pharmacy)
                  <tr>
-                   
+                  <td>{{$pharmacy->id}} </td>
                     <td>{{$pharmacy->name}}</td>
-                    <td>{{$pharmacy->address?$pharmacy->address}}</td>
+                    <td>{{$pharmacy->address}}</td>
                     <td>
-                       <a  href="" data-toggle="modal" data-target="#edits{{$pharmacy->id}}" class="btn btn-warning mr-3 ml-2">
+                      {{$pharmacy->order_count}}
+                       {{-- <a  href="" data-toggle="modal" data-target="#edits{{$pharmacy->id}}" class="btn btn-warning mr-3 ml-2">
                         <i class="fa fa-edit fa-2x"></i>
-                        </a>
+                        </a> --}}
                         
-                        
-                        
-
-{{-- <div class="modal hide fade in " data-keyboard="false" data-backdrop="static" id="edits{{$pharmacy->id}}">
- <div class="modal-dialog" role="document">
-   <div class="modal-content">
-     <div class="modal-header">
-       <h5 class="modal-title">  تعديل بيانات النسب  {{$pharmacy->id}}</h5>
-       <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-     </div>
-     <div class="modal-body">
-     {!! Form::open(['action' => ['App\Http\Controllers\admin\pharmacyController@updatespecial',$pharmacy->id], 'method' => 'POST','enctype'=>'multipart/form-data']) !!}
-     
-     <div class="form-group">
-
-      @php
-       $special=\App\Models\special::pluck('name', 'id')->toArray();  
-      @endphp
-      <div id="repeater">
-        <!-- Repeater Heading -->
-        <div class="repeater-heading">
-            <h5 class="pull-rit"> التخصصات </h5>
-            <button type="button" style="float: left !important;font-size: 13px;line-height: 0;border-radius: 3px;padding-top: 15px !important;padding: 16px;" class="btn btn-primary pt-5 repeater-add-btn">
-                إضافة
-            </button>
-        </div>
-      <div class="clearfix"></div>
-      <!-- Repeater Items -->
-      @if(count($pharmacy->rate)>0)
-      @foreach($pharmacy->rate as $rat)
-      <div class="items" data-group="test">
-          <!-- Repeater Content -->
-          <div class="item-content">
-            <div class="row">
-            <div class="form-group col-4 ">
-                  {{Form::label('special_id','التخصص  ')}}
-                  {{Form::select('special_id', $special,$rat->special_id, ['class' => 'custom-select','id' => 'schoolclass', 'placeholder' => 'اختار اليوم','required'=>true,'data-name'=>"special_id"])}}
-                </div>
-              <div class="form-group col-4">
-                  {{Form::label('rate',' النسبة ')}}
-                  {{Form::number('rate',$rat->rate, ['class' => 'form-control','required'=>'required','data-name'=>"rate"])}}
-                  </div>
-                </div>
-          
-        </div>
-          <!-- Repeater Remove Btn-->
-          <div class="pull-left repeater-remove-btn">
-              <button type="button" class="btn btn-danger remove-btn">
-              إزالة
-              </button>
-          </div>
-          <div class="clearfix"></div>
-      </div> 
-      @endforeach
-      @endif
-      <div class="items" data-group="test">
-        <!-- Repeater Content -->
-        <div class="item-content">
-          <div class="row">
-            <div class="form-group col-4 ">
-                  {{Form::label('special_id','التخصص  ')}}
-                  {{Form::select('special_id', $special,null, ['class' => 'custom-select','id' => 'schoolclass', 'placeholder' => 'التخصص','data-name'=>"special_id",'required'=>true])}}
-                </div>
-          
-              <div class="form-group col-4">
-                  {{Form::label('rate',' النسبة ')}}
-                  {{Form::number('rate', '', ['class' => 'form-control','data-name'=>"rate",'required'=>true])}}
-                  </div>
-                </div>
-        </div>
-        <!-- Repeater Remove Btn-->
-        <div class="pull-left repeater-remove-btn">
-            <button type="button" class="btn btn-danger remove-btn">
-            إزالة
-            </button>
-        </div>
-        <div class="clearfix"></div>
-      </div> 
-    </div> 
-    
-
-{{Form::hidden('_method','PUT')}}
-
-</div>
-     <div class="modal-footer">
-       <button class="btn btn-primary" type="submit">  حفظ التعديلات</button>
-       {!! Form::close() !!}      
-       <button class="btn btn-secondary" type="button" data-dismiss="modal">اغلاق</button>
-     </div>
-   </div>
- </div>
-</div>
-</div> --}}
-
-
                     </td>
-                    @can('pharmacy-edit')
 
                     <td> <a  href="" data-toggle="modal" data-target="#edit{{$pharmacy->id}}" class="btn btn-warning mr-3 ml-2">
                                        <i class="fa fa-edit fa-2x"></i>
@@ -164,14 +78,39 @@
                       <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                     </div>
                     <div class="modal-body">
-                    {!! Form::open(['action' => ['App\Http\Controllers\admin\pharmacyController@update',$pharmacy->id], 'method' => 'POST','enctype'=>'multipart/form-data']) !!}
+                    {!! Form::open(['action' => ['App\Http\Controllers\PharmacyController@update',$pharmacy->id], 'method' => 'POST','enctype'=>'multipart/form-data']) !!}
                     
-                    <div class="form-group">
+           <div class="form-group">
 
             {{Form::label('name','الصيدلية')}}
-            {{Form::text('name', $pharmacy->name, ['class' => 'form-control', 'placeholder' => 'السؤال'])}}
-        </div>
-         
+            {{Form::text('name', $pharmacy->name, ['class' => 'form-control', 'placeholder' => ''])}}
+          </div>
+        <div class="form-group">
+
+          {{Form::label('phone','الهاتف')}}
+          {{Form::text('phone', $pharmacy->phone, ['class' => 'form-control', 'placeholder' => ''])}}
+       </div> 
+       <div class="form-group">
+
+        {{Form::label('address','العنوان')}}
+        {{Form::text('address', $pharmacy->address, ['class' => 'form-control', 'placeholder' => ''])}}
+       </div>  
+      {{-- <div class="form-group">
+      {{Form::label('lat','الطول')}}
+      {{Form::text('lat', $pharmacy->lat, ['class' => 'form-control', 'placeholder' => ''])}}
+     </div>
+     <div class="form-group">
+      {{Form::label('lng','العرض')}}
+      {{Form::text('lng', $pharmacy->lng, ['class' => 'form-control', 'placeholder' => ''])}}
+     </div> --}}
+     <div class="form-group">
+      {{Form::label('order_count','رقم الطلبية')}}
+      {{Form::text('order_count', $pharmacy->order_count, ['class' => 'form-control', 'placeholder' => ''])}}
+     </div>
+     <div class="form-group">
+      {{Form::label('balance','الميزانية')}}
+      {{Form::text('balance', $pharmacy->balance, ['class' => 'form-control', 'placeholder' => ''])}}
+     </div>
             {{Form::hidden('_method','PUT')}}
         
          </div>
@@ -186,18 +125,15 @@
             </div>
 
               </td>
-              @endcan
-              @can('question-delete')
-
+            
               <td>
-                    {!!Form::open(['action' => ['App\Http\Controllers\admin\QuestionController@destroy',$Question->id],'method'=>'POST', 'class'=>'pull-right','onsubmit' => 'return ConfirmDelete()'])!!}
+                    {!!Form::open(['action' => ['App\Http\Controllers\PharmacyController@destroy',$pharmacy->id],'method'=>'POST', 'class'=>'pull-right','onsubmit' => 'return ConfirmDelete()'])!!}
                     {{Form::hidden('_method','DELETE')}}
                        <button class ="btn btn-danger mr-3 ml-3" type="submit"><i class="fa fa-md fa-trash"></i>
                        </button>
                        {!!Form::close()!!}
                     </td>
                       
-                    @endcan
 
                   </tr>
                    

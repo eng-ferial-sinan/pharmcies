@@ -2,12 +2,11 @@
 
 namespace Database\Seeders;
 
-
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-class CategorySeeder extends Seeder
+class usertokenSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -17,10 +16,10 @@ class CategorySeeder extends Seeder
     public function run()
     {
         //
-        DB::table('categories')->insert([
-            'name' => Str::random(10),
-            'created_at' =>now(),
-            'updated_at' => now(),
+        DB::table('usertokens')->insert([
+            'token' => Str::random(10),
+            'user_id' => rand(10,50),
+            
         ]);
     }
 }

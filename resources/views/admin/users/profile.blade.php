@@ -13,6 +13,22 @@
 @section('content')
 <!--link rel="stylesheet" href="/date/css/style.css"-->
  
+@php
+   function roleName1($name)
+    {
+         
+switch($name)
+{
+    case "admin": $name = "مشرف الموقع"; break;
+    case "delegate": $name = "مندوب  ";break;
+    case "delegate2": $name = "صيدلاني  ";break;
+  
+}
+
+        return  $name;
+   
+    }
+@endphp
 
       
         <div class="row">
@@ -20,7 +36,7 @@
        
                <div class="tile user-settings">
                 <h4 class="line-head">تعديل البيانات الشخصية</h4>
-                <form action="/admin/profile/updated" method="POST" class="form-horizontal">
+                <form action="/profile/updated" method="POST" class="form-horizontal">
  {{ csrf_field() }}
                   <div class="row mb-4">
                     <div class="col-md-8">
@@ -76,17 +92,17 @@
          <div class="col-md-4 tile user-settings">
          <div class="info"><img class="user-img img-fluid img-responsive" src="{{$user->url? $user->url:'/img/logo.png'}}">
               <h4>{{$user->name}}</h4>
-              <p> @if(!empty($user->getRoleNames()))
+              {{-- <p> @if(!empty($user->getRoleNames()))
                 @foreach($user->getRoleNames() as $v)
                <a class="badge-success btn btn-default">{{ $v }}</a>
                 @endforeach
-               @endif  </p>
+               @endif  </p> --}}
             </div>
 
             <h4 class="line-head">تعديل الصورة الشخصية</h4>
                    <div class="row mb-4">
                     <div class="col-md-8">
-                    <form action="/admin/profile/updated/saveimage" method="POST" class="form-horizontal" enctype="multipart/form-data">
+                    <form action="/profile/updated/saveimage" method="POST" class="form-horizontal" enctype="multipart/form-data">
  {{ csrf_field() }}
                       <label>رفع صورة </label>
                       <input class="form-control" type="file" name= "myimg">

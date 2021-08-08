@@ -23,7 +23,8 @@ class detalilsSeeder extends Seeder
             'count' => rand(10,50),
             'sum' => rand(10,50),
             'order_id' => rand(10,50),
-
+            'created_at' =>now(),
+            'updated_at' => now(),
             
 
         ]);

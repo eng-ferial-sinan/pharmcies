@@ -1,4 +1,4 @@
-@extends('admin.vadmin.admin')
+@extends('admin.vadmin.lay')
 
 @section('head')   /
 بيانات   
@@ -24,24 +24,39 @@
     
                     </h3>
 
-        <form method="post" action="@if ($item->id == null) {{ route('category.store') }} @else {{ route('category.update', ['category' => $item->id]) }} @endif" enctype="multipart/form-data">
+        <form method="post" action="@if ($item->id == null) {{ route('pharmacy.store') }} @else {{ route('pharmacy.update', ['pharmacy' => $item->id]) }} @endif" enctype="multipart/form-data">
         {{ csrf_field() }}
         @if ($item->id != null)
             {{ method_field('PUT') }}
         @endif
 
        <div class="form-group">
-            {{Form::label('title','الصنف')}}
+            {{Form::label('name','الصيدلية')}}
             {{Form::text('name', $item->name, ['class' => 'form-control', 'placeholder' => '','required'=>true])}}
         </div>
-
-        
-
-        
-        
-
-        
-       
+        <div class="form-group">
+          {{Form::label('address','العنوان')}}
+          {{Form::text('address', $item->address, ['class' => 'form-control', 'placeholder' => '','required'=>true])}}
+      </div> 
+           @php
+               $users = \App\Models\User::where('user_type',2)->pluck('name', 'id')->toArray();
+           @endphp
+<?php
+// $users = \App\Models\User::whereHas("roles", function($q){ 
+// $q->where("name",'صيدلاني'); })->pluck('name', 'id')->toArray();
+?>
+{{-- <div class="form-group col-2">
+  {{Form::label('users_id','المستخدم')}}
+  {{Form::select('users_id[]',$users,(isset($filter['users_id'])?$filter['users_id']:'') , [ 'multiple'=>"multiple" ,'class' => 'form-control select2','id'=>'demoSelect' ])}}
+</div> --}}
+     {{-- <div class="form-group">
+        {{Form::label('user_id','المستخدم')}}
+        {{Form::select('user_id', $users,$item->user_id, ['class' => 'form-control js-example-basic-single', 'placeholder' => ' الاسم ','required'=>true])}}
+    </div> --}}
+    <div class="form-group col-3" >
+      {{Form::label('user_id','المستخدم')}}
+      {{Form::select('user_id', $users,(isset($filter['user_id'])?$filter['user_id']:''), ['class' => 'custom-select newRead js-example-basic-single','id' => 'custmer_id', 'placeholder' => ' المستخدم'])}}
+    </div>
     {{Form::submit('حفظ',['class'=>'btn btn-primary'])}}    
     {!! Form::close() !!}   
    
@@ -56,7 +71,6 @@
             }
           
     </script>
- 
 @endsection
 @section('script')
 <script src="/app.js"></script>

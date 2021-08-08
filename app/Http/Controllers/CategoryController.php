@@ -3,18 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Models\category;
 class CategoryController extends Controller
 {
     //
     public function __construct(Request $request)
     {
         $this->middleware('auth');
-        // $this->middleware('permission:role-list|role-create|role-edit|role-delete', ['only' => ['index','store']]);
-        // $this->middleware('permission:role-create', ['only' => ['create','store']]);
-        // $this->middleware('permission:role-edit', ['only' => ['edit','update']]);
-        // $this->middleware('permission:role-delete', ['only' => ['destroy']]);
-        
+       
     }
     public function index()
     {
@@ -30,7 +26,9 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        $category =new category;
+        return view('admin.category.form')->with('item',$category);
+  
     }
 
     /**
@@ -72,7 +70,9 @@ class CategoryController extends Controller
      */
     public function edit(category $category)
     {
-        //
+        // $category =category::find($category->id);
+        return view('admin.category.form')->with('item',$category);
+  
     }
 
     /**

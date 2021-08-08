@@ -4,12 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Pharmacy extends Model
+class usertoken extends Model
 {
-    use HasFactory,SoftDeletes;
-    
+    use HasFactory;
+
+    protected $fillable = [
+        'token',
+        'user_id',
+        'push',
+    ];
     public function user()
     {
         return $this->belongsTo('App\Models\User');

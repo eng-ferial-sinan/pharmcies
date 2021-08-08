@@ -1,6 +1,6 @@
 @extends('admin.vadmin.lay')
 @section('title') - 
-إدارة الادوية
+إدارة الطلبيات
 @endsection
 
 @section('content')
@@ -10,15 +10,16 @@
                 <div class="container">
                   <div class="row">
                 <div class="col-md-12">
-                  @if (auth()->user()->hasPermission('medicine-create'))
+                  @can('role-create')
+
        <a href="" data-toggle="modal" data-target="#add" class="btn btn-info float-left">
-                                       <i class="fa fa-plus fa-2x"></i> اضافة دواء
+                                       <i class="fa fa-plus fa-2x"></i> اضافة طلبية جديد
                                        </a>
-                                       @endif
+                                       @endcan
 
        </div></div>
 
-       @if(count($medicines)>0)
+       @if(count($orders)>0)
        <div class="row">
         <div class="col-md-12">
           <div class="tile">
@@ -27,53 +28,61 @@
               <table class="table table-hover table-bordered " id="sampleTable">
                 <thead>
                   <tr>
-                    <th>الاسم</th>
-                    <th>الصنف</th>
-                    <th>السعر</th>
-                    <th>تاريخ الانتاج</th>
-                    <th>تاريخ الانتهاء</th>
-                    @if (auth()->user()->hasPermission('medicine-edit'))
+                    <th>رقم الطلبية</th>
+                    {{-- <th>رقم الصيدلية</th> --}}
+                    <th>حالة الطلبية</th>
+                    {{-- @can('role-edit') --}}
                     <th>تعديل</th>
-                    @endif
-                    @if (auth()->user()->hasPermission('medicine-delete'))
+                    {{-- @endcan --}}
+                    {{-- @can('role-delete') --}}
                     <th>حذف</th>
-                    @endif
+                    {{-- @endcan --}}
 
                   </tr>
                 </thead>
                 <tbody>
-                @foreach($medicines as $medicine)
+                @foreach($orders as $order)
                  <tr>
                    
-                    <td>{{$medicine->name}}</td>
-                    <td>{{$medicine->category_id}}</td>
-                    <td>{{$medicine->price}}</td>
-                    <td>{{$medicine->production_date}}</td>
-                    <td>{{$medicine->expiry_date}}</td>
-                    @if (auth()->user()->hasPermission('medicine-edit'))
-                    <td> <a  href="" data-toggle="modal" data-target="#edit{{$medicine->id}}" class="btn btn-warning mr-3 ml-2">
+                    <td>{{$order->id}}</td>
+                    {{-- <td>{{$order->pharmacy_id}}</td> --}}
+                    <td>{{$order->status_id}}</td>
+                    {{-- @can('role-edit') --}}
+                    <td> <a  href="" data-toggle="modal" data-target="#edit{{$order->id}}" class="btn btn-warning mr-3 ml-2">
                                        <i class="fa fa-edit fa-2x"></i>
                                        </a>
                                        
                                        
                                        
 
-<div class="modal hide fade in " data-keyboard="false" data-backdrop="static" id="edit{{$medicine->id}}">
+<div class="modal hide fade in " data-keyboard="false" data-backdrop="static" id="edit{{$order->id}}">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title">  تعديل بيانات الدواء {{$medicine->name}}</h5>
+                      <h5 class="modal-title">  تعديل بيانات الطلبية {{$order->name}}</h5>
                       <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                     </div>
                     <div class="modal-body">
-                    {!! Form::open(['action' => ['App\Http\Controllers\MedicineController@update',$medicine->id], 'method' => 'POST','enctype'=>'multipart/form-data']) !!}
+                    {!! Form::open(['action' => ['App\Http\Controllers\OrderController@update',$order->id], 'method' => 'POST','enctype'=>'multipart/form-data']) !!}
                     
                     <div class="form-group">
 
-            {{Form::label('name','اسم الدواء')}}
-            {{Form::text('name', $medicine->name, ['class' => 'form-control', 'placeholder' => 'الاسم'])}}
+            {{Form::label('status_id','حالة الطلبية')}}
+            {{Form::text('status_id', $order->status_id, ['class' => 'form-control', 'placeholder' => 'الاسم'])}}
         </div>
-         
+        <div class="form-group">
+        {{Form::label('total_pice','المجموع')}}
+        {{Form::text('total_pice', $order->total_pice, ['class' => 'form-control', 'placeholder' => 'الاسم'])}}
+       </div>
+    <div class="form-group">
+    {{Form::label('pharmacy_id','رقم الصيدلية')}}
+    {{Form::text('pharmacy_id', $order->pharmacy_id, ['class' => 'form-control', 'placeholder' => 'الاسم'])}}
+    </div>
+  {{-- <div class="form-group">
+  {{Form::label('user_id','رقم المستخدم')}}
+  {{Form::text('user_id', $order->user_id, ['class' => 'form-control', 'placeholder' => 'الاسم'])}}
+  </div> --}}
+
             {{Form::hidden('_method','PUT')}}
         
          </div>
@@ -88,22 +97,21 @@
             </div>
 
               </td>
-              @endif
+              {{-- @endcan --}}
 
-              @if (auth()->user()->hasPermission('medicine-delete'))
+
+              {{-- @can('role-delete') --}}
               <td>
-                    {!!Form::open(['action' => ['App\Http\Controllers\MedicineController@destroy',$medicine->id],'method'=>'POST', 'class'=>'pull-right','onsubmit' => 'return ConfirmDelete()'])!!}
+                    {!!Form::open(['action' => ['App\Http\Controllers\OrderController@destroy',$order->id],'method'=>'POST', 'class'=>'pull-right','onsubmit' => 'return ConfirmDelete()'])!!}
                     {{Form::hidden('_method','DELETE')}}
                        <button class ="btn btn-danger mr-3 ml-3" type="submit"><i class="fa fa-md fa-trash"></i>
                        </button>
                        {!!Form::close()!!}
                     </td>
-                    @endif
+                    {{-- @endcan --}}
 
                     
-                  </tr>
-                   
-                   
+                  </tr>                   
                   @endforeach
                    
                    
@@ -138,16 +146,22 @@
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title">  اضافة دواء جديد</h5>
+                      <h5 class="modal-title">  اضافة طلبية جديدة</h5>
                       <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                     </div>
                     <div class="modal-body">
-                    {!! Form::open(['action' => 'App\Http\Controllers\MedicineController@store', 'method' => 'POST','enctype'=>'multipart/form-data']) !!}
-                   
-        <div class="form-group">
-            {{Form::label('name','اسم الدواء')}}
-            {{Form::text('name', '', ['class' => 'form-control', 'placeholder' => 'الاسم'])}}
-        </div>
+                    {!! Form::open(['action' => 'App\Http\Controllers\OrderController@store', 'method' => 'POST','enctype'=>'multipart/form-data']) !!}
+                    {{Form::label('status_id','حالة الطلبية')}}
+                    {{Form::text('status_id', $order->status_id, ['class' => 'form-control', 'placeholder' => 'الاسم'])}}
+                </div>
+                <div class="form-group">
+                {{Form::label('total_pice','المجموع')}}
+                {{Form::text('total_pice', $order->total_pice, ['class' => 'form-control', 'placeholder' => 'الاسم'])}}
+               </div>
+            <div class="form-group">
+            {{Form::label('pharmacy_id','رقم الصيدلية')}}
+            {{Form::text('pharmacy_id', $order->pharmacy_id, ['class' => 'form-control', 'placeholder' => 'الاسم'])}}
+            </div>
         
         
  

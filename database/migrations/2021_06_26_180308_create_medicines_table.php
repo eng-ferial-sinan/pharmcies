@@ -25,6 +25,8 @@ class CreateMedicinesTable extends Migration
             $table->string("expiry_date")->nullable(true);
 
             $table->timestamps();
+            $table->softDeletes(); 
+
         });
     }
 

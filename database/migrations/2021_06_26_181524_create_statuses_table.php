@@ -17,6 +17,8 @@ class CreateStatusesTable extends Migration
             $table->unsignedInteger('id');
             $table->string("name");
             $table->timestamps();
+            $table->softDeletes(); 
+
         });
     }
 
