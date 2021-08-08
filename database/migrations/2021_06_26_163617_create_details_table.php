@@ -15,7 +15,7 @@ class CreateDetailsTable extends Migration
     {
         Schema::create('details', function (Blueprint $table) {
             $table->id();
-            $table->string("medicine")->nullable(true);
+            $table->longText("medicine")->nullable(true);
             $table->integer("medicine_id")->unsigned();
             $table->integer('price')->default(0);
             $table->integer("count")->default(0);

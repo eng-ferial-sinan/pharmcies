@@ -38,13 +38,10 @@
                     <th>ID</th>
                     <th>الاسم</th>
                     <th>البيانات </th>
-                    @can('user-edit')
-                    <th>-</th>
-                    @endcan
 
-                    @can('user-delete')
                     <th>-</th>
-                    @endcan
+
+                    <th>-</th>
                 </tr>
                 </thead>
                 <tbody>  
@@ -54,17 +51,13 @@
                     <td><a href="/users/{{$user->id}}/" class="btn btn-default">{{$user->name}}</a></td>
                     <td><a href="/users/{{$user->id}}/" class="btn btn-default">{{$user->email}}
                     <br> {{$user->market}}</a></td>
-                    @can('user-edit')
                     <td>
                         <a href="/member/{{$user->id}}/edit" class="btn btn-default">
                         <i class="fa fa-edit"></i>
                         التحرير</a>
                     </td>
                      
-                    @endcan
-                    
-                
-                    @can('user-edit')
+                   
                     <td>
 
                          @if(!is_null($user->deleted_at))                        
@@ -87,7 +80,6 @@
                        
                         @endif
                     </td>
-                    @endcan
       
                 </tr>
                     @endforeach 

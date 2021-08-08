@@ -127,7 +127,6 @@ class UserController extends Controller
 
              public function dataUser(Request $request)
              { 
-                $masseges=array() ;
                 $response['status']=false;
                 $token=$request->header('token');
 
@@ -136,17 +135,6 @@ class UserController extends Controller
                 {
                  $user_id=$usertoken->user_id;
                  $user=User::find($user_id);
-        //          if (!is_null($user)) {
-        //             $masseges[]="  المستخدم محذوف";
-        //             return response()->json(['status'=>$status ,'token'=>array() ,'messages'=>$masseges]);
-        
-        //         }
-        //         if(is_null($user) and $request->input('user_id'))
-        // {
-        //     $masseges[]=" المستخدم غير موجود";
-        //     return response()->json(['status'=>$status ,'token'=>array() ,'messages'=>$masseges]);
-
-        // }
                  $response['token']=$token;
                  $response['user']=$user;
                  if($user->pharmacy)
@@ -158,6 +146,29 @@ class UserController extends Controller
 
 
              }
+           
+             public function logout(Request $request)
+             { 
+                $masseges=array() ;
+                $response['status']=false;
+                $token=$request->header('token');
+
+                $usertoken=usertoken::where('token',$token)->first();
+                if($usertoken)
+                {
+                 $usertoken->delete();
+                 $response['messages']="تم تسجيل الخوج بنجاح";
+                 $response['status']=true;
+                }else
+                {
+                 $response['messages']="الحساب غير موجود";
+                 $response['status']=false;
+                }
+                return response()->json($response);
+
+
+             }
+
              public function store(Request $request)
              {
                  $status=0 ;

@@ -9,4 +9,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class detail extends Model
 {
     use HasFactory,SoftDeletes;
+
+    public function order()
+    {
+        return $this->belongsTo('App\Models\order');
+    }
+    public function getMedicineAttribute($value)
+    {
+        return  json_decode($value);
+    }
+    
 }

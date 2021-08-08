@@ -10,12 +10,11 @@
                 <div class="container">
                   <div class="row">
                 <div class="col-md-12">
-                  @can('role-create')
-
+                  @if (auth()->user()->hasPermission('medicine-create'))
        <a href="" data-toggle="modal" data-target="#add" class="btn btn-info float-left">
                                        <i class="fa fa-plus fa-2x"></i> اضافة دواء
                                        </a>
-                                       @endcan
+                                       @endif
 
        </div></div>
 
@@ -33,12 +32,12 @@
                     <th>السعر</th>
                     <th>تاريخ الانتاج</th>
                     <th>تاريخ الانتهاء</th>
-                    @can('role-edit')
+                    @if (auth()->user()->hasPermission('medicine-edit'))
                     <th>تعديل</th>
-                    @endcan
-                    @can('role-delete')
+                    @endif
+                    @if (auth()->user()->hasPermission('medicine-delete'))
                     <th>حذف</th>
-                    @endcan
+                    @endif
 
                   </tr>
                 </thead>
@@ -51,7 +50,7 @@
                     <td>{{$medicine->price}}</td>
                     <td>{{$medicine->production_date}}</td>
                     <td>{{$medicine->expiry_date}}</td>
-                    @can('role-edit')
+                    @if (auth()->user()->hasPermission('medicine-edit'))
                     <td> <a  href="" data-toggle="modal" data-target="#edit{{$medicine->id}}" class="btn btn-warning mr-3 ml-2">
                                        <i class="fa fa-edit fa-2x"></i>
                                        </a>
@@ -67,7 +66,7 @@
                       <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                     </div>
                     <div class="modal-body">
-                    {!! Form::open(['action' => ['App\Http\Controllers\MedicineController@update',$medicines->id], 'method' => 'POST','enctype'=>'multipart/form-data']) !!}
+                    {!! Form::open(['action' => ['App\Http\Controllers\MedicineController@update',$medicine->id], 'method' => 'POST','enctype'=>'multipart/form-data']) !!}
                     
                     <div class="form-group">
 
@@ -89,11 +88,9 @@
             </div>
 
               </td>
-              @endcan
+              @endif
 
-              {{-- @if (auth()->user()->hasPermission('medicine-delete')) --}}
-
-              {{-- @can('role-delete') --}}
+              @if (auth()->user()->hasPermission('medicine-delete'))
               <td>
                     {!!Form::open(['action' => ['App\Http\Controllers\MedicineController@destroy',$medicine->id],'method'=>'POST', 'class'=>'pull-right','onsubmit' => 'return ConfirmDelete()'])!!}
                     {{Form::hidden('_method','DELETE')}}
@@ -101,8 +98,7 @@
                        </button>
                        {!!Form::close()!!}
                     </td>
-                    {{-- @endif --}}
-                    {{-- @endcan --}}
+                    @endif
 
                     
                   </tr>

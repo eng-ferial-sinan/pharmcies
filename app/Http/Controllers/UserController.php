@@ -175,10 +175,13 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
-        $roles = Role::pluck('name','name')->all();
-        $userRole = $user->roles?$user->roles->pluck('name','name')->all():0;
 
-         return view('admin.users.edit',compact('user','roles','userRole'));
+        $permission_id = user_permission::where('user_id',$id)->pluck('permission_id')->toArray();
+
+        $permission = permission::whereNotIn('id',$permission_id)->get();
+        $user_permission = permission::whereIn('id',$permission_id)->get();
+
+         return view('admin.users.edit',compact('user','permission','user_permission'));
         
     }
 
@@ -193,23 +196,29 @@ class UserController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
-            // 'email' => 'required|email|unique:users,email,'.$id,
             'password' => 'same:confirm-password',
-            'roles' => 'required'
         ]);
 
+        $user =  User::find($id);
+        $user->name=$request->name;
+        $user->phone=$request->phone;
+        $user->user_type=$request->user_type;
+        $user->password=Hash::make($request['password']);;
+        $user->address=isset($request->address)??'';
+        $user->save();
 
-        $input = $request->all();
-        if(!empty($input['password'])){ 
-            $input['password'] = Hash::make($input['password']);
-        }else{
-            $input = array_except($input,array('password'));    
+        foreach($request->permission as $value )
+        {
+
+            $user_permission =user_permission::where('user_id',$id)->where('permission_id',$value)->first();
+          if(is_null($user_permission))
+          {
+            $user_permission =new user_permission;
+            $user_permission->user_id=$user->id;
+            $user_permission->permission_id=$value;
+            $user_permission->save();
+          }
         }
-
-        $user = User::find($id);
-        $user->update($input);
-        DB::table('model_has_roles')->where('model_id',$id)->delete();
-        $user->assignRole($request->input('roles'));
         
         return redirect()->back()
                         ->with('success','User updated successfully');
