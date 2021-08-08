@@ -20,8 +20,8 @@ class DatabaseSeeder extends Seeder
         $this->call([medicinSeeder::class]);
         $this->call([OrderSeeder::class]);
         $this->call([permistionSeeder::class]);
-        $this->call([user_permitionSeeder::class]);
         $this->call([UserSeeder::class]);
+        $this->call([user_permitionSeeder::class]);
 
     }
 }

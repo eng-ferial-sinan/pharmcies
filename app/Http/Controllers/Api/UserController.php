@@ -98,6 +98,7 @@ class UserController extends Controller
             $user->name=$data['name'];
             $user->password= Hash::make($data['password']);
             $user->phone=$data['phone'];
+            $user->user_type="صيدلاني";                                   
             $user->save();
 
             $pharmacy =new pharmacy;
