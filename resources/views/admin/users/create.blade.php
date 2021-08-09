@@ -35,8 +35,9 @@
   case "order-delete": $name = "حذف طلبية";break;
      
  }
- 
-
+ return  $name;
+  }
+  @endphp
 <div class="container">
     <div class="md-form text-right text-black col-md-12 card p-2 m-1">
         {!! Form::open(['action' => 'App\Http\Controllers\UserController@store', 'method' => 'POST','enctype'=>'multipart/form-data']) !!}

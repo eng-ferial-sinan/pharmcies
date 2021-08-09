@@ -17,7 +17,7 @@
                                        @endif
 
        </div></div>
-
+      
        @if(count($medicines)>0)
        <div class="row">
         <div class="col-md-12">
@@ -73,7 +73,14 @@
             {{Form::label('name','اسم الدواء')}}
             {{Form::text('name', $medicine->name, ['class' => 'form-control', 'placeholder' => 'الاسم'])}}
         </div>
-         
+    
+    
+            <div class="form-group">
+              {{Form::label('category_id','اسم الدواء')}}
+              {!! Form::select('category_id', $categories2,$medicine->category_id, array('class' => 'form-control')) !!}
+            </div>
+
+
             {{Form::hidden('_method','PUT')}}
         
          </div>
@@ -146,14 +153,44 @@
                    
         <div class="form-group">
             {{Form::label('name','اسم الدواء')}}
-            {{Form::text('name', '', ['class' => 'form-control', 'placeholder' => 'الاسم'])}}
+            {{Form::text('name', '', ['class' => 'form-control', 'placeholder' => 'الاسم','required'=>true])}}
         </div>
-        
+@php
+    // $categories=\App\Models\category::pluck('name','id')->all();
+    $categories=\App\Models\category::all();
+@endphp
+
+
+        <div class="form-group">
+          {{Form::label('category_id','اسم الدواء')}}
+            <select name="category_id" class="select2 form-control" required >
+            @foreach ($categories as $item)
+            <option value="{{$item->id}}">
+               {{ $item->name}}
+            </option>
+            @endforeach
+
+            </select>
+          {{-- {!! Form::select('category_id', $categories,null, array('class' => 'form-control')) !!} --}}
+        </div>
+
+        <div class="form-group">
+          {{Form::label('price',' السعر')}}
+          {{Form::number('price', '', ['class' => 'form-control', 'placeholder' => 'الاسم','required'=>true])}}
+      </div>
+        <div class="form-group">
+          {{Form::label('production_date','اسم الدواء')}}
+          {{Form::date('production_date', '', ['class' => 'form-control', 'placeholder' => 'الاسم','required'=>true])}}
+      </div>
+      <div class="form-group">
+        {{Form::label('expiry_date','اسم الدواء')}}
+        {{Form::date('expiry_date', '', ['class' => 'form-control', 'placeholder' => 'الاسم','required'=>true])}}
+    </div>
         
  
                      </div>
                     <div class="modal-footer">
-                      <button class="btn btn-primary" type="submit">  حفظ التعديلات</button>
+                      <button class="btn btn-primary" type="submit">  إضافة </button>
                       {!! Form::close() !!}      
                       <button class="btn btn-secondary" type="button" data-dismiss="modal">اغلاق</button>
                     </div>

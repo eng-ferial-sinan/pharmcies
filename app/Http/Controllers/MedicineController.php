@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\medicine;
-
+use App\Models\category;
 class MedicineController extends Controller
 {
     //
@@ -15,8 +15,10 @@ class MedicineController extends Controller
     }
     public function index()
     {
+       $categories2=category::pluck('name','id')->all();
         $medicine = medicine::all();
-      return view('admin.medicine.index')->with('medicines',$medicine);
+      return view('admin.medicine.index')->with('medicines',$medicine)
+      ->with('categories2',$categories2);
     
         
     }
@@ -44,6 +46,7 @@ class MedicineController extends Controller
 
         $medicine =new medicine;
         $medicine->name=$request->name;
+        $medicine->category_id=$request->category_id;
         $medicine->save();
         return redirect()->back()
                         ->with('success','تم انشاء ');  

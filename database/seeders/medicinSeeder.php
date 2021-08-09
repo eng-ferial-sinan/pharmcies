@@ -23,8 +23,8 @@ class medicinSeeder extends Seeder
             'demerites' => Str::random(10),
             'relics' => Str::random(10),
             'price' => rand(10,50),
-            'production_date' => Str::random(10),
-            'expiry_date' => Str::random(10),
+            'production_date' =>now(),
+            'expiry_date' => now(),
             'created_at' =>now(),
             'updated_at' => now(),
             

@@ -158,7 +158,7 @@ class UserController extends Controller
                 if($usertoken)
                 {
                  $usertoken->delete();
-                 $response['messages']="تم تسجيل الخوج بنجاح";
+                 $response['messages']="تم تسجيل الخروج بنجاح";
                  $response['status']=true;
                 }else
                 {
@@ -170,97 +170,49 @@ class UserController extends Controller
 
              }
 
-             public function store(Request $request)
-             {
-                 $status=0 ;
-                 $masseges=array() ;
-                 $validator = Validator::make($request->all(), [
-                    'image' => 'image', 
+            
+                public function store(Request $request){
+                    $status=false;
+                    $validator = Validator::make($request->all(), [
+                        'email' => 'required|string|email|',
+                        'password' => 'required|string|confirmed',
+                        'name' => 'required|string',
+                        'phone' => 'required|string',
+                        'address' => 'required|string',
                     ]);
-               
-         
-                 if ($validator->fails()) {
-                     return response()->json(['status'=>$status ,'data'=>array() ,'messages'=>$validator->errors()->all()],200);
-         
-                 }
-         
-                 // $data=json_decode( $request['user_id'] ); 
-                 // dd($data);
-                 $user = User::withTrashed()->whereNotNull('deleted_at')->where('id',$request['id'])->first();      
-                 if (!is_null($user)) {
-                     $masseges[]="  المستخدم محذوف";
-                     return response()->json(['status'=>$status ,'data'=>array() ,'messages'=>$masseges]);
-         
-                 }
-                 $user = User::where('phone',$request['phone'])->first(); 
-                 $filename=null;
-                 $largepath="";
-                 $response_data=array() ;
-                 if(is_null($user) )
-                 {
-                  if($request->hasFile('image'))
-                 {   
-                     $media=$request->file('image') ;
-                     $filename = 'super_'.time().'.jpg';             
-                     $largepath=  '/storage/'.$filename;
-                     Image::make($media)->save( public_path($largepath) );
-                     $md5=    md5_file(public_path($largepath)); 
-                 }
-                        $user = new User;
-                        $user->id=isset($request['id'])? $request['id'] :"";
-                        $user->name=isset($request['name'])? $request['name'] :"";
-                        $user->email=isset($request['email'])? $request['email'] :"";
-                        $user->address=isset($request['address'])? $request['address'] :"";
-                        $user->phone=isset($request['phone'])? $request['phone'] :"";                                   
-                        $user->password=Hash::make(isset($request['phone'])? $request['phone'] :'password');
-                        $user->url=$largepath;
-                        $user->save();
-                        $user->assignRole('مندوب');
-         
-                         $status= 1 ;
-                        
-                         $response_data['id'] = User::select('id as idx','name','address','url','phone','updated_at as date')->where('id',$user->id)->first();      
-                         // $user=User::select('id as idx','firebase_id as id','email','name','url','phone','updated_at as date')
-                         // ->where('firebase_id','=',$data->id)->first() ; 
-         
-                        //  $response_data['addresses']= Address::where('user_id','=',$user->id)->get() ;   
-                             
-                        //      $response_data['purchase']=order::where('user_id',$user->id)->get() ;                      
-                        //      $purchase_ids =$response_data['purchase']->pluck('id')->all();     
-                            //  $response_data['replies']=reply::whereIn('order_id',$purchase_ids)->get() ; 
-                            //  $replies_id =$response_data['replies']->pluck('acount_id')->all();     
-                            //  $response_data['user'] = User::select('id','name','address','url','phone','updated_at as date')
-                            //  ->whereIn('id',$replies_id)->get();      
-                             
-                            //  unset($response_data['id']['idx']);               
-                         $masseges[]="تم اضافة مستخدم جديد";
-                 }else {
-                     if($request->hasFile('image'))
-                     {   
-                         $media=$request->file('image') ;
-                         $filename = 'super_'.time().'.jpg';             
-                         $largepath=  '/storage/'.$filename;
-                         Image::make($media)->save( public_path($largepath) );
-                         File::delete(public_path().$user->url);
-                         $md5=    md5_file(public_path($largepath)); 
+            
+                    if ($validator->fails()) {
+                        return response()->json(['status'=>$status ,'data'=>array() ,'messages'=>$validator->errors()->all()],200);
+                    }
+                    $data=$request->all();
+        
+                    $user = new User;
+                    $user->email=$data['email'];
+                    $user->name=$data['name'];
+                    $user->password= Hash::make($data['password']);
+                    $user->phone=$data['phone'];
+                    $user->user_type="مندوب";                                   
+                    $user->save();
+        
+                    $result=Auth()->guard()->attempt(['email'=>$data['email'],'password'=>$data['password']]);
+                     $response=['status'=>$result];
+                     if($result)
+                     {
+                         $User=Auth()->user();
+                         $token=$User->generateToken();
+                         if(isset($request->push))
+                         {
+                            $token->push=$request->push;
+                            $token->save();
+                         }
+                         $response['token']=$token->token;
+                         $response['user']=$User;
+                     //    $response['user']['addresses']=$user->addresses;
                      }
-                                        if($filename!=null) $user->url= $largepath;                          
-                                        if(isset($request['name'])  ) $user->name=$request['name'];                                     
-                                        if(isset($request['email'])  ) $user->email=$request['email'];                                     
-                                        if(isset($request['address'])  ) $user->address=$request['address'];                                     
-                                        // if(isset($request['id'])  ) $user->user_id=isset($request['id'])? $request['id'] :"";
-         
-                                              $user->save();
-                                           
-         
-                     $status= 1 ;
-                     $response_data['user'] = User::select('id','email','address','name','url','phone','updated_at as date')->where('id',$user->id)->first();
-                     // $response_data1=User::select('firebase_id as id','email','name','url','phone','updated_at as date')->where('id',$user->id)->first();
-                     $masseges[]="تم تعديل بيانات مستخدم بنجاح";     
-                 }
-                                         
-                 return response()->json(['status'=>$status ,'data'=>$response_data ,'messages'=>$masseges]);
-             }
+                     return response()->json($response);
+            
+                     }
+        
          
              public function update(Request $request, $id=null)
              {
