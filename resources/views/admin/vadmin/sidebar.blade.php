@@ -4,7 +4,7 @@
        
       <ul class="app-menu">
 
-        <li><a class="app-menu__item {{{ (\Request::is('home') ? 'active' : '') }}}" href="/home"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">الرئيسة</span></a></li>
+        <li><a class="app-menu__item {{{ (\Request::is('/') ? 'active' : '') }}}" href="/"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">الرئيسة</span></a></li>
       
 
 {{-- @can('collage-list')
@@ -39,7 +39,7 @@
        <li class="treeview"><a class="app-menu__item {{{ (Request::is('/basic*') ? 'active' : '') }}}" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-calendar-check-o">
       </i><span class="app-menu__label"> الاصناف </span><i class="treeview-indicator fa fa-angle-left"></i></a>
       <ul class="treeview-menu">
-        <li><a class="treeview-item  mr-2" href="/category/create"><i class="icon fa fa-plus-square "></i> إضافة صنف</a></li>
+        {{-- <li><a class="treeview-item  mr-2" href="/category/create"><i class="icon fa fa-plus-square "></i> إضافة صنف</a></li> --}}
         <li><a class="treeview-item  mr-2" href="/category"><i class="icon fa fa-plus-square "></i> الكل</a></li>
         </ul>
       </li>

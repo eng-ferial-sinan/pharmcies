@@ -17,13 +17,12 @@ class UserSeeder extends Seeder
     {
         //
         DB::table('users')->insert([
-            'name' => Str::random(10),
-            'email' => Str::random(10).'@gmail.com',
-            'phone' => Str::random(10),
-            'password' => Hash::make('password'),
-            'url' => Str::random(20),
-            'address' => Str::random(10),
-            'user_type' => rand(10,50),
+            'name' => 'Admin',
+            'email' => 'admin@gmail.com',
+            'phone' => '774452212',
+            'password' => Hash::make('123456'),
+            'address' => 'صنعاء',
+            'user_type' => 'مدير',
             'created_at' =>now(),
             'updated_at' => now(),
         ]);

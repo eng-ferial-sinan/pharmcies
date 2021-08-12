@@ -39,6 +39,7 @@
   }
   @endphp
 <div class="container">
+    <div class="tile ">
     <div class="md-form text-right text-black col-md-12 card p-2 m-1">
         {!! Form::open(['action' => 'App\Http\Controllers\UserController@store', 'method' => 'POST','enctype'=>'multipart/form-data']) !!}
         {{ csrf_field() }}
@@ -49,7 +50,7 @@
             </div>
             <div class="col-md-4">
                 {{-- {!! Form::select('roles', $roles,[], array('class' => 'form-control','multiple')) !!} --}}
-                {{Form::select('user_type',['1'=>'1','2'=>'2','3'=>'3'],'', ['class' => 'custom-select', 'placeholder' => 'اختر نوع المستخدم','required'=>true])}}
+                {{Form::select('user_type',['مدير'=>'مدير','مدخل بيانات'=>'مدخل بيانات','مندوب'=>'مندوب','صيدلية'=>'صيدلية'],'', ['class' => 'custom-select', 'placeholder' => 'اختر نوع المستخدم','required'=>true])}}
             </div>
     
     <div class="md-form text-right text-black col-md-12 card p-2 m-1">
@@ -140,6 +141,7 @@
                   
                             
     </div>
+</div>
 
 
     

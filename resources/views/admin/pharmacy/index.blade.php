@@ -13,7 +13,7 @@
                   {{-- @can('pharmacy-create') --}}
                   @if (auth()->user()->hasPermission('pharmacy-create'))
 
-       <a href="" data-toggle="modal" data-target="#add" class="btn btn-info float-left">
+       <a href="/pharmacy/create" class="btn btn-info float-left">
                                        <i class="fa fa-plus fa-2x"></i> اضافة صيدلية جديدة
                                        </a>
                                        @endif
@@ -63,67 +63,13 @@
                         
                     </td>
 
-                    <td> <a  href="" data-toggle="modal" data-target="#edit{{$pharmacy->id}}" class="btn btn-warning mr-3 ml-2">
-                                       <i class="fa fa-edit fa-2x"></i>
+                    <td>
+                      @if (auth()->user()->hasPermission('pharmacy-create'))
+
+       <a href="/pharmacy/{{$pharmacy->id}}/edit" class="btn btn-info float-left">
+                                       <i class="fa fa-edit fa-2x"></i> تعديل
                                        </a>
-                                       
-                                       
-                                       
-
-<div class="modal hide fade in " data-keyboard="false" data-backdrop="static" id="edit{{$pharmacy->id}}">
-                <div class="modal-dialog" pharmacy="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title">  تعديل بيانات الصيدلية {{$pharmacy->id}}</h5>
-                      <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                    </div>
-                    <div class="modal-body">
-                    {!! Form::open(['action' => ['App\Http\Controllers\PharmacyController@update',$pharmacy->id], 'method' => 'POST','enctype'=>'multipart/form-data']) !!}
-                    
-           <div class="form-group">
-
-            {{Form::label('name','الصيدلية')}}
-            {{Form::text('name', $pharmacy->name, ['class' => 'form-control', 'placeholder' => ''])}}
-          </div>
-        <div class="form-group">
-
-          {{Form::label('phone','الهاتف')}}
-          {{Form::text('phone', $pharmacy->phone, ['class' => 'form-control', 'placeholder' => ''])}}
-       </div> 
-       <div class="form-group">
-
-        {{Form::label('address','العنوان')}}
-        {{Form::text('address', $pharmacy->address, ['class' => 'form-control', 'placeholder' => ''])}}
-       </div>  
-      {{-- <div class="form-group">
-      {{Form::label('lat','الطول')}}
-      {{Form::text('lat', $pharmacy->lat, ['class' => 'form-control', 'placeholder' => ''])}}
-     </div>
-     <div class="form-group">
-      {{Form::label('lng','العرض')}}
-      {{Form::text('lng', $pharmacy->lng, ['class' => 'form-control', 'placeholder' => ''])}}
-     </div> --}}
-     <div class="form-group">
-      {{Form::label('order_count','رقم الطلبية')}}
-      {{Form::text('order_count', $pharmacy->order_count, ['class' => 'form-control', 'placeholder' => ''])}}
-     </div>
-     <div class="form-group">
-      {{Form::label('balance','الميزانية')}}
-      {{Form::text('balance', $pharmacy->balance, ['class' => 'form-control', 'placeholder' => ''])}}
-     </div>
-            {{Form::hidden('_method','PUT')}}
-        
-         </div>
-                    <div class="modal-footer">
-                      <button class="btn btn-primary" type="submit">  حفظ التعديلات</button>
-                      {!! Form::close() !!}      
-                      <button class="btn btn-secondary" type="button" data-dismiss="modal">اغلاق</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
+                                       @endif
               </td>
             
               <td>

@@ -14,7 +14,7 @@
        <a href="" data-toggle="modal" data-target="#add" class="btn btn-info float-left">
                                        <i class="fa fa-plus fa-2x"></i> اضافة دواء
                                        </a>
-                                       @endif
+                      @endif
 
        </div></div>
       
@@ -59,7 +59,7 @@
                                        
 
 <div class="modal hide fade in " data-keyboard="false" data-backdrop="static" id="edit{{$medicine->id}}">
-                <div class="modal-dialog" role="document">
+                <div class="modal-dialog modal-xl" >
                   <div class="modal-content">
                     <div class="modal-header">
                       <h5 class="modal-title">  تعديل بيانات الدواء {{$medicine->name}}</h5>
@@ -68,18 +68,41 @@
                     <div class="modal-body">
                     {!! Form::open(['action' => ['App\Http\Controllers\MedicineController@update',$medicine->id], 'method' => 'POST','enctype'=>'multipart/form-data']) !!}
                     
-                    <div class="form-group">
-
+              <div class="form-group">
             {{Form::label('name','اسم الدواء')}}
             {{Form::text('name', $medicine->name, ['class' => 'form-control', 'placeholder' => 'الاسم'])}}
-        </div>
+              </div>
     
-    
+              <div class="form-group">
+                {{Form::label('traite','الفوائد')}}
+                {{Form::textarea('traite', $medicine->traite, [ 'rows'=>'4','class' => 'form-control', 'placeholder' => 'الفوائد'])}}
+                </div>
+                <div class="form-group">
+                  {{Form::label('demerites','العيوب')}}
+                  {{Form::textarea('demerites', $medicine->demerites, [ 'rows'=>'4','class' => 'form-control', 'placeholder' => 'العيوب'])}}
+                </div>
+                <div class="form-group">
+                  {{Form::label('relics','الاثار الجانبية')}}
+                  {{Form::textarea('relics', $medicine->relics, [ 'rows'=>'4','class' => 'form-control', 'placeholder' => 'الاثار الجانبية'])}}
+                </div>
+                              
             <div class="form-group">
-              {{Form::label('category_id','اسم الدواء')}}
+              {{Form::label('category_id','الصنف')}}
               {!! Form::select('category_id', $categories2,$medicine->category_id, array('class' => 'form-control')) !!}
             </div>
 
+            <div class="form-group">
+              {{Form::label('price',' السعر')}}
+              {{Form::number('price',$medicine->price, ['class' => 'form-control', 'placeholder' => 'الاسم','required'=>true])}}
+           </div>
+            <div class="form-group">
+              {{Form::label('production_date','تاريخ الانتاج')}}
+              {{Form::date('production_date', $medicine->production_date, ['class' => 'form-control','required'=>true])}}
+          </div>
+          <div class="form-group">
+            {{Form::label('expiry_date','تاريخ الانتهاء')}}
+            {{Form::date('expiry_date',$medicine->expiry_date, ['class' => 'form-control','required'=>true])}}
+        </div>
 
             {{Form::hidden('_method','PUT')}}
         
@@ -140,63 +163,78 @@
 
 <!--  data-backdrop="static" id="add" -->
 
-
-<div class="modal hide fade in " data-keyboard="false" data-backdrop="static" id="add">
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title">  اضافة دواء جديد</h5>
-                      <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                    </div>
-                    <div class="modal-body">
-                    {!! Form::open(['action' => 'App\Http\Controllers\MedicineController@store', 'method' => 'POST','enctype'=>'multipart/form-data']) !!}
-                   
-        <div class="form-group">
-            {{Form::label('name','اسم الدواء')}}
-            {{Form::text('name', '', ['class' => 'form-control', 'placeholder' => 'الاسم','required'=>true])}}
-        </div>
+<div class="modal fade" id="add">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">  اضافة دواء جديد</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        {!! Form::open(['action' => 'App\Http\Controllers\MedicineController@store', 'method' => 'POST','enctype'=>'multipart/form-data']) !!}
+       
+<div class="form-group">
+{{Form::label('name','اسم الدواء')}}
+{{Form::text('name', '', ['class' => 'form-control', 'placeholder' => 'الاسم','required'=>true])}}
+</div>
+<div class="form-group">
+{{Form::label('traite','الفوائد')}}
+{{Form::textarea('traite', '', [ 'rows'=>'4','class' => 'form-control', 'placeholder' => 'الفوائد'])}}
+</div>
+<div class="form-group">
+{{Form::label('demerites','العيوب')}}
+{{Form::textarea('demerites', '', [ 'rows'=>'4','class' => 'form-control', 'placeholder' => 'العيوب'])}}
+</div>
+<div class="form-group">
+{{Form::label('relics','الاثار الجانبية')}}
+{{Form::textarea('relics', '', [ 'rows'=>'4','class' => 'form-control', 'placeholder' => 'الاثار الجانبية'])}}
+</div>
 @php
-    // $categories=\App\Models\category::pluck('name','id')->all();
-    $categories=\App\Models\category::all();
+// $categories=\App\Models\category::pluck('name','id')->all();
+$categories=\App\Models\category::all();
 @endphp
 
 
-        <div class="form-group">
-          {{Form::label('category_id','اسم الدواء')}}
-            <select name="category_id" class="select2 form-control" required >
-            @foreach ($categories as $item)
-            <option value="{{$item->id}}">
-               {{ $item->name}}
-            </option>
-            @endforeach
+<div class="form-group">
+{{Form::label('category_id','الصنف ')}}
+<select name="category_id" class="select2 form-control" required >
+@foreach ($categories as $item)
+<option value="{{$item->id}}">
+   {{ $item->name}}
+</option>
+@endforeach
 
-            </select>
-          {{-- {!! Form::select('category_id', $categories,null, array('class' => 'form-control')) !!} --}}
-        </div>
+</select>
+{{-- {!! Form::select('category_id', $categories,null, array('class' => 'form-control')) !!} --}}
+</div>
 
-        <div class="form-group">
-          {{Form::label('price',' السعر')}}
-          {{Form::number('price', '', ['class' => 'form-control', 'placeholder' => 'الاسم','required'=>true])}}
-       </div>
-        <div class="form-group">
-          {{Form::label('production_date','اسم الدواء')}}
-          {{Form::date('production_date', '', ['class' => 'form-control', 'placeholder' => 'الاسم','required'=>true])}}
+<div class="form-group">
+{{Form::label('price',' السعر')}}
+{{Form::number('price', '', ['class' => 'form-control', 'placeholder' => 'الاسم','required'=>true])}}
+</div>
+<div class="form-group">
+{{Form::label('production_date','تاريخ الانتاج')}}
+{{Form::date('production_date', '', ['class' => 'form-control','required'=>true])}}
+</div>
+<div class="form-group">
+{{Form::label('expiry_date','تاريخ الانتهاء')}}
+{{Form::date('expiry_date', '', ['class' => 'form-control','required'=>true])}}
+</div>
+
+
+         </div>
+      <div class="modal-footer justify-content-between">
+        <button type="submit" class="btn btn-primary">حفظ </button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">الغاء</button>
       </div>
-      <div class="form-group">
-        {{Form::label('expiry_date','اسم الدواء')}}
-        {{Form::date('expiry_date', '', ['class' => 'form-control', 'placeholder' => 'الاسم','required'=>true])}}
     </div>
-        
- 
-                     </div>
-                    <div class="modal-footer">
-                      <button class="btn btn-primary" type="submit">  إضافة </button>
-                      {!! Form::close() !!}      
-                      <button class="btn btn-secondary" type="button" data-dismiss="modal">اغلاق</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+
             
 @endsection

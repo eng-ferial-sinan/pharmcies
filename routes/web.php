@@ -13,9 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
 
 Auth::routes();
 Route::resource('/category',App\Http\Controllers\CategoryController::class);
@@ -36,7 +34,7 @@ Route::get('/members/{id}', 'UserController@index1')->middleware('permission:use
 // Route::get('/category/{id}', [App\Http\Controllers\admin\CategoryController::class, 'category'])->name('category');
 Route::get('/members/{id}', [App\Http\Controllers\UserController::class, 'user'])->middleware('permission:user-list');
 
-Route::get('/home',function(){  return view('home');});
+// Route::get('/home',function(){  return view('home');});
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -46,7 +44,7 @@ Route::get('/home',function(){  return view('home');});
 //     Route::post('/category/{id}/delete',[App\Http\Controllers\admin\CategoryController::class, 'delete']);    
 
 // });
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'home'])->name('home');
+Route::get('/', [App\Http\Controllers\HomeController::class, 'home'])->name('home');
 Route::get('/posts/create', [App\Http\Controllers\BlogController::class, 'create'])->name('posts.create');
 Route::post('/posts', [App\Http\Controllers\BlogController::class, 'store'])->name('posts.store');
 Route::get('/posts/{id}', [App\Http\Controllers\BlogController::class, 'show'])->name('posts.show');

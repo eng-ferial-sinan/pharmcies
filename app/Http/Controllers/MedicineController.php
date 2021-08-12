@@ -46,8 +46,15 @@ class MedicineController extends Controller
 
         $medicine =new medicine;
         $medicine->name=$request->name;
+        $medicine->traite=$request->traite;
+        $medicine->demerites=$request->demerites;
+        $medicine->relics=$request->relics;
+        $medicine->price=$request->price;
+        $medicine->production_date=$request->production_date;
+        $medicine->expiry_date=$request->expiry_date;
         $medicine->category_id=$request->category_id;
         $medicine->save();
+        
         return redirect()->back()
                         ->with('success','تم انشاء ');  
    
@@ -92,7 +99,15 @@ class MedicineController extends Controller
 
         $medicine = medicine::find($id);
         $medicine->name=$request->name;
+        $medicine->traite=$request->traite;
+        $medicine->demerites=$request->demerites;
+        $medicine->relics=$request->relics;
+        $medicine->price=$request->price;
+        $medicine->production_date=$request->production_date;
+        $medicine->expiry_date=$request->expiry_date;
+        $medicine->category_id=$request->category_id;
         $medicine->save();
+        
 
         return  back()-> with('success','تم حفظ التعديلات '); 
     }

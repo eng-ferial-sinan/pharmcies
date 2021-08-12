@@ -38,6 +38,7 @@
                     <th>ID</th>
                     <th>الاسم</th>
                     <th>البيانات </th>
+                    <th>النوع </th>
 
                     <th>-</th>
 
@@ -50,7 +51,8 @@
                     <td>{{$user->id}} </td>
                     <td><a href="/users/{{$user->id}}/" class="btn btn-default">{{$user->name}}</a></td>
                     <td><a href="/users/{{$user->id}}/" class="btn btn-default">{{$user->email}}
-                    <br> {{$user->market}}</a></td>
+                     </td>
+                    <td> {{$user->user_type}}</a></td>
                     <td>
                         <a href="/member/{{$user->id}}/edit" class="btn btn-default">
                         <i class="fa fa-edit"></i>

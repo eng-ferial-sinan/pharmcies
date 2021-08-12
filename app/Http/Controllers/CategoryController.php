@@ -26,8 +26,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $category =new category;
-        return view('admin.category.form')->with('item',$category);
+        // $category =new category;
+        // return view('admin.category.form')->with('item',$category);
   
     }
 
@@ -70,9 +70,7 @@ class CategoryController extends Controller
      */
     public function edit(category $category)
     {
-        // $category =category::find($category->id);
-        return view('admin.category.form')->with('item',$category);
-  
+       
     }
 
     /**

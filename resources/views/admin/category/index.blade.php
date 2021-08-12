@@ -14,11 +14,11 @@
 
     <div class="row">
         <div class="col-md-12  " style="text-align: center;">
-                @can('category-create')
-                <h3>
-                <a href="/category/create" class="btn btn-primary">اضافة صنف جديد </a>
-                </h3>
-            @endcan
+                @if (auth()->user()->hasPermission('category-create'))
+                <a href="" data-toggle="modal" data-target="#add" class="btn btn-info float-left">
+                    <i class="fa fa-plus fa-2x"></i> اضافة صنف
+                </a>
+            @endif
 
     </div>
 </div>
@@ -34,19 +34,8 @@
                        <tr>
                     <th>#</th>
                     <th>الصنف</th>
-                    {{-- <th>البيانات </th> --}}
-                    {{-- @can('category-edit') --}}
-                    {{-- @if (auth()->user()->hasPermission('category-edit')) --}}
-
                     <th>-</th>
-                    {{-- @endif --}}
-
-                    {{-- @endcan --}}
-                    {{-- @if (auth()->user()->hasPermission('category-delete')) --}}
-                    {{-- @can('category-delete') --}}
                     <th>-</th>
-                    {{-- @endif --}}
-                    {{-- @endcan --}}
                 </tr>
                 </thead>
                 <tbody>  
@@ -58,11 +47,41 @@
                     {{-- @if (auth()->user()->hasPermission('category-edit')) --}}
             
                     {{-- @can('category-edit') --}}
-                    <td>
-                        <a href="/category/{{$category->id}}/edit" class="btn btn-default">
-                        <i class="fa fa-edit"></i>
-                        التحرير</a>
-                    </td>
+                    <td> <a  href="" data-toggle="modal" data-target="#edit{{$category->id}}" class="btn btn-warning mr-3 ml-2">
+                        <i class="fa fa-edit fa-2x"></i>
+                        </a>
+                        
+                        
+                        
+
+<div class="modal hide fade in " data-keyboard="false" data-backdrop="static" id="edit{{$category->id}}">
+ <div class="modal-dialog modal-xl" >
+   <div class="modal-content">
+     <div class="modal-header">
+       <h5 class="modal-title">  تعديل بيانات الصنف {{$category->name}}</h5>
+       <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+     </div>
+     <div class="modal-body">
+     {!! Form::open(['action' => ['App\Http\Controllers\CategoryController@update',$category->id], 'method' => 'POST','enctype'=>'multipart/form-data']) !!}
+     
+<div class="form-group">
+{{Form::label('name','اسم الصنف')}}
+{{Form::text('name', $category->name, ['class' => 'form-control', 'placeholder' => 'الاسم'])}}
+</div>
+{{Form::hidden('_method','PUT')}}
+
+</div>
+     <div class="modal-footer">
+       <button class="btn btn-primary" type="submit">  حفظ التعديلات</button>
+       {!! Form::close() !!}      
+       <button class="btn btn-secondary" type="button" data-dismiss="modal">اغلاق</button>
+     </div>
+   </div>
+ </div>
+</div>
+</div>
+
+</td>
                     {{-- @endif --}}
                      
                     {{-- @endcan --}}
@@ -101,6 +120,34 @@
                 
 </div>
     
+<div class="modal fade" id="add">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">  اضافة صنف  جديد</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          {!! Form::open(['action' => 'App\Http\Controllers\CategoryController@store', 'method' => 'POST','enctype'=>'multipart/form-data']) !!}
+         
+  <div class="form-group">
+  {{Form::label('name','اسم الصنف ')}}
+  {{Form::text('name', '', ['class' => 'form-control', 'placeholder' => 'الاسم','required'=>true])}}
+  </div>
+  
+           </div>
+        <div class="modal-footer justify-content-between">
+          <button type="submit" class="btn btn-primary">حفظ </button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">الغاء</button>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  
 
 <script>      
     function ConfirmDelete( )

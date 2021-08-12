@@ -42,6 +42,8 @@ switch($name)
 
 
 <div class="container dir_rtl afrahright">
+  <div class="tile ">
+
     <h3>تحرير   
     بيانات   
 {{$user->name }}
@@ -91,7 +93,7 @@ switch($name)
 
         <div class="form-group">
           {{-- {!! Form::select('roles', $roles,[], array('class' => 'form-control','multiple')) !!} --}}
-          {{Form::select('user_type',['مدير'=>'مدير','مدخل بيانات'=>'مدخل بيانات','صيدلاني'=>'صيدلاني'],$user->user_type, ['class' => 'custom-select', 'placeholder' => 'اختر نوع المستخدم','required'=>true])}}
+          {{Form::select('user_type',['مدير'=>'مدير','مدخل بيانات'=>'مدخل بيانات','مندوب'=>'مندوب','صيدلية'=>'صيدلية'],$user->user_type, ['class' => 'custom-select', 'placeholder' => 'اختر نوع المستخدم','required'=>true])}}
       </div>
        
      
@@ -100,7 +102,8 @@ switch($name)
     {{Form::hidden('_method','PUT')}}
     {{Form::submit('تعديل',['class'=>'btn btn-primary'])}}    
     {!! Form::close() !!}   
-   
+  </div>
+</div>
     <script>
  
         

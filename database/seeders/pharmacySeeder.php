@@ -16,16 +16,25 @@ class pharmacySeeder extends Seeder
     public function run()
     {
         //
+        $id=DB::table('users')->insertGetId([
+            'name' => 'عالم الصيدلة',
+            'email' => 'alme@gmail.com',
+            'phone' => '775552212',
+            'password' => Hash::make('123456'),
+            'address' => 'صنعاء',
+            'user_type' => 'صيدلية',
+            'created_at' =>now(),
+            'updated_at' => now(),
+        ]);
         DB::table('pharmacies')->insert([
-            'name' => Str::random(10),
-            'phone' => Str::random(10),
+            'name' => 'عالم الصيدلة',
+            'phone' => '775552212',
             'address' => Str::random(10),
-            'lat' => Str::random(10),
-            'lng' => Str::random(10),
-            'order_count' => Int::random(10),
-            'balance' => Str::random(10),
-            'order_count' =>Str ::random(10),
-            'user_id' => rand(10,50),
+            'lat' => '15.690000000000000',
+            'lng' => '44.670000000000000',
+            'order_count' => 0,
+            'balance' => 0,
+            'user_id' => $id,
             'created_at' =>now(),
             'updated_at' => now(),
 

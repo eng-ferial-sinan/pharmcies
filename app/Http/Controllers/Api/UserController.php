@@ -143,9 +143,6 @@ class UserController extends Controller
                  $response['status']=true;
                 }
                 return response()->json($response);
-                // return response()->json(['status'=>$status ,'token'=>$user ,'messages'=>$masseges]);
-
-
              }
            
              public function logout(Request $request)

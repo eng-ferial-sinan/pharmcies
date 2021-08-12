@@ -60,10 +60,15 @@ class PharmacyController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
+            'phone' => 'required',
+            'user_id' => 'required',
         ]);
 
         $pharmacy =new pharmacy;
         $pharmacy->name=$request->name;
+        $pharmacy->phone=$request->phone;
+        $pharmacy->lat=$request->lat;
+        $pharmacy->lng=$request->lng;
         $pharmacy->user_id=$request->user_id;
         $pharmacy->address=$request->address;
         $pharmacy->save();
@@ -111,6 +116,11 @@ class PharmacyController extends Controller
 
         $pharmacy = pharmacy::find($id);
         $pharmacy->name=$request->name;
+        $pharmacy->phone=$request->phone;
+        $pharmacy->lat=$request->lat;
+        $pharmacy->lng=$request->lng;
+        $pharmacy->user_id=$request->user_id;
+        $pharmacy->address=$request->address;
         $pharmacy->save();
 
         return  back()-> with('success','تم حفظ التعديلات '); 

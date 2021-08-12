@@ -18,7 +18,12 @@ class CategorySeeder extends Seeder
     {
         //
         DB::table('categories')->insert([
-            'name' => Str::random(10),
+            'name' => 'ادوية الكلى',
+            'created_at' =>now(),
+            'updated_at' => now(),
+        ]);
+        DB::table('categories')->insert([
+            'name' => 'الادوية المزمنة',
             'created_at' =>now(),
             'updated_at' => now(),
         ]);

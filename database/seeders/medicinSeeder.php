@@ -16,9 +16,15 @@ class medicinSeeder extends Seeder
     public function run()
     {
         //
+       $id=DB::table('categories')->insertGetId([
+            'name' => 'ادوية القلب',
+            'created_at' =>now(),
+            'updated_at' => now(),
+        ]);
+
         DB::table('medicines')->insert([
             'name' => Str::random(10),
-            'category_id' => rand(10,50),
+            'category_id' => $id,
             'traite' => Str::random(10),
             'demerites' => Str::random(10),
             'relics' => Str::random(10),
@@ -27,8 +33,6 @@ class medicinSeeder extends Seeder
             'expiry_date' => now(),
             'created_at' =>now(),
             'updated_at' => now(),
-            
-
         ]);
     }
 }
