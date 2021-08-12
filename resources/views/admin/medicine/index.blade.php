@@ -177,7 +177,7 @@
         <div class="form-group">
           {{Form::label('price',' السعر')}}
           {{Form::number('price', '', ['class' => 'form-control', 'placeholder' => 'الاسم','required'=>true])}}
-      </div>
+       </div>
         <div class="form-group">
           {{Form::label('production_date','اسم الدواء')}}
           {{Form::date('production_date', '', ['class' => 'form-control', 'placeholder' => 'الاسم','required'=>true])}}

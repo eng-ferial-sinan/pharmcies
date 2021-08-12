@@ -14,6 +14,10 @@ class detail extends Model
     {
         return $this->belongsTo('App\Models\order');
     }
+    public function medicine()
+    {
+        return $this->belongsTo('App\Models\medicine');
+    }
     public function getMedicineAttribute($value)
     {
         return  json_decode($value);

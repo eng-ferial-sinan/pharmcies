@@ -59,9 +59,11 @@ class OrderController extends Controller
      * @param  \App\Models\order  $order
      * @return \Illuminate\Http\Response
      */
-    public function show(order $order)
+    public function show( $order)
     {
-        //
+        $order = order::find($order);
+        return view('admin.order.show')->with('order',$order);    
+       
     }
 
     /**

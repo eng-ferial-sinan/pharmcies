@@ -9,7 +9,9 @@ use App\Models\detail;
 use App\Models\User;
 use Validator;
 use App\Models\medicine;
-
+use App\Models\Pharmacy;
+use App\Notifications\OrderNotification;
+use Notification;
 class OrderController extends Controller
 {
     //
@@ -105,6 +107,14 @@ class OrderController extends Controller
           $order->total_pice=$total_sum;
           $order->save();
           $order=order::with('details')->find($order->id);
+          $pharmacy=Pharmacy::find($request->pharmacy_id);
+          $users=User::where('user_type','مدير')->get();
+          foreach($users as $user)
+          {
+             Notification::send($user, new OrderNotification($order,$user,$pharmacy));
+          
+            }
+
          $response['data']['user']=$user;
          $response['data']['order']=$order;
          $response['status']=true;

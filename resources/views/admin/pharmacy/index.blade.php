@@ -34,18 +34,18 @@
                     <th>الصيدلية</th>
                     <th>العنوان</th>
                     <th>رقم الطلبية</th>
-              {{-- @if (auth()->user()->hasPermission('pharmacy-edit')) --}}
+              @if (auth()->user()->hasPermission('pharmacy-edit'))
                     
                     {{-- @can('pharmacy-edit') --}}
                     <th>تعديل</th>
                     {{-- @endcan --}}
-                    {{-- @endif --}}
+                    @endif
                     {{-- @can('pharmacy-delete') --}}
-              {{-- @if (auth()->user()->hasPermission('pharmacy-delete')) --}}
+              @if (auth()->user()->hasPermission('pharmacy-delete'))
 
                     <th>حذف</th>
                     {{-- @endcan --}}
-                    {{-- @endif --}}
+                    @endif
 
                   </tr>
                 </thead>
