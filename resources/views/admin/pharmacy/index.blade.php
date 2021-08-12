@@ -106,24 +106,6 @@
                     @endif
         </div>
 
-
-
-
-
-
-<!--  data-backdrop="static" id="add" -->
-
-
-        
-        
- 
-                    
-                    <div class="modal-footer">
-                      <button class="btn btn-primary" type="submit">  حفظ التعديلات</button>
-                      {!! Form::close() !!}      
-                      <button class="btn btn-secondary" type="button" data-dismiss="modal">اغلاق</button>
-                    </div>
-                 
 @endsection
 
 @section('script')
