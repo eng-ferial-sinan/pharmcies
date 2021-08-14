@@ -52,7 +52,15 @@ class OrderController extends Controller
                         ->with('success','تم انشاء ');  
    
     }
-
+    public function setStatus(Request $request)
+    {
+        dd($request->input('order_id'));
+        $order =order::find($request->input('order_id'));
+        $order->status = $request->input('status_id') ;
+        $order->save() ;   
+        $order =$order->fresh();     
+        return $order->status->name;
+    }
     /**
      * Display the specified resource.
      *

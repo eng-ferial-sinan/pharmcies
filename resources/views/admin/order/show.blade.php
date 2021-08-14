@@ -2,7 +2,7 @@
 
 @section('title') - 
         تفاصيل الطلب  رقم {{$order->id}}
-         @endsection
+ @endsection
 @section('content')
   
       <div class="row">
@@ -157,7 +157,7 @@
          $('#status_save').html('جاري حفظ الحالة ') ;
            $.ajax({
               type:"GET",
-              url:"{{url('/order/setStatus')}}?status_id="+status_id+"&order_id={{$order->id}}",
+              url:"{{url('/order/setStatus')}}?status_id="+status_id+"&order_id="+{{$order->id}},
               success:function(res){               
                if(res){
                    $('#status_text').html(res) ;

@@ -3,8 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
-use App\Cart,App\Company,App\Favorite ,App\storetype,App\User,App\store ,
-App\service,App\section ,App\Product,App\PurchaseDetial,App\ShippingType ,App\order,App\Address,App\Country;
+
 use App\Models\setting ;
 use App\Models\medicine ;
 use App\Models\Category;
