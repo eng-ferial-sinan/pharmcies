@@ -27,6 +27,8 @@
               <table class="table table-hover table-bordered " id="sampleTable">
                 <thead>
                   <tr>
+                    <th>#</th>
+                    <th>#</th>
                     <th>الاسم</th>
                     <th>الصنف</th>
                     <th>السعر</th>
@@ -44,7 +46,8 @@
                 <tbody>
                 @foreach($medicines as $medicine)
                  <tr>
-                   
+                  <td>{{$medicine->id}}</td>
+                  <td><img src="{{$medicine->image}}" height="80" width="75"></td>
                     <td>{{$medicine->name}}</td>
                     <td>{{$medicine->category_id}}</td>
                     <td>{{$medicine->price}}</td>
@@ -103,7 +106,12 @@
             {{Form::label('expiry_date','تاريخ الانتهاء')}}
             {{Form::date('expiry_date',$medicine->expiry_date, ['class' => 'form-control','required'=>true])}}
         </div>
-
+        <div class="form-group">
+          <img src="{{$medicine->image}}" class="img-rounded" height="50" width="70" alt="{{$medicine->name}}">
+           <br/>
+            {{Form::label('image','صورة معبرة')}}
+             {{Form::file('image')}}
+         </div>
             {{Form::hidden('_method','PUT')}}
         
          </div>
@@ -223,7 +231,10 @@ $categories=\App\Models\category::all();
 {{Form::date('expiry_date', '', ['class' => 'form-control','required'=>true])}}
 </div>
 
-
+<div class="form-group">
+    {{Form::label('image','صورة معبرة')}}
+     {{Form::file('image')}}
+ </div>
          </div>
       <div class="modal-footer justify-content-between">
         <button type="submit" class="btn btn-primary">حفظ </button>

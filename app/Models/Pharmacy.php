@@ -14,4 +14,10 @@ class Pharmacy extends Model
     {
         return $this->belongsTo('App\Models\User');
     }
+
+    public function getImageAttribute($value)
+    {
+        return $value?url($value):url("pharmacies.jpg");
+
+    }
 }

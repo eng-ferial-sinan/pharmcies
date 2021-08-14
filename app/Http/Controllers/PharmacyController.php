@@ -65,6 +65,12 @@ class PharmacyController extends Controller
         $pharmacy->lng=$request->lng;
         $pharmacy->user_id=$request->user_id;
         $pharmacy->address=$request->address;
+        if($request->hasFile('image')){
+            $imagename = $request->file('image');
+            $fileNameToStore= "pharmacy_" .time().'.jpg';
+            $imagename->move(public_path('pharmacies/'), $fileNameToStore);
+            $pharmacy->image='/pharmacies/'.$fileNameToStore;            
+             } 
         $pharmacy->save();
         return redirect()->back()
                         ->with('success','تم انشاء ');
@@ -113,6 +119,12 @@ class PharmacyController extends Controller
         $pharmacy->lng=$request->lng;
         $pharmacy->user_id=$request->user_id;
         $pharmacy->address=$request->address;
+        if($request->hasFile('image')){
+            $imagename = $request->file('image');
+            $fileNameToStore= "pharmacy_" .time().'.jpg';
+            $imagename->move(public_path('pharmacies/'), $fileNameToStore);
+            $pharmacy->image='/pharmacies/'.$fileNameToStore;            
+             }  
         $pharmacy->save();
 
         return  back()-> with('success','تم حفظ التعديلات ');

@@ -21,9 +21,9 @@ class CreateMedicinesTable extends Migration
             $table->text("demerites")->nullable(true);
             $table->text("relics")->nullable(true);
             $table->integer("price")->default(0);
-            $table->string("production_date")->nullable(true);
-            $table->string("expiry_date")->nullable(true);
-
+            $table->date("production_date")->nullable(true);
+            $table->date("expiry_date")->nullable(true);
+            $table->string("image")->nullable(true);
             $table->timestamps();
             $table->softDeletes(); 
 

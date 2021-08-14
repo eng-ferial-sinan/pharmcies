@@ -49,11 +49,16 @@
                $users = \App\Models\User::where('user_type','صيدلية')->pluck('name', 'id')->toArray();
            @endphp
            
-    <div class="form-group col-3" >
+    <div class="form-group" >
       {{Form::label('user_id','المستخدم')}}
       {{Form::select('user_id', $users,$item->user_id, ['class' => 'form-control newRead js-example-basic-single','id' => 'custmer_id', 'placeholder' => ' المستخدم'])}}
     </div>
-
+    <div class="form-group">
+      <img src="{{$item->image}}" class="img-rounded" height="50" width="70" alt="{{$item->name}}">
+       <br/>
+        {{Form::label('image','صورة معبرة')}}
+         {{Form::file('image')}}
+     </div>
     <div class="form-group">
       <input type="text" name='lat'value="{{$item->lat}}"    id = 'map_1' required>
       

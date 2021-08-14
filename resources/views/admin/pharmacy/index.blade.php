@@ -31,20 +31,17 @@
                 <thead>
                   <tr>
                     <th>#</th>
+                    <th>#</th>
                     <th>الصيدلية</th>
                     <th>العنوان</th>
-                    <th>رقم الطلبية</th>
+                    <th>عدد الطلبات</th>
               @if (auth()->user()->hasPermission('pharmacy-edit'))
                     
-                    {{-- @can('pharmacy-edit') --}}
                     <th>تعديل</th>
-                    {{-- @endcan --}}
                     @endif
-                    {{-- @can('pharmacy-delete') --}}
               @if (auth()->user()->hasPermission('pharmacy-delete'))
 
                     <th>حذف</th>
-                    {{-- @endcan --}}
                     @endif
 
                   </tr>
@@ -53,6 +50,7 @@
                 @foreach($pharmacies as $pharmacy)
                  <tr>
                   <td>{{$pharmacy->id}} </td>
+                  <td><img src="{{$pharmacy->image}}" height="80" width="75"></td>
                     <td>{{$pharmacy->name}}</td>
                     <td>{{$pharmacy->address}}</td>
                     <td>
@@ -60,7 +58,6 @@
                        {{-- <a  href="" data-toggle="modal" data-target="#edits{{$pharmacy->id}}" class="btn btn-warning mr-3 ml-2">
                         <i class="fa fa-edit fa-2x"></i>
                         </a> --}}
-                        
                     </td>
 
                     <td>

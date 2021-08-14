@@ -23,6 +23,7 @@ class CreatePharmaciesTable extends Migration
             $table->integer("order_count")->nullable(true);
             $table->integer('balance')->nullable(true);
             $table->integer("user_id")->unsigned();
+            $table->string("image")->nullable(true);
             $table->timestamps();
             $table->softDeletes(); 
 

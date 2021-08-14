@@ -50,6 +50,12 @@ class MedicineController extends Controller
         $medicine->production_date=$request->production_date;
         $medicine->expiry_date=$request->expiry_date;
         $medicine->category_id=$request->category_id;
+        if($request->hasFile('image')){
+            $imagename = $request->file('image');
+            $fileNameToStore= "medicine_" .time().'.jpg';
+            $imagename->move(public_path('medicines/'), $fileNameToStore);
+            $medicine->image='/medicines/'.$fileNameToStore;            
+             } 
         $medicine->save();
         
         return redirect()->back()
@@ -101,6 +107,12 @@ class MedicineController extends Controller
         $medicine->production_date=$request->production_date;
         $medicine->expiry_date=$request->expiry_date;
         $medicine->category_id=$request->category_id;
+        if($request->hasFile('image')){
+            $imagename = $request->file('image');
+            $fileNameToStore= "medicine_" .time().'.jpg';
+            $imagename->move(public_path('medicines/'), $fileNameToStore);
+            $medicine->image='/medicines/'.$fileNameToStore;            
+             } 
         $medicine->save();
         
 

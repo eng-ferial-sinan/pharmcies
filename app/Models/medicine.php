@@ -9,4 +9,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class medicine extends Model
 {
     use HasFactory,SoftDeletes;
+
+    public function getImageAttribute($value)
+    {
+        return $value?url($value):url("medicines.jpg");
+
+    }
 }
