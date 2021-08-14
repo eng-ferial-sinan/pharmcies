@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\order;
 
 use Illuminate\Http\Request;
@@ -20,7 +21,7 @@ class OrderController extends Controller
     public function index()
     {
         $order = order::all();
-        return view('admin.order.index')->with('orders',$order);    
+        return view('admin.order.index')->with('orders',$order);
     }
 
     /**
@@ -49,17 +50,27 @@ class OrderController extends Controller
         $order->total_pice=$request->total_pice;
         $order->save();
         return redirect()->back()
-                        ->with('success','تم انشاء ');  
-   
+                        ->with('success','تم انشاء ');
     }
+  
     public function setStatus(Request $request)
     {
-        dd($request->input('order_id'));
-        $order =order::find($request->input('order_id'));
-        $order->status = $request->input('status_id') ;
-        $order->save() ;   
-        $order =$order->fresh();     
+        $order =order::find($request->order_id);
+        $order->status_id = $request->status_id ;
+        $order->save() ;
+        $order =$order->fresh();
         return $order->status->name;
+    }
+    public function setUser(Request $request)
+    {
+        $order =order::find($request->order_id);
+        $order->user_id = $request->user_id ;
+        $order->status_id = 3 ;
+        $order->save() ;
+        $order =$order->fresh();
+        $data['user']=$order->user->name;
+        $data['status']=$order->status->name;
+        return $data;
     }
     /**
      * Display the specified resource.
@@ -67,11 +78,10 @@ class OrderController extends Controller
      * @param  \App\Models\order  $order
      * @return \Illuminate\Http\Response
      */
-    public function show( $order)
+    public function show($order)
     {
         $order = order::find($order);
-        return view('admin.order.show')->with('order',$order);    
-       
+        return view('admin.order.show')->with('order',$order);
     }
 
     /**
@@ -92,17 +102,9 @@ class OrderController extends Controller
      * @param  \App\Models\order  $order
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,  $id)
+    public function update(Request $request, $id)
     {
-        $this->validate($request, [
-            'total_pice' => 'required',
-        ]);
-
-        $order = order::find($id);
-        $order->total_pice=$request->total_pice;
-        $order->save();
-
-        return  back()-> with('success','تم حفظ التعديلات '); 
+        
     }
 
     /**
@@ -111,11 +113,10 @@ class OrderController extends Controller
      * @param  \App\Models\order  $order
      * @return \Illuminate\Http\Response
      */
-    public function destroy( $id)
+    public function destroy($id)
     {
         $order =  order::find($id);
         $order->delete();
-    return back()-> with('success','تم حذف  '.$order->name.''); 
-   
+    return back()-> with('success','تم حذف  '.$order->name.'');
     }
 }

@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notification;
 use App\Models\order;
 use App\Models\Pharmacy;
 use App\Models\User;
+
 class OrderNotification extends Notification
 {
     use Queueable;
@@ -22,12 +23,12 @@ class OrderNotification extends Notification
     private $user;
     private $pharmacy;
 
-    public function __construct(order $order , User $user ,Pharmacy $pharmacy)
+    public function __construct(order $order, User $user, Pharmacy $pharmacy)
     {
 
-        $this->order=$order;    
-        $this->user=$user;    
-        $this->pharmacy=$pharmacy;    
+        $this->order=$order;
+        $this->user=$user;
+        $this->pharmacy=$pharmacy;
         //
     }
 

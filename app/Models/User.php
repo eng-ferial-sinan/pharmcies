@@ -59,7 +59,7 @@ class User extends Authenticatable
         $permission = permission::where('name', '=', $name)->first();
         $user_permission = user_permission::where('permission_id',$permission->id)->where('user_id',$user->id)->first();
 
-       if($user_permission)
+       if ($user_permission)
        $ret = true;
 
         return $ret;

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Auth;
 use File ;
 use Image;
@@ -29,7 +30,7 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {   
+    {
         $users =User::withTrashed()->orderby('id','desc')->get();
         return view('admin.users.list')->with('users',$users) ;
     }
@@ -40,8 +41,9 @@ class UserController extends Controller
     //     ->where("role_has_permissions.role_id",$id)
     //     ->get();
     //  $roles = Role::where('id',$id)->first();
-    $users = User::whereHas("roles", function($q) use($id) { 
-        $q->where("id", $id); })->withTrashed()->orderby('id','desc')->get();
+    $users = User::whereHas("roles", function ($q) use ($id) {
+			$q->where("id", $id);
+    })->withTrashed()->orderby('id','desc')->get();
 
 
         return view('admin.users.list')->with('users',$users) ;
@@ -85,8 +87,7 @@ class UserController extends Controller
         $user->address=isset($request->address)??'';
         $user->save();
 
-        foreach($request->permission as $value )
-        {
+        foreach ($request->permission as $value) {
             $user_permission =new user_permission;
             $user_permission->user_id=$user->id;
             $user_permission->permission_id=$value;
@@ -95,9 +96,8 @@ class UserController extends Controller
         
 
         return redirect()->back()
-                        ->with('success','تم انشاء المستخدم');  
-                    
-     }
+                        ->with('success','تم انشاء المستخدم');
+    }
     public function profile(Request $request)
     {
         $this->validate($request, [
@@ -111,8 +111,7 @@ class UserController extends Controller
 
          $user->save();
 
-         return  back()-> with('success','تم حفظ التعديلات ');    
-   
+         return  back()-> with('success','تم حفظ التعديلات ');
     }
     public function profiles()
     {
@@ -125,34 +124,31 @@ class UserController extends Controller
     {
         $User =User::find(auth()->user()->id);
         $User->api_token = $request->input('user_id') ;
-        $User->save() ;   
+        $User->save() ;
         return true;
     }
     
     public function saveimage(Request $request)
     {
-         if($request->hasFile('myimg'))
-        {
-              
+         if ($request->hasFile('myimg')) {
         $user=User::find(auth()->user()->id);
 
             $imagename = $request->file('myimg');
-            $temp =$user->image ; 
+            $temp =$user->image ;
             $fileNameToStore= 'user_sama'.time().'.jpg';
             $largepath= "/storage/".$fileNameToStore;
-            Image::make($imagename)->save( public_path($largepath) );
+            Image::make($imagename)->save(public_path($largepath));
             $smallpath= "/storage/users_thumb_".$fileNameToStore;
-            Image::make($imagename)->resize(450, 350)->save( public_path($smallpath),100 ); 
+            Image::make($imagename)->resize(450, 350)->save(public_path($smallpath),100);
             $user->url= $smallpath;
             $user->save();
 
-            File::delete(public_path($temp ));
+            File::delete(public_path($temp));
                      
-         return  back()-> with('success','تم حفظ التعديلات ');    
-   
-        }
-    return  back()-> with('error','يرجي التأكد م صحة الملف ');    
-}
+         return  back()-> with('success','تم حفظ التعديلات ');
+         }
+    return  back()-> with('error','يرجي التأكد م صحة الملف ');
+    }
     /**
      * Display the specified resource.
      *
@@ -161,8 +157,9 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $users = User::whereHas("roles", function($q) use($id) { 
-            $q->where("id", $id); })->withTrashed()->orderby('id','desc')->get();
+        $users = User::whereHas("roles", function ($q) use ($id) {
+            $q->where("id", $id);
+        })->withTrashed()->orderby('id','desc')->get();
         return view('admin.users.list')->with('users',$users) ;
     }
 
@@ -182,7 +179,6 @@ class UserController extends Controller
         $user_permission = permission::whereIn('id',$permission_id)->get();
 
          return view('admin.users.edit',compact('user','permission','user_permission'));
-        
     }
 
     /**
@@ -207,34 +203,28 @@ class UserController extends Controller
         $user->address=isset($request->address)??'';
         $user->save();
 
-        foreach($request->permission as $value )
-        {
-
+        foreach ($request->permission as $value) {
             $user_permission =user_permission::where('user_id',$id)->where('permission_id',$value)->first();
-          if(is_null($user_permission))
-          {
-            $user_permission =new user_permission;
-            $user_permission->user_id=$user->id;
-            $user_permission->permission_id=$value;
-            $user_permission->save();
+          if (is_null($user_permission)) {
+				$user_permission =new user_permission;
+				$user_permission->user_id=$user->id;
+				$user_permission->permission_id=$value;
+				$user_permission->save();
           }
         }
         
         return redirect()->back()
                         ->with('success','User updated successfully');
     }
-    public function index1(Request $request,$id)
+    public function index1(Request $request, $id)
     {
 
-        if($id!=0)
-        {
-            $items= User::withTrashed()->whereHas("roles", function($q) use($id){ 
-                $q->where("id",$id); })->orderBy('id','asc');
-        
-        }else
-        {
+        if ($id!=0) {
+            $items= User::withTrashed()->whereHas("roles", function ($q) use ($id) {
+                $q->where("id",$id);
+            })->orderBy('id','asc');
+        } else {
         $items= User::withTrashed()->orderBy('id','asc');
-        
         }
     
         $users=$items->pluck('name','id')->all();
@@ -242,12 +232,11 @@ class UserController extends Controller
 
     
         // $st=isset($request['myselect'])?$request['myselect']:'-1';
-        // dd($st); 
+        // dd($st);
         // $user=$user::orderBy('id','asc');
 
-        if(isset($filter['user_id'])) 
-        {     
-        $items=$items->where('id',$filter['user_id'] ) ;
+        if (isset($filter['user_id'])) {
+        $items=$items->where('id',$filter['user_id']) ;
         }
 
         if (is_array($filter) && isset($filter['search'])) {
@@ -256,10 +245,9 @@ class UserController extends Controller
                 return $query->where('name', 'LIKE', $q)->orWhere('phone', 'LIKE', $q);
             });
         }
-        $items=$items->paginate(10); 
+        $items=$items->paginate(10);
 
         return view('admin.users.list')->with('items',$items)->with('filter',$filter)->with('id',$id)->with('users',$users)  ;
-
     }
     /**
      * Remove the specified resource from storage.
@@ -271,53 +259,48 @@ class UserController extends Controller
     {
         $user =  User::find($id);
         
-            if(auth()->user()->id == $user->id){
-                return redirect('/admin/home')->with('error','غير مصرح');            
+            if (auth()->user()->id == $user->id) {
+			return redirect('/admin/home')->with('error','غير مصرح');
             }
         $user->delete();
          
         
         
-        return back()-> with('success','تم حذف  '.$user->name.' المستخدم :'.$user->email);    
-   
+        return back()-> with('success','تم حذف  '.$user->name.' المستخدم :'.$user->email);
     }
 
-    //changestatus 
+    //changestatus
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function changestatus ($id)
+    public function changestatus($id)
     {
     $user =  User::find($id);
-    if($user->status==1)
-    {
-        $user->status=2;
-    }else
-    {
-        $user->status=1;
+    if ($user->status==1) {
+			$user->status=2;
+    } else {
+			$user->status=1;
     }
     $user->save();
      
         return  back()->with('success','تم تغير حالة   '.$user->name.' المستخدم :'.$user->email); ;
-   
-    } public function changepriv (Request $request , $id )
+    } public function changepriv(Request $request, $id)
     {
 
         $this->validate($request,[
-        'role' => 'required|numeric|max:6'  
-        ]);      
+        'role' => 'required|numeric|max:6'
+        ]);
         
 
     $user =  User::find($id);
-         $role= $request->input('role');     
+         $role= $request->input('role');
          $user->usertype=$role;
     $user->save();
      
         return  back()->with('success','تم تغير نوع   '.$user->name.' المستخدم :'.$user->email); ;
-   
     }
     /**
      * Remove the specified resource from storage.
@@ -328,10 +311,9 @@ class UserController extends Controller
     public function restorUser($id)
     {
         $user = User::withTrashed()->find($id);
-        $user->restore();        
+        $user->restore();
 
         return  back()->with('success','تم استعادة    '.$user->name.' المستخدم :'.$user->email);;
-   
     }
     /**
      * Remove the specified resource from storage.
@@ -344,13 +326,12 @@ class UserController extends Controller
     {
         $user = User::withTrashed()->find($id);
     
-        if($user->url != null){
+        if ($user->url != null) {
             File::delete(public_path($user->url));
         }
         
         $user->forceDelete();
 
         return  back()->with('success','تم حذف    '.$user->name.' المستخدم :'.$user->email);;
-   
-    } 
+    }
 }

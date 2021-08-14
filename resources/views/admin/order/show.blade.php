@@ -52,15 +52,20 @@
                       <br>
                       
                 </div>
-                
-                  <div class="col-md-3 col-sm-12">
-                      <b>  الحالة   :</b>
-                      <span id="status_text">
-                        {{$order->status?$order->status->name:"-"}} </span>
-                        <br>
-                      <a onclick="$('#status').show();" class="ml-3 d-print-none btn btn-outline-secondary float-left"><i class="fa fa-edit"></i>تغير الحالة</a>
+                <div class="col-md-3 col-sm-12">
+                  <b>  الحالة   :</b>
+                  <span id="status_text">
+                    {{$order->status?$order->status->name:"-"}} </span>
+                    <br>
+                    <a onclick="$('#status').show();$('#user').hide();" class="ml-3 d-print-none btn btn-outline-secondary float-left"><i class="fa fa-edit"></i>تغير الحالة</a>
 
-                      {{-- <a onclick="$('#driver').show();$('#status').hide();" class="btn d-print-none btn-outline-secondary float-left"><i class="fa fa-edit"></i>تغير سائق</a> --}}
+                </div>
+                  <div class="col-md-3 col-sm-12">
+                      <b>  المندوب   :</b>
+                      <span id="user_text">
+                        {{$order->user?$order->user->name:"-"}} </span>
+                        <br>
+                      <a onclick="$('#user').show();$('#status').hide();" class="btn d-print-none btn-outline-secondary float-left"><i class="fa fa-edit"></i>تغير المندوب</a>
                     
                  <div id="status" style="display:none" >
                  <select name="status" id="status_id"  class="custom-select"> 
@@ -73,7 +78,16 @@
 
             </div>
                
-                  
+                      <div id="user" style="display:none" >
+                        <select name="user" id="user_id"  class="custom-select"> 
+                        <option value=""  > حدد الحالة</option>
+                        @foreach(\App\Models\User::where('user_type','مندوب')->get() as $user)
+                        <option value="{{$user->id}}" @if($order->user_id== $user->id) selected @endif> {{$user->name}} </option>
+                        @endforeach
+                    </select>                  
+                  <a id="user_save" class="btn btn-outline-secondary float-left"><i class="fa fa-edit"></i> حفظ المندوب  </a>
+
+                  </div>
                  
               
                  </div>
@@ -152,22 +166,47 @@
    $( "#status_save" ).click(function() {    
        
        var status_id = $('#status_id').val();   
-       
        if(status_id){
          $('#status_save').html('جاري حفظ الحالة ') ;
            $.ajax({
               type:"GET",
-              url:"{{url('/order/setStatus')}}?status_id="+status_id+"&order_id="+{{$order->id}},
+              url:"{{url('/order/setStatus')}}?status_id="+status_id+"&order_id={{$order->id}}",
               success:function(res){               
                if(res){
                    $('#status_text').html(res) ;
-                    
                     $('#status').hide() ;
                    alert('تم.  تغير الحالة الي  ' + res);
                    $('#status_save').html('  حفظ الحالة     ') ;
    
                }else{
                   alert('عفوا..تعذر تغير الحالة   ');
+                }
+              }
+           });
+       }else{
+                 
+       }      
+      });
+
+      $( "#user_save" ).click(function() {    
+      
+       var user_id = $('#user_id').val(); 
+       console.log(user_id);
+       if(user_id){
+         $('#user_save').html('جاري حفظ المندوب ') ;
+           $.ajax({
+              type:"GET",
+              url:"{{url('/order/setUser')}}?user_id="+user_id+"&order_id={{$order->id}}",
+              success:function(res){               
+               if(res){
+                   $('#user_text').html(res['user']) ;
+                   $('#status_text').html(res['status']) ;
+                    $('#user').hide() ;
+                   alert('تم.  تغير المندوب  الي  ' + res['user']);
+                   $('#user_save').html('  حفظ المندوب     ') ;
+   
+               }else{
+                  alert('عفوا..تعذر تغير المندوب   ');
                 }
               }
            });

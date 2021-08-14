@@ -7,12 +7,13 @@ use App\Models\Permission;
 use App\Http\Controllers\PermissionController;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+
 class PermissionController extends Controller
 {
     //
     function __construct()
-    {    $this->middleware('auth');
-        
+    {
+    $this->middleware('auth');
     }
     /**
      * Display a listing of the resource.
@@ -20,7 +21,8 @@ class PermissionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {     $permissions = Permission::orderBy('id','DESC')->get();
+    {
+     $permissions = Permission::orderBy('id','DESC')->get();
         // ,compact('roles')
         return view('admin.roles.index');
         $permission = Permission::all();
@@ -30,7 +32,6 @@ class PermissionController extends Controller
         // $permission = Role::orderBy('id','DESC')->get();
         // return view('admin.roles.index');
         // ,compact('$permission'));
-        
     }
 
     /**
@@ -63,7 +64,6 @@ class PermissionController extends Controller
 
         return redirect()->route('roles.index')
                         ->with('success','تم انشاء الصلاحيات');
-    
     }
 
     /**
@@ -113,7 +113,6 @@ class PermissionController extends Controller
 
         return redirect()->route('roles.index')
                         ->with('success','تم التحديث');
-    
     }
 
     /**

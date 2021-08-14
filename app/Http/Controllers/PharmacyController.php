@@ -10,33 +10,28 @@ class PharmacyController extends Controller
 {
     //
      public function __construct(Request $request)
-    {
+     {
         $this->middleware('auth');
-       
-    }
+     }
     public function index(Request $request)
-    {        
+    {
         
-      if( ! auth()->user()->hasPermission('Pharmacy-list'))
-      {
-          return redirect()->back()->with('error','ليس من صلاحياتك');
-        
-        }
+      if (! auth()->user()->hasPermission('Pharmacy-list')) {
+			return redirect()->back()->with('error','ليس من صلاحياتك');
+      }
         // $users = \App\Models\User::where('user_type','صيدلاني')->pluck('name', 'id')->toArray();
         // $filter = $request->all() ;
 
         $pharmacy = pharmacy::all();
         //       $user = \App\Models\User::where('user_type','صيدلاني')->orderBy('id','asc');
 
-        // if(isset($filter['users_id'])) 
+        // if(isset($filter['users_id']))
         // {     if($filter['users_id'][0] != null)
         //         $user=$user->whereIn('id',$filter['users_id'] ) ;
         // }
-        // $user=$user->paginate(10); 
+        // $user=$user->paginate(10);
 
       return view('admin.pharmacy.index')->with('pharmacies',$pharmacy);
-    
-        
     }
     /**
      * Show the form for creating a new resource.
@@ -47,7 +42,6 @@ class PharmacyController extends Controller
     {
         $pharmacy =new pharmacy;
         return view('admin.pharmacy.form')->with('item',$pharmacy);
-  
     }
 
     /**
@@ -73,8 +67,7 @@ class PharmacyController extends Controller
         $pharmacy->address=$request->address;
         $pharmacy->save();
         return redirect()->back()
-                        ->with('success','تم انشاء ');  
-   
+                        ->with('success','تم انشاء ');
     }
 
     /**
@@ -98,7 +91,6 @@ class PharmacyController extends Controller
     {
         // $pharmacy =pharmacy::find($pharmacy->id);
         return view('admin.pharmacy.form')->with('item',$pharmacy);
-  
     }
 
     /**
@@ -108,7 +100,7 @@ class PharmacyController extends Controller
      * @param  \App\Models\pharmacy  $pharmacy
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,  $id)
+    public function update(Request $request, $id)
     {
         $this->validate($request, [
             'name' => 'required',
@@ -123,7 +115,7 @@ class PharmacyController extends Controller
         $pharmacy->address=$request->address;
         $pharmacy->save();
 
-        return  back()-> with('success','تم حفظ التعديلات '); 
+        return  back()-> with('success','تم حفظ التعديلات ');
     }
 
     /**
@@ -132,11 +124,10 @@ class PharmacyController extends Controller
      * @param  \App\Models\collage  $collage
      * @return \Illuminate\Http\Response
      */
-    public function destroy( $id)
+    public function destroy($id)
     {
         $pharmacy =  pharmacy::find($id);
         $pharmacy->delete();
-    return back()-> with('success','تم حذف  '.$pharmacy->name.''); 
-   
+    return back()-> with('success','تم حذف  '.$pharmacy->name.'');
     }
 }

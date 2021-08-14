@@ -11,13 +11,11 @@ class SettingController extends Controller
     public function __construct(Request $request)
     {
         $this->middleware('auth');
-       
     }
     public function index()
     {
         $info = setting::first();
-        if($info==null)
-        {
+        if ($info==null) {
             $info = new setting;
         }
 
@@ -49,7 +47,6 @@ class SettingController extends Controller
      */
     public function store(Request $request)
     {
-        
     }
 
     /**
@@ -83,7 +80,7 @@ class SettingController extends Controller
      */
     public function update(Request $request)
     {
-        $info = setting :: find($request->input('num')); 
+        $info = setting :: find($request->input('num'));
         $info->nameAr =  $request->input('nameAr');
         $info->nameEn =  $request->input('nameEn');
         $info->address =  $request->input('address');
@@ -92,27 +89,25 @@ class SettingController extends Controller
        
         // if($request->hasFile("url")){
         //     $image=$request->file('url');
-        //     $name=time().$image->getClientOriginalName();                
+        //     $name=time().$image->getClientOriginalName();
         //     Image::make($image->getRealPath())->interlace()->resize(230, 66)->save(public_path('/images/'. $name), 80);
         //    $info->url=url('/images/'.$name);
         //               // $smallpath= "/storage/users_thumb_".$fileNameToStore;
-        //         // Image::make($imagename)->resize(450, 350)->save( public_path($smallpath),100 ); 
+        //         // Image::make($imagename)->resize(450, 350)->save( public_path($smallpath),100 );
         //     }
             
 
         $info->save();
         return back()->with('success','تم حفظ  بنجاح');
-    
     }
     public function update1(Request $request)
     {
-        // $info = setting :: first(); 
+        // $info = setting :: first();
         // $info->f_title =  $request->input('f_title');
         // $info->s_title =  $request->input('s_title');
         // $info->desc =  $request->input('desc');
         // $info->save();
         // return back()->with('success','تم حفظ  بنجاح');
-    
     }
 
     /**
@@ -125,5 +120,4 @@ class SettingController extends Controller
     {
         //
     }
-    
 }

@@ -11,10 +11,10 @@ class category extends Model
     use HasFactory,SoftDeletes;
     public function user()
     {
-        return $this->belongsTo('App\Models\User') ; 
+        return $this->belongsTo('App\Models\User') ;
     }
     public function category()
     {
-        return $this->belongsTo('App\Models\category'); 
+        return $this->belongsTo('App\Models\category');
     }
 }

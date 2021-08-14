@@ -4,20 +4,18 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\category;
+
 class CategoryController extends Controller
 {
     //
     public function __construct(Request $request)
     {
         $this->middleware('auth');
-       
     }
     public function index()
     {
         $category = category::all();
       return view('admin.category.index')->with('categorys',$category);
-    
-        
     }
     /**
      * Show the form for creating a new resource.
@@ -28,7 +26,6 @@ class CategoryController extends Controller
     {
         // $category =new category;
         // return view('admin.category.form')->with('item',$category);
-  
     }
 
     /**
@@ -47,8 +44,7 @@ class CategoryController extends Controller
         $category->name=$request->name;
         $category->save();
         return redirect()->back()
-                        ->with('success','تم انشاء ');  
-   
+                        ->with('success','تم انشاء ');
     }
 
     /**
@@ -70,7 +66,6 @@ class CategoryController extends Controller
      */
     public function edit(category $category)
     {
-       
     }
 
     /**
@@ -80,7 +75,7 @@ class CategoryController extends Controller
      * @param  \App\Models\category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,  $id)
+    public function update(Request $request, $id)
     {
         $this->validate($request, [
             'name' => 'required',
@@ -90,7 +85,7 @@ class CategoryController extends Controller
         $category->name=$request->name;
         $category->save();
 
-        return  back()-> with('success','تم حفظ التعديلات '); 
+        return  back()-> with('success','تم حفظ التعديلات ');
     }
 
     /**
@@ -99,11 +94,10 @@ class CategoryController extends Controller
      * @param  \App\Models\collage  $collage
      * @return \Illuminate\Http\Response
      */
-    public function destroy( $id)
+    public function destroy($id)
     {
         $category =  category::find($id);
         $category->delete();
-    return back()-> with('success','تم حذف  '.$category->name.''); 
-   
+    return back()-> with('success','تم حذف  '.$category->name.'');
     }
 }

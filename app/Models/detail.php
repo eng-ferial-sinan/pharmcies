@@ -22,5 +22,4 @@ class detail extends Model
     {
         return  json_decode($value);
     }
-    
 }

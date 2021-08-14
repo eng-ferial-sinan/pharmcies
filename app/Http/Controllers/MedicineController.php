@@ -5,13 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\medicine;
 use App\Models\category;
+
 class MedicineController extends Controller
 {
     //
     public function __construct(Request $request)
     {
         $this->middleware('auth');
-       
     }
     public function index()
     {
@@ -19,8 +19,6 @@ class MedicineController extends Controller
         $medicine = medicine::all();
       return view('admin.medicine.index')->with('medicines',$medicine)
       ->with('categories2',$categories2);
-    
-        
     }
     /**
      * Show the form for creating a new resource.
@@ -29,7 +27,6 @@ class MedicineController extends Controller
      */
     public function create()
     {
-        
     }
 
     /**
@@ -56,8 +53,7 @@ class MedicineController extends Controller
         $medicine->save();
         
         return redirect()->back()
-                        ->with('success','تم انشاء ');  
-   
+                        ->with('success','تم انشاء ');
     }
 
     /**
@@ -81,7 +77,6 @@ class MedicineController extends Controller
     {
         // $medicine =medicine::find($medicine->id);
         return view('admin.medicine.form')->with('item',$medicine);
-  
     }
 
     /**
@@ -91,7 +86,7 @@ class MedicineController extends Controller
      * @param  \App\Models\medicine  $medicine
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,  $id)
+    public function update(Request $request, $id)
     {
         $this->validate($request, [
             'name' => 'required',
@@ -109,7 +104,7 @@ class MedicineController extends Controller
         $medicine->save();
         
 
-        return  back()-> with('success','تم حفظ التعديلات '); 
+        return  back()-> with('success','تم حفظ التعديلات ');
     }
 
     /**
@@ -118,11 +113,10 @@ class MedicineController extends Controller
      * @param  \App\Models\collage  $collage
      * @return \Illuminate\Http\Response
      */
-    public function destroy( $id)
+    public function destroy($id)
     {
         $medicine =  medicine::find($id);
         $medicine->delete();
-    return back()-> with('success','تم حذف  '.$medicine->name.''); 
-   
+    return back()-> with('success','تم حذف  '.$medicine->name.'');
     }
 }

@@ -9,6 +9,4 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class user_permission extends Model
 {
     use HasFactory,SoftDeletes;
-   
-   
 }

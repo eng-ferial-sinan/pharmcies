@@ -8,7 +8,8 @@ class postsController extends Controller
 {
     //
     public function index()
-    {$posts=post::orderBy('id','asc')->get();
+    {
+$posts=post::orderBy('id','asc')->get();
         $count=post::count();
         return view('posts.index',compact('posts','count'));
     }

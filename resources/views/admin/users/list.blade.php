@@ -49,8 +49,8 @@
                     @foreach($users as $user)
                     <tr>
                     <td>{{$user->id}} </td>
-                    <td><a href="/users/{{$user->id}}/" class="btn btn-default">{{$user->name}}</a></td>
-                    <td><a href="/users/{{$user->id}}/" class="btn btn-default">{{$user->email}}
+                    <td><a href="/member/{{$user->id}}/edit" class="btn btn-default">{{$user->name}}</a></td>
+                    <td><a href="/member/{{$user->id}}/edit" class="btn btn-default">{{$user->email}}
                      </td>
                     <td> {{$user->user_type}}</a></td>
                     <td>
@@ -59,7 +59,6 @@
                         التحرير</a>
                     </td>
                      
-                   
                     <td>
 
                          @if(!is_null($user->deleted_at))                        

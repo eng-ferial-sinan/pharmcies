@@ -11,6 +11,7 @@ use Validator;
 use App\Models\medicine;
 use App\Models\Pharmacy;
 use App\Notifications\OrderNotification;
+use Illuminate\Support\Arr;
 use Notification;
 class OrderController extends Controller
 {
@@ -123,9 +124,13 @@ class OrderController extends Controller
           $users=User::where('user_type','مدير')->get();
           foreach($users as $user)
           {
-             Notification::send($user, new OrderNotification($order,$user,$pharmacy));
-          
+           
+            try {
+                Notification::send($user, new OrderNotification($order,$user,$pharmacy));
+            } catch (\Exception $error) {
+                return [];
             }
+          }
 
          $response['data']['user']=$user;
          $response['data']['order']=$order;
@@ -172,16 +177,34 @@ class OrderController extends Controller
      */
     public function update(Request $request,  $id)
     {
-        $this->validate($request, [
-            'total_pice' => 'required',
+        $response['data']=array();
+        $response['status']=false;
+
+        $validator = Validator::make($request->all(), [
+            'status' => 'required|string',            
         ]);
 
-        $order = order::find($id);
-        $order->total_pice=$request->total_pice;
-        $order->save();
+        if ($validator->fails()) {
+             $response['messages']=$validator->errors()->all();
+             return response()->json($response,200);
+            }
 
-        return  back()-> with('success','تم حفظ التعديلات '); 
-    }
+        $order = order::find($id);
+        if(!is_null($order))
+        {
+        $order->status_id=$request->status;
+        $order->save();
+        $order =$order->fresh();
+        $response['data']=$order;
+        $response['status']=true;
+        $response['messages'][]="تم تعير الحالة";
+        }else
+        {
+        $response['messages'][]="الحساب غير موجود";
+
+        }
+      return response()->json($response ,200);
+        }
 
     /**
      * Remove the specified resource from storage.
@@ -191,9 +214,7 @@ class OrderController extends Controller
      */
     public function destroy( $id)
     {
-        $order =  order::find($id);
-        $order->delete();
-    return back()-> with('success','تم حذف  '.$order->name.''); 
+       
    
     }
 }
