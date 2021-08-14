@@ -14,9 +14,9 @@ class detail extends Model
     {
         return $this->belongsTo('App\Models\order');
     }
-    public function medicine()
+    public function medicined()
     {
-        return $this->belongsTo('App\Models\medicine');
+        return $this->belongsTo('App\Models\medicine','medicine_id');
     }
     public function getMedicineAttribute($value)
     {

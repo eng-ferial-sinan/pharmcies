@@ -24,13 +24,11 @@
                 <thead>
                   <tr>
                     <th>رقم الطلبية</th>
-                    {{-- <th>رقم الصيدلية</th> --}}
                     <th>الزبون </th>
                     <th>الصيدلية </th>
+                    <th>المندوب </th>
                     <th>حالة الطلبية</th>
-                    {{-- @can('role-edit') --}}
-                    {{-- @endcan --}}
-                    {{-- @can('role-delete') --}}
+                  
                     <th>عرض</th>
                     {{-- @endcan --}}
 
@@ -42,20 +40,15 @@
                    
                     <td>{{$order->id}}</td>
                     {{-- <td>{{$order->pharmacy_id}}</td> --}}
-                    <td>{{$order->user?$order->user->name:""}}</td>
+                    <td>{{$order->pharmacy->user?$order->pharmacy->user->name:""}}</td>
                     <td>{{$order->pharmacy?$order->pharmacy->name:""}}</td>
+                    <td>{{$order->user?$order->user->name:"لم يتم تعين مندوب بعد"}}</td>
                     <td>{{$order->status?$order->status->name:""}}</td>
-                   
 
-
-              {{-- @can('role-delete') --}}
               <td>
               <a href="\order\{{$order->id}}" class="btn btn-success ">
               <i class="fa fa-eye"></i></a>
                     </td>
-                    {{-- @endcan --}}
-
-                    
                   </tr>                   
                   @endforeach
                    

@@ -27,15 +27,15 @@
                  
                   <div class="col-md-3 col-sm-12"> 
 
-                      @if($order->user)
-                        <address><strong>اسم العميل:   {{$order->user->name}}</strong>   
+                      @if($order->pharmacy)
+                        <address><strong>اسم العميل:   {{$order->pharmacy->user->name}}</strong>   
                           <br><strong>تلفون:</strong>
-                          <a href="tel:{{str_replace("+967","", $order->user->phone)}}">
-                          {{str_replace("+967","", $order->user->phone)}}
+                          <a href="tel:{{str_replace("+967","", $order->pharmacy->user->phone)}}">
+                          {{str_replace("+967","", $order->pharmacy->user->phone)}}
                           </a>
                           <br> <strong>عنوان: </strong>
                         
-                          {{$order->user->address?$order->user->address:'لايوجد'}} 
+                          {{$order->pharmacy->address?$order->pharmacy->address:'لايوجد'}} 
                                         
                           </address>
                           @else غير متوفر
@@ -111,7 +111,7 @@
                   @foreach ($order->details as $item)
                       <tr>
                      <td> {{$item->id}} </td>
-                     <td> {{$item->medicine?$item->medicine->name:"-"}} </td>
+                     <td> {{$item->medicined?$item->medicined->name:"-"}} </td>
                      <td> {{$item->count}} </td>
                      <td> {{$item->price}} </td>
                      <td> {{$item->sum}} </td>
