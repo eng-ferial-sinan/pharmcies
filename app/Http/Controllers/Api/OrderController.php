@@ -29,9 +29,17 @@ class OrderController extends Controller
         $usertoken=usertoken::where('token',$token)->first();
         if($usertoken)
         {
+
          $user_id=$usertoken->user_id;
          $user=User::find($user_id);
+         if($user->user_type !='صيدلية')
+         {
          $order = order::with('details')->where('user_id',$user->id)->where('updated_at','>',$order_date)->get();
+         }else
+         {
+            if($user->pharmacy)
+         $order = order::with('details')->where('pharmacy_id',$user->pharmacy->id)->where('updated_at','>',$order_date)->get();
+         }
          $response['user']=$user;
          $response['orders']=$order;
          $response['status']=true;
@@ -80,8 +88,12 @@ class OrderController extends Controller
             }
          $user_id=$usertoken->user_id;
          $user=User::find($user_id);
+         if($user->user_type !='صيدلية')
+         {
+            return response()->json(['status'=>$status ,'data'=>array() ,'messages'=>['لايمكنك الطلب']],200);
+         }
+
         $order=new order;
-        $order->user_id=$user->id;
         $order->status_id=1;
         $order->pharmacy_id=$request->pharmacy_id;
         $order->save();
