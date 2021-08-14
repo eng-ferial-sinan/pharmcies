@@ -33,10 +33,10 @@ $info= sitinfo();
     <main class="app-content">
       <div class="app-title">
         <div>
-          <h1><i class="fa fa-dashboard"></i> لوحة التحكم
+          <h1><i class="fa fa-dashboard"></i> {{$info->nameAr}}
           @yield('title')
           </h1>
-          <p>لوحة تحكم   للتجارة والتسويق</p>
+          <p>لوحة تحكم  </p>
         </div>
         <ul class="app-breadcrumb breadcrumb">
           <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>

@@ -49,7 +49,7 @@
                   <td>{{$medicine->id}}</td>
                   <td><img src="{{$medicine->image}}" height="80" width="75"></td>
                     <td>{{$medicine->name}}</td>
-                    <td>{{$medicine->category_id}}</td>
+                    <td>{{$medicine->category?$medicine->category->name:''}}</td>
                     <td>{{$medicine->price}}</td>
                     <td>{{$medicine->production_date}}</td>
                     <td>{{$medicine->expiry_date}}</td>

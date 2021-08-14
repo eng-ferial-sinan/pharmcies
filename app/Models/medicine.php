@@ -15,4 +15,9 @@ class medicine extends Model
         return $value?url($value):url("medicines.jpg");
 
     }
+
+    public function category()
+    {
+        return $this->belongsTo('App\Models\category');
+    }
 }

@@ -106,6 +106,12 @@ class UserController extends Controller
 	   $pharmacy->name=$request->pharmacy_name;
 	   $pharmacy->user_id=$user->id;
 	   $pharmacy->address=$request->address;
+	   if($request->hasFile('image')){
+		$imagename = $request->file('image');
+		$fileNameToStore= "pharmacy_" .time().'.jpg';
+		$imagename->move(public_path('pharmacies/'), $fileNameToStore);
+		$pharmacy->image='/pharmacies/'.$fileNameToStore;            
+		 }  
 	   $pharmacy->save();
 
 	   $result=Auth()->guard()->attempt(['email'=>$data['email'],'password'=>$data['password']]);

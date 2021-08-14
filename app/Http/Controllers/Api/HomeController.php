@@ -25,7 +25,7 @@ class HomeController extends Controller
                 $data=array() ;
                 $deleted=array() ;
                 $data['categories']= category::select('id','name','updated_at as date')->where('updated_at','>',$category_date)->get() ;
-                $data['medicines'] = medicine::select('id','name','category_id','traite','demerites','relics','price','production_date','expiry_date','updated_at as date')->where('updated_at','>',$medicine_date)->get();
+                $data['medicines'] = medicine::select('id','name','image','category_id','traite','demerites','relics','price','production_date','expiry_date','updated_at as date')->where('updated_at','>',$medicine_date)->get();
                 $data['settings']= setting::select('id','nameAr','nameEn','email','address','phone','updated_at as date')->first();
                   //======================================== deleted
                   

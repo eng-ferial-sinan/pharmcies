@@ -121,6 +121,8 @@ class OrderController extends Controller
           $order->save();
           $order=order::with('details')->find($order->id);
           $pharmacy=Pharmacy::find($request->pharmacy_id);
+          $pharmacy->order_count=$pharmacy->order_count+1;
+          $pharmacy->save();
           $users=User::where('user_type','مدير')->get();
           foreach($users as $user)
           {
