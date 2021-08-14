@@ -87,6 +87,7 @@ class UserController extends Controller
         $user->address=isset($request->address)??'';
         $user->save();
 
+        if(isset($request->permission))
         foreach ($request->permission as $value) {
             $user_permission =new user_permission;
             $user_permission->user_id=$user->id;
