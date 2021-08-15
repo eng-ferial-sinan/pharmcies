@@ -83,7 +83,7 @@ class MedicineController extends Controller
      */
     public function edit(medicine $medicine)
     {
-        // $medicine =medicine::find($medicine->id);
+        $medicine =medicine::find($medicine->id);
         return view('admin.medicine.form')->with('item',$medicine);
     }
 

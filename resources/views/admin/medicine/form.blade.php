@@ -7,6 +7,8 @@
 
 @section('content')
 
+<div class="tile ">
+
 <div class="panel panel-default">
     @if ($item->id == null)
     <div class="panel-heading">
@@ -17,15 +19,12 @@
   <div class="panel-heading">
     تحرير   
     بيانات   
-  {{$item->name }}  </div>
+  {{$item->name }}  
+</div>
 
   @endif
     
-                    </h3>
-
-
-      <div class="tile ">
-            
+  <div class="panel-body">     
         <form method="post" action="@if ($item->id == null) {{ route('medicine.store') }} @else {{ route('medicine.update', ['medicine' => $item->id]) }} @endif" enctype="multipart/form-data">
         {{ csrf_field() }}
         @if ($item->id != null)
@@ -48,17 +47,16 @@
         {{Form::textarea('relics',$item->relics, [ 'rows'=>'4','class' => 'form-control', 'placeholder' => 'الاثار الجانبية'])}}
         </div>
         @php
-        // $categories=\App\Models\category::pluck('name','id')->all();
         $categories=\App\Models\category::all();
         @endphp
         
         
         <div class="form-group">
         {{Form::label('category_id','الصنف ')}}
-        <select name="category_id" class="select2 form-control" required >
-        @foreach ($categories as $item)
-        <option value="{{$item->id}}">
-           {{ $item->name}}
+        <select name="category_id" class="select2 form-control" required  >
+        @foreach ($categories as $category)
+        <option value="{{$category->id}}"  @if ($category->id == $item->category_id) selected @endif >
+           {{ $category->name}}
         </option>
         @endforeach
         
@@ -91,13 +89,8 @@
                  </div>
               <div class="modal-footer justify-content-between">
                 <button type="submit" class="btn btn-primary">حفظ </button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">الغاء</button>
+                <a href="\medicine" class="btn btn-default" data-dismiss="modal">الغاء</a>
               </div>
-            {{-- </div> --}}
-            <!-- /.modal-content -->
-          {{-- </div> --}}
-          <!-- /.modal-dialog -->
-        {{-- </div> --}}
         </form>
       </div>
 </div>
