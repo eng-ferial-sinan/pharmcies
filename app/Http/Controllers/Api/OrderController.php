@@ -73,15 +73,14 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $status=false;
+        $response['data']=array();
+        $response['status']=false;
         $token=$request->header('token');
         $usertoken=usertoken::where('token',$token)->first();
         if($usertoken)
         {
-
             $validator = Validator::make($request->all(), [
-                'pharmacy_id' => 'required|string',
                 'detalis' => 'required|string',
-                
             ]);
     
             if ($validator->fails()) {
@@ -93,51 +92,68 @@ class OrderController extends Controller
          {
             return response()->json(['status'=>$status ,'data'=>array() ,'messages'=>['لايمكنك الطلب']],200);
          }
+        if($user->pharmacy)
+        {
+            $order=new order;
+            $order->status_id=1;
+            $order->pharmacy_id=$user->pharmacy->id;
+            $order->save();
+            $total_sum=0;
 
-        $order=new order;
-        $order->status_id=1;
-        $order->pharmacy_id=$request->pharmacy_id;
-        $order->save();
-        $total_sum=0;
+        $detalis=json_decode($request->detalis,true);
 
-       $detalis=json_decode($request->detalis,true);
-    //    dd($detalis);
-        foreach ($detalis as $datat) {
+        foreach ($detalis as $datat) 
+                {
 
-            $medicine=medicine::find($datat['id']);
-            // dd($datat['count']);
-            $detail=new detail;
-            $detail->order_id=$order->id;
-            $detail->medicine_id=$datat['id'];
-            $detail->medicine=json_encode($medicine);
-            $detail->count=$datat['count'];
-            $detail->price=$medicine->price;
-            $detail->sum=($datat['count']*$medicine->price);
-            $detail->save();
-            $total_sum+=($datat['count']*$medicine->price);
-          }
-       
-          $order->total_pice=$total_sum;
-          $order->save();
-          $order=order::with('details')->find($order->id);
-          $pharmacy=Pharmacy::find($request->pharmacy_id);
-          $pharmacy->order_count=$pharmacy->order_count+1;
-          $pharmacy->save();
-          $users=User::where('user_type','مدير')->get();
-          foreach($users as $user)
-          {
-           
-            try {
-                Notification::send($user, new OrderNotification($order,$user,$pharmacy));
-            } catch (\Exception $error) {
-                return [];
+                    $medicine=medicine::find($datat['id']);
+                    if($medicine)
+                    {
+                    $detail=new detail;
+                    $detail->order_id=$order->id;
+                    $detail->medicine_id=$datat['id'];
+                    $detail->medicine=json_encode($medicine);
+                    $detail->count=$datat['count'];
+                    $detail->price=$medicine->price;
+                    $detail->sum=($datat['count']*$medicine->price);
+                    $detail->save();
+                    $total_sum+=($datat['count']*$medicine->price);
+                     }
+                      else
+                    {
+                        $response['messages'][]="المنتج غير موجود";
+                          $order->delete();
+                        return response()->json($response);
+
+                    }
+                }
+        
+            $order->total_pice=$total_sum;
+            $order->save();
+            $order=order::with('details')->find($order->id);
+            $pharmacy=$user->pharmacy;
+            $pharmacy->order_count=$pharmacy->order_count+1;
+            $pharmacy->save();
+            $users=User::where('user_type','مدير')->get();
+            foreach($users as $user)
+            {
+            
+                try {
+                    Notification::send($user, new OrderNotification($order,$user,$pharmacy));
+                    } catch (\Exception $error) {
+
+                    }
             }
-          }
 
-         $response['data']['user']=$user;
-         $response['data']['order']=$order;
-         $response['status']=true;
-         $response['messages'][]="الطلبيات";
+            $response['data']['user']=$user;
+            $response['data']['order']=$order;
+            $response['status']=true;
+            $response['messages'][]="تم انشاء الطلبية ";
+            
+        }else
+        {
+            $response['messages'][]="الصيدلية غير موجود";
+ 
+        }
 
        }else
        {
