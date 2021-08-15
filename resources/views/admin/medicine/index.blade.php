@@ -7,11 +7,10 @@
 
 <div class="container"> 
                
-                <div class="container">
                   <div class="row">
                 <div class="col-md-12">
                   @if (auth()->user()->hasPermission('medicine-create'))
-       <a href="" data-toggle="modal" data-target="#add" class="btn btn-info float-left">
+       <a href="/medicine/create" data-toggle="modal" data-target="#add" class="btn btn-info float-left">
                                        <i class="fa fa-plus fa-2x"></i> اضافة دواء
                                        </a>
                       @endif
@@ -53,15 +52,17 @@
                     <td>{{$medicine->price}}</td>
                     <td>{{$medicine->production_date}}</td>
                     <td>{{$medicine->expiry_date}}</td>
-                    @if (auth()->user()->hasPermission('medicine-edit'))
-                    <td> <a  href="" data-toggle="modal" data-target="#edit{{$medicine->id}}" class="btn btn-warning mr-3 ml-2">
-                                       <i class="fa fa-edit fa-2x"></i>
-                                       </a>
-                                       
-                                       
-                                       
 
-<div class="modal hide fade in " data-keyboard="false" data-backdrop="static" id="edit{{$medicine->id}}">
+                    <td> 
+                       @if (auth()->user()->hasPermission('medicine-edit'))
+
+                      <a href="/medicine/{{$medicine->id}}/edit" class="btn btn-info float-left">
+                                                      <i class="fa fa-edit fa-2x"></i> تعديل
+                                                      </a>
+                                                      @endif
+                                       
+                                                    </td>
+{{-- <div class="modal hide fade in " data-keyboard="false" data-backdrop="static" id="edit{{$medicine->id}}">
                 <div class="modal-dialog modal-xl" >
                   <div class="modal-content">
                     <div class="modal-header">
@@ -125,8 +126,8 @@
               </div>
             </div>
 
-              </td>
-              @endif
+               --}}
+              {{-- @endif --}}
 
               @if (auth()->user()->hasPermission('medicine-delete'))
               <td>
@@ -171,7 +172,7 @@
 
 <!--  data-backdrop="static" id="add" -->
 
-<div class="modal fade" id="add">
+{{-- <div class="modal fade" id="add">
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <div class="modal-header">
@@ -179,8 +180,8 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-      </div>
-      <div class="modal-body">
+      </div> --}}
+      {{-- <div class="modal-body">
         {!! Form::open(['action' => 'App\Http\Controllers\MedicineController@store', 'method' => 'POST','enctype'=>'multipart/form-data']) !!}
        
 <div class="form-group">
@@ -202,10 +203,10 @@
 @php
 // $categories=\App\Models\category::pluck('name','id')->all();
 $categories=\App\Models\category::all();
-@endphp
+@endphp --}}
 
 
-<div class="form-group">
+{{-- <div class="form-group">
 {{Form::label('category_id','الصنف ')}}
 <select name="category_id" class="select2 form-control" required >
 @foreach ($categories as $item)
@@ -216,9 +217,10 @@ $categories=\App\Models\category::all();
 
 </select>
 {{-- {!! Form::select('category_id', $categories,null, array('class' => 'form-control')) !!} --}}
-</div>
+{{-- </div> --}}
+ 
 
-<div class="form-group">
+{{-- <div class="form-group">
 {{Form::label('price',' السعر')}}
 {{Form::number('price', '', ['class' => 'form-control', 'placeholder' => 'الاسم','required'=>true])}}
 </div>
@@ -229,9 +231,9 @@ $categories=\App\Models\category::all();
 <div class="form-group">
 {{Form::label('expiry_date','تاريخ الانتهاء')}}
 {{Form::date('expiry_date', '', ['class' => 'form-control','required'=>true])}}
-</div>
+</div> --}}
 
-<div class="form-group">
+{{-- <div class="form-group">
     {{Form::label('image','صورة معبرة')}}
      {{Form::file('image')}}
  </div>
@@ -244,8 +246,19 @@ $categories=\App\Models\category::all();
     <!-- /.modal-content -->
   </div>
   <!-- /.modal-dialog -->
-</div>
+</div> --}}
 
 
             
 @endsection
+@section('script')
+<script src="/js/repeater.js" type="text/javascript"></script>
+    <script>
+        /* Create Repeater */
+        $("#repeater").createRepeater({
+            showFirstItemToDefault: true,
+        });
+    </script>
+ 
+ @endsection
+       

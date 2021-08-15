@@ -27,6 +27,8 @@ class MedicineController extends Controller
      */
     public function create()
     {
+        $medicine =new medicine;
+        return view('admin.medicine.form')->with('item',$medicine);
     }
 
     /**
