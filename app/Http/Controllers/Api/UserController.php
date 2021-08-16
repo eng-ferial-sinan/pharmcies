@@ -144,9 +144,10 @@ class UserController extends Controller
                  if ($user->pharmacy)
                  $response['pharmacy']=$user->pharmacy;
                  $response['status']=true;
-	   }
-	   return response()->json($response);
-             }
+	                }
+	          return response()->json($response);
+			 
+	       }
            
              public function logout(Request $request)
              {

@@ -93,8 +93,8 @@ switch($name)
 
         <div class="form-group">
           {{-- {!! Form::select('roles', $roles,[], array('class' => 'form-control','multiple')) !!} --}}
-          {{Form::select('user_type',['مدير'=>'مدير','مدخل بيانات'=>'مدخل بيانات','مندوب'=>'مندوب','صيدلية'=>'صيدلية'],$user->user_type, ['class' => 'custom-select', 'placeholder' => 'اختر نوع المستخدم','required'=>true])}}
-      </div>
+          {{Form::select('user_type',['مدير'=>'مدير','مدخل بيانات'=>'مدخل بيانات','مندوب طبي'=>'مندوب طبي','مندوب'=>'مندوب','صيدلية'=>'صيدلية'],$user->user_type, ['class' => 'custom-select', 'placeholder' => 'اختر نوع المستخدم','required'=>true])}}
+        </div>
        
      
     

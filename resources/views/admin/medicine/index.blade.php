@@ -52,7 +52,6 @@
                     <td>{{$medicine->price}}</td>
                     <td>{{$medicine->production_date}}</td>
                     <td>{{$medicine->expiry_date}}</td>
-
                     <td> 
                        @if (auth()->user()->hasPermission('medicine-edit'))
 

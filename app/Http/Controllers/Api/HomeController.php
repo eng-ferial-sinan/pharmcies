@@ -9,7 +9,9 @@ use App\Models\medicine ;
 use App\Models\Category;
 use App\Http\Controllers\Controller;
 use DB ;
-
+use App\Models\User;
+use App\Models\usertoken;
+use App\Models\Pharmacy;
 class HomeController extends Controller
 {
     /**
@@ -34,4 +36,25 @@ class HomeController extends Controller
 
         return response()->json(array('data'=>$data,'deleted'=>$deleted ));
     }
+
+    public function pharmacies(Request $request)
+    {
+        $response['status']=false;
+        $token=$request->header('token');
+        $pharmacy_date = $request->input('pharmacy_date')?$request->input('pharmacy_date'):date('Y-m-d');
+        $usertoken=usertoken::where('token',$token)->first();
+        if ($usertoken) {
+                $user_id=$usertoken->user_id;
+                $user=User::find($user_id);
+                if($user->user_type=="مندوب طبي")
+                {
+                $response['data']['Pharmacy'] = Pharmacy::where('updated_at','>',$pharmacy_date)->get();
+                $response['deleted']['Pharmacy']= Pharmacy::withTrashed()->select('id')->whereNotNull('deleted_at')->where('updated_at','>',$pharmacy_date)->get() ;
+                $response['status']=true;
+                }
+                }
+               return response()->json($response);
+    
+  }
+
 }
