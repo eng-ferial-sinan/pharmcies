@@ -193,11 +193,17 @@ class OrderController extends Controller
      * @param  \App\Models\order  $order
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,  $id)
+    public function update(Request $request, $id)
     {
         $response['data']=array();
         $response['status']=false;
-
+        $token=$request->header('token');
+        $usertoken=usertoken::where('token',$token)->first();
+        if(!$usertoken)
+        {
+            $response['messages']=["يجب تسجيل الدخول"];
+            return response()->json($response,200);
+        }
         $validator = Validator::make($request->all(), [
             'status' => 'required|string',            
         ]);
@@ -213,6 +219,13 @@ class OrderController extends Controller
         $order->status_id=$request->status;
         $order->save();
         $order =$order->fresh();
+        if(isset($request->lat )&& isset($request->lng))
+        {
+            $user=$usertoken->user;
+            $user->lat=$request->lat;
+            $user->lng=$request->lng;
+            $user->save();
+        }
         $response['data']=$order;
         $response['status']=true;
         $response['messages'][]="تم تعير الحالة";

@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Auth::routes();
+Route::resource('/visit',App\Http\Controllers\VisitController::class);
 Route::resource('/category',App\Http\Controllers\CategoryController::class);
 Route::resource('/pharmacy',App\Http\Controllers\PharmacyController::class);
 Route::resource('/medicine',App\Http\Controllers\MedicineController::class);

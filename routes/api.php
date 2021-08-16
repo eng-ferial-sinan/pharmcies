@@ -20,6 +20,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 // Route::post('/setup1',[App\Http\Controllers\ApiController::class,'index']);
 Route::post('/setup1','App\Http\Controllers\Api\HomeController@index');
 Route::post('/pharmacies','App\Http\Controllers\Api\HomeController@pharmacies');
+Route::post('/visit','App\Http\Controllers\Api\HomeController@visit');
 Route::post('/login','App\Http\Controllers\Api\UserController@login');
 Route::post('/logout','App\Http\Controllers\Api\UserController@logout');
 Route::resource('/order',App\Http\Controllers\Api\OrderController::class);
