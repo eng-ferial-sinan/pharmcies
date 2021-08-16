@@ -87,7 +87,7 @@ class UserController extends Controller
         $user->address=isset($request->address)??'';
         $user->save();
 
-        if(isset($request->permission))
+        if (isset($request->permission))
         foreach ($request->permission as $value) {
             $user_permission =new user_permission;
             $user_permission->user_id=$user->id;
@@ -203,7 +203,8 @@ class UserController extends Controller
         $user->password=Hash::make($request['password']);;
         $user->address=isset($request->address)??'';
         $user->save();
-
+        
+        if (isset($request->permission))
         foreach ($request->permission as $value) {
             $user_permission =user_permission::where('user_id',$id)->where('permission_id',$value)->first();
           if (is_null($user_permission)) {

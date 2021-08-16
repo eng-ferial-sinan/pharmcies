@@ -13,7 +13,6 @@ class medicine extends Model
     public function getImageAttribute($value)
     {
         return $value?url($value):url("medicines.jpg");
-
     }
 
     public function category()

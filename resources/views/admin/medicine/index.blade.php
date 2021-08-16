@@ -10,7 +10,7 @@
                   <div class="row">
                 <div class="col-md-12">
                   @if (auth()->user()->hasPermission('medicine-create'))
-       <a href="/medicine/create" data-toggle="modal" data-target="#add" class="btn btn-info float-left">
+       <a href="/medicine/create" class="btn btn-info float-left">
                                        <i class="fa fa-plus fa-2x"></i> اضافة دواء
                                        </a>
                       @endif

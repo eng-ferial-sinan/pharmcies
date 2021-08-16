@@ -8,6 +8,7 @@
 
 @section('content')
 
+<div class="tile ">
 <div class="panel panel-default">
     @if ($item->id == null)
     <div class="panel-heading">
@@ -21,12 +22,8 @@
   {{$item->name }}  </div>
 
   @endif
-    
-                    </h3>
-
-
-      <div class="tile ">
-            
+  <div class="panel-body">
+        
         <form method="post" action="@if ($item->id == null) {{ route('pharmacy.store') }} @else {{ route('pharmacy.update', ['pharmacy' => $item->id]) }} @endif" enctype="multipart/form-data">
         {{ csrf_field() }}
         @if ($item->id != null)
@@ -69,8 +66,11 @@
            <div id="cat_mapxx" style="height:250px;width:100%"></div>
       </div>
 
-    {{Form::submit('حفظ',['class'=>'btn btn-primary'])}}    
-    {!! Form::close() !!}   
+      <div class="modal-footer justify-content-between">
+        <button type="submit" class="btn btn-primary">حفظ </button>
+        <a href="\pharmacy" class="btn btn-default" data-dismiss="modal">الغاء</a>
+      </div>
+       
         </form>
       </div>
 </div>

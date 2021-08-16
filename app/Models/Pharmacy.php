@@ -18,6 +18,5 @@ class Pharmacy extends Model
     public function getImageAttribute($value)
     {
         return $value?url($value):url("pharmacies.jpg");
-
     }
 }

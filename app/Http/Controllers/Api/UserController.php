@@ -76,17 +76,17 @@ class UserController extends Controller
          public function register(Request $request)
          {
        
-			$response['data']=array();
-			$response['status']=false;
+	   $response['data']=array();
+	   $response['status']=false;
 			
 		$validator = Validator::make($request->all(), [
-			'email' => 'required|string|email|',
-			'password' => 'required|string|confirmed',
-			'name' => 'required|string',
-			'pharmacy_name' => 'required|string',
-			'phone' => 'required|string',
-			'address' => 'required|string',
-	  		 ]);
+	   'email' => 'required|string|email|',
+	   'password' => 'required|string|confirmed',
+	   'name' => 'required|string',
+	   'pharmacy_name' => 'required|string',
+	   'phone' => 'required|string',
+	   'address' => 'required|string',
+		]);
     
 	   if ($validator->fails()) {
 			    $response['messages']=$validator->errors()->all();
@@ -99,19 +99,19 @@ class UserController extends Controller
 	   $user->name=$data['name'];
 	   $user->password= Hash::make($data['password']);
 	   $user->phone=$data['phone'];
-	   $user->user_type="صيدلاني";
+	   $user->user_type="صيدلية";
 	   $user->save();
 	   $user =$user->fresh();
 	   $pharmacy =new pharmacy;
 	   $pharmacy->name=$request->pharmacy_name;
 	   $pharmacy->user_id=$user->id;
 	   $pharmacy->address=$request->address;
-	   if($request->hasFile('image')){
-		$imagename = $request->file('image');
-		$fileNameToStore= "pharmacy_" .time().'.jpg';
-		$imagename->move(public_path('pharmacies/'), $fileNameToStore);
-		$pharmacy->image='/pharmacies/'.$fileNameToStore;            
-		 }  
+	   if ($request->hasFile('image')) {
+			$imagename = $request->file('image');
+			$fileNameToStore= "pharmacy_" .time().'.jpg';
+			$imagename->move(public_path('pharmacies/'), $fileNameToStore);
+			$pharmacy->image='/pharmacies/'.$fileNameToStore;
+	   }
 	   $pharmacy->save();
 
 	   $result=Auth()->guard()->attempt(['email'=>$data['email'],'password'=>$data['password']]);
@@ -122,11 +122,11 @@ class UserController extends Controller
 			if (isset($request->push)) {
 			   $token->push=$request->push;
 			   $token->save();
-			}
+}
 			$response['token']=$token->token;
 			$response['user']=$User;
-		//    $response['user']['addresses']=$user->addresses;
-		}
+			//    $response['user']['addresses']=$user->addresses;
+	   }
 		return response()->json($response);
          }
 
