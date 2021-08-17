@@ -86,6 +86,7 @@ class UserController extends Controller
 	   'pharmacy_name' => 'required|string',
 	   'phone' => 'required|string',
 	   'address' => 'required|string',
+	   'note' => 'required|string',
 		]);
     
 	   if ($validator->fails()) {
@@ -109,6 +110,7 @@ class UserController extends Controller
 	   $pharmacy->phone=$request->phone;
         $pharmacy->lat=$request->lat;
         $pharmacy->lng=$request->lng;
+        $pharmacy->note=$request->note;
 	   if ($request->hasFile('image')) {
 			$imagename = $request->file('image');
 			$fileNameToStore= "pharmacy_" .time().'.jpg';

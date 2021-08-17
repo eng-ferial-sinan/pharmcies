@@ -65,6 +65,7 @@ class PharmacyController extends Controller
         $pharmacy->lng=$request->lng;
         $pharmacy->user_id=$request->user_id;
         $pharmacy->address=$request->address;
+        $pharmacy->note=$request->note;
         if ($request->hasFile('image')) {
             $imagename = $request->file('image');
             $fileNameToStore= "pharmacy_" .time().'.jpg';
@@ -119,6 +120,7 @@ class PharmacyController extends Controller
         $pharmacy->lng=$request->lng;
         $pharmacy->user_id=$request->user_id;
         $pharmacy->address=$request->address;
+        $pharmacy->note=$request->note;
         if ($request->hasFile('image')) {
             $imagename = $request->file('image');
             $fileNameToStore= "pharmacy_" .time().'.jpg';

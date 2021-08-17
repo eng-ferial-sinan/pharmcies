@@ -35,6 +35,7 @@
                     <th>الصيدلية</th>
                     <th>العنوان</th>
                     <th>عدد الطلبات</th>
+                    <th>ملاحظات </th>
               @if (auth()->user()->hasPermission('pharmacy-edit'))
                     
                     <th>تعديل</th>
@@ -59,6 +60,7 @@
                         <i class="fa fa-edit fa-2x"></i>
                         </a> --}}
                     </td>
+                    <td>{{$pharmacy->note}}</td>
 
                     <td>
                       @if (auth()->user()->hasPermission('pharmacy-create'))

@@ -50,6 +50,12 @@
       {{Form::label('user_id','المستخدم')}}
       {{Form::select('user_id', $users,$item->user_id, ['class' => 'form-control newRead js-example-basic-single','id' => 'custmer_id', 'placeholder' => ' المستخدم'])}}
     </div>
+
+    <div class="form-group">
+      {{Form::label('note','ملاحظة')}}
+      {{Form::textarea('note', $item->note, ['rows' => 2,'class' => 'form-control', 'placeholder' => ''])}}
+  </div>
+  
     <div class="form-group">
       <img src="{{$item->image}}" class="img-rounded" height="50" width="70" alt="{{$item->name}}">
        <br/>

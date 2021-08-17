@@ -35,6 +35,7 @@ class pharmacySeeder extends Seeder
             'order_count' => 0,
             'balance' => 0,
             'user_id' => $id,
+            'note' => $id,
             'created_at' =>now(),
             'updated_at' => now(),
 
