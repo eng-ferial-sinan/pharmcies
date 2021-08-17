@@ -51,7 +51,10 @@ class User extends Authenticatable
     {
         return $this->hasOne('App\Models\Pharmacy');
     }
-
+    public function routeNotificationForOneSignal()
+    {
+        return ['include_external_user_ids' => [(string)$this->id]];
+    }
     public static function hasPermission($name)
     {
         $ret = false;

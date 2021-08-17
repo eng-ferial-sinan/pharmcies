@@ -135,16 +135,7 @@ class OrderController extends Controller
             $pharmacy->order_count=$pharmacy->order_count+1;
             $pharmacy->save();
             $users=User::where('user_type','مدير')->get();
-            foreach($users as $user)
-            {
-            
-                try {
-                    Notification::send($user, new OrderNotification($order,$user,$pharmacy,$order->status));
-                    } catch (\Exception $error) {
-
-                    }
-            }
-
+            Notification::send($users, new OrderNotification($order,$user,$pharmacy,$order->status));       
             $response['data']['user']=$user;
             $response['data']['order']=$order;
             $response['status']=true;

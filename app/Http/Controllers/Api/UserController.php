@@ -80,7 +80,7 @@ class UserController extends Controller
 	   $response['status']=false;
 			
 		$validator = Validator::make($request->all(), [
-      'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+      'email' => 'required|string|email|max:255|unique:users',
 	   'password' => 'required|string|confirmed',
 	   'name' => 'required|string',
 	   'pharmacy_name' => 'required|string',
@@ -108,9 +108,9 @@ class UserController extends Controller
 	   $pharmacy->user_id=$user->id;
 	   $pharmacy->address=$request->address;
 	   $pharmacy->phone=$request->phone;
-        $pharmacy->lat=$request->lat;
-        $pharmacy->lng=$request->lng;
-        $pharmacy->note=$request->note;
+        $pharmacy->lat=$request->lat??'';
+        $pharmacy->lng=$request->lng??'';
+        $pharmacy->note=$request->note??'';
 	   if ($request->hasFile('image')) {
 			$imagename = $request->file('image');
 			$fileNameToStore= "pharmacy_" .time().'.jpg';

@@ -22,6 +22,20 @@ $info= sitinfo();
 
 
 
+    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
+    <script>
+      window.OneSignal = window.OneSignal || [];
+      OneSignal.push(function() {
+        OneSignal.init({
+          appId: "{{ config('services.onesignal.app_id') }}",
+        });
+      });
+
+      let externalUserId ="{{auth()->user()->id}}"; // You will supply the external user id to the OneSignal SDK
+        OneSignal.push(function() {
+          OneSignal.setExternalUserId(externalUserId);
+        });
+    </script>
 
   </head>
   <body class="app sidebar-mini rtl">

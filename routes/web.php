@@ -36,3 +36,4 @@ Route::get('/members/{id}', 'UserController@index1')->middleware('permission:use
 Route::get('/members/{id}', [App\Http\Controllers\UserController::class, 'user'])->middleware('permission:user-list');
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'home'])->name('home');
+Route::get('/clear', [App\Http\Controllers\HomeController::class, 'clear'])->name('clear');

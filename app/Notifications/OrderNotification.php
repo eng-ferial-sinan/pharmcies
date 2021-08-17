@@ -10,6 +10,9 @@ use App\Models\order;
 use App\Models\Pharmacy;
 use App\Models\User;
 use App\Models\status;
+use NotificationChannels\OneSignal\OneSignalChannel;
+use NotificationChannels\OneSignal\OneSignalMessage;
+
 class OrderNotification extends Notification
 {
     use Queueable;
@@ -43,7 +46,28 @@ class OrderNotification extends Notification
     public function via($notifiable)
     {
         // return ['mail'];
-        return ['Database','mail'];
+        return ['Database',OneSignalChannel::class];
+    }
+
+    public function toOneSignal($notifiable)
+    {
+        $url = route('order.show', $this->order->id);
+
+        if($this->status->id==1)
+        {
+           return OneSignalMessage::create()
+            ->setSubject("الطلب رقم {$this->order->id} طلب جديد.")
+            ->setBody("اضغط هنا لمعرفة المزيد .")
+            ->setData('الصيدلية ', $this->pharmacy->name)
+            ->setUrl($url);
+        }else
+        {
+            return OneSignalMessage::create()
+            ->setSubject("الطلب رقم {$this->order->id} تم تغير حالة.")
+            ->setBody("اضغط هنا لمعرفة المزيد .")
+            ->setData('الحالة ', $this->status->name)
+            ->setUrl($url);
+        }
     }
     public function toDatabase($notifiable)
     {
