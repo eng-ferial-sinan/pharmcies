@@ -9,7 +9,7 @@ use Illuminate\Notifications\Notification;
 use App\Models\order;
 use App\Models\Pharmacy;
 use App\Models\User;
-
+use App\Models\status;
 class OrderNotification extends Notification
 {
     use Queueable;
@@ -22,13 +22,15 @@ class OrderNotification extends Notification
     private $order;
     private $user;
     private $pharmacy;
+    private $status;
 
-    public function __construct(order $order, User $user, Pharmacy $pharmacy)
+    public function __construct(order $order, User $user, Pharmacy $pharmacy,status $status)
     {
 
         $this->order=$order;
         $this->user=$user;
         $this->pharmacy=$pharmacy;
+        $this->status=$status;
         //
     }
 
@@ -40,9 +42,20 @@ class OrderNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        // return ['mail'];
+        return ['Database','mail'];
     }
-
+    public function toDatabase($notifiable)
+    {
+        return [
+            'id'=>$this->order->id,
+            'pharmacy'=>$this->pharmacy->name,
+            'user'=>$this->user->name,
+            'driver'=>$this->order->user?$this->order->user->name:'',
+            'price'=>$this->order->total_pice,
+            'status'=>$this->status->name,
+        ];
+    }
     /**
      * Get the mail representation of the notification.
      *

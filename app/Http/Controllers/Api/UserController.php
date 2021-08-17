@@ -80,7 +80,7 @@ class UserController extends Controller
 	   $response['status']=false;
 			
 		$validator = Validator::make($request->all(), [
-	   'email' => 'required|string|email|',
+      'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
 	   'password' => 'required|string|confirmed',
 	   'name' => 'required|string',
 	   'pharmacy_name' => 'required|string',

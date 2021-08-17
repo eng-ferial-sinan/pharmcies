@@ -29,3 +29,4 @@ Route::get('/me','App\Http\Controllers\Api\UserController@dataUser');
 Route::post('/store','App\Http\Controllers\Api\UserController@store');
 Route::post('/updateToken','App\Http\Controllers\Api\UserController@updateToken');
 Route::put('/update','App\Http\Controllers\Api\UserController@update');
+Route::put('/update_order','App\Http\Controllers\Api\OrderController@update');

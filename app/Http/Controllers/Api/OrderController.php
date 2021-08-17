@@ -7,12 +7,13 @@ use App\Models\usertoken;
 use App\Models\order;
 use App\Models\detail;
 use App\Models\User;
-use Validator;
 use App\Models\medicine;
 use App\Models\Pharmacy;
 use App\Notifications\OrderNotification;
 use Illuminate\Support\Arr;
-use Notification;
+use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Validator;
+
 class OrderController extends Controller
 {
     //
@@ -129,7 +130,7 @@ class OrderController extends Controller
         
             $order->total_pice=$total_sum;
             $order->save();
-            $order=order::with('details')->find($order->id);
+            $order=order::with(['details','status'])->find($order->id);
             $pharmacy=$user->pharmacy;
             $pharmacy->order_count=$pharmacy->order_count+1;
             $pharmacy->save();
@@ -138,7 +139,7 @@ class OrderController extends Controller
             {
             
                 try {
-                    Notification::send($user, new OrderNotification($order,$user,$pharmacy));
+                    Notification::send($user, new OrderNotification($order,$user,$pharmacy,$order->status));
                     } catch (\Exception $error) {
 
                     }
@@ -218,13 +219,24 @@ class OrderController extends Controller
         {
         $order->status_id=$request->status;
         $order->save();
-        $order =$order->fresh();
+        $order->refresh();
         if(isset($request->lat )&& isset($request->lng))
         {
             $user=$usertoken->user;
             $user->lat=$request->lat;
             $user->lng=$request->lng;
             $user->save();
+        }
+        $users=User::where('user_type','مدير')->get();
+        $order = order::with(['user','pharmacy','status'])->find($id);
+        // dd($order->status);
+        foreach($users as $user)
+        {
+                try {
+                    Notification::send($user, new OrderNotification($order,$order->pharmacy->user,$order->pharmacy,$order->status));
+                    } catch (\Exception $error) {
+
+                    }
         }
         $response['data']=$order;
         $response['status']=true;
