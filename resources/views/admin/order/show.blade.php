@@ -135,9 +135,11 @@
                   <div class="bs-component col-6">
 
                         <div class="form-group  ">
-                            <input type="hidden" name='map_1'value="{{$order->pharmacy?$order->pharmacy->lat:15.344}}" id = 'map_1'>
-                            <input type="hidden" name='map_2' value="{{$order->pharmacy?$order->pharmacy->lng:14.344}}"  id='map_2' >
-                        </div>
+                          <input type="hidden" name='map_1'value="{{$order->pharmacy?$order->pharmacy->lat:15.344}}" id = 'map_1'>
+                          <input type="hidden" name='map_2' value="{{$order->pharmacy?$order->pharmacy->lng:14.344}}"  id='map_2' >
+                          <input type="hidden" name='map_driver_1'value="{{$order->user?$order->user->lat:15.344}}" id = 'map_driver_1'>
+                          <input type="hidden" name='map_driver_2' value="{{$order->user?$order->user->lng:14.344}}"  id='map_driver_2' >
+                      </div>
                         <div class="form-group">
                                 <div id="cat_mapxx" style="height:250px;width:100%"></div>
                             </div>
