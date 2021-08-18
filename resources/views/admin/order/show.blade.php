@@ -135,10 +135,15 @@
                   <div class="bs-component col-6">
 
                         <div class="form-group  ">
-                          <input type="hidden" name='map_1'value="{{$order->pharmacy?$order->pharmacy->lat:15.344}}" id = 'map_1'>
-                          <input type="hidden" name='map_2' value="{{$order->pharmacy?$order->pharmacy->lng:14.344}}"  id='map_2' >
-                          <input type="hidden" name='map_driver_1'value="{{$order->user?$order->user->lat:15.344}}" id = 'map_driver_1'>
-                          <input type="hidden" name='map_driver_2' value="{{$order->user?$order->user->lng:14.344}}"  id='map_driver_2' >
+                      
+                          <input type="hidden" name='rname'value="{{$order->pharmacy?$order->pharmacy->name:''}}" id = 'rname'>
+                          <input type="hidden" name='username' value="{{$order->user?$order->user->name:''}}"  id='username' >
+
+                          <input hidden type="text" name='lat' value="{{$order->pharmacy?$order->pharmacy->lat:15.344}}" id='map_1'>
+                          <input hidden type="text" name='lang' value="{{$order->pharmacy?$order->pharmacy->lng:14.344}}" id='map_2'>
+                          <input hidden type="text" name='rlat' value="{{$order->user?$order->user->lat:15.344}}" id='map_3'>
+                          <input hidden type="text" name='rlang' value="{{$order->user?$order->user->lng:14.344}}" id='map_4'>
+              
                       </div>
                         <div class="form-group">
                                 <div id="cat_mapxx" style="height:250px;width:100%"></div>
@@ -218,81 +223,61 @@
       });
    </script>
 
-<script>
-      
-    
-  var marker;        
-  var map ,infoWindow ;
-  var image = '1.png';
-  function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-      infoWindow.setPosition(pos);
-      infoWindow.setContent(browserHasGeolocation ?
-                            'Error: The Geolocation service failed.' :
-                            'Error: Your browser doesn\'t support geolocation.');
-      infoWindow.open(map);
-    }
+<script type="text/javascript">
+  var icon = new google.maps.MarkerImage("http://maps.google.com/mapfiles/ms/micons/blue.png", new google.maps.Size(32, 32), new google.maps.Point(0, 0), new google.maps.Point(16, 32));
+  var icon1 = new google.maps.MarkerImage("http://maps.google.com/mapfiles/ms/micons/yellow.png", new google.maps.Size(32, 32), new google.maps.Point(0, 0), new google.maps.Point(16, 32));
+  var center = null;
+  var map = null;
+  var currentPopup;
+  var bounds = new google.maps.LatLngBounds();
 
+  function addMarker(lat, lng, info,icon) {
+    var pt = new google.maps.LatLng(lat, lng);
+    map.setCenter(pt);
+    map.setZoom(4);
+    var marker = new google.maps.Marker({
+      position: pt,
+      icon: icon,
+      map: map
+    });
+    var popup = new google.maps.InfoWindow({
+      content: info,
+      maxWidth: 300
+    });
+    google.maps.event.addListener(marker, "click", function() {
+      if (currentPopup != null) {
+        currentPopup.close();
+        currentPopup = null;
+      }
+      popup.open(map, marker);
+      currentPopup = popup;
+    });
+    google.maps.event.addListener(popup, "closeclick", function() {
+      map.panTo(center);
+      currentPopup = null;
+    });
+  }
+  
   function myMap() {
-      var mapCanvas = document.getElementById("cat_mapxx");
-      //var myCenter=new google.maps.LatLng(15.344,44.185);
-      var myCenter=new google.maps.LatLng(
-                    (document.getElementById("map_1").value ? document.getElementById("map_1").value : 15.344),
-                    (document.getElementById("map_2").value ?document.getElementById("map_2").value : 44.185));
-             
-      var mapOptions = {center: myCenter, zoom: 15};
-          map = new google.maps.Map(mapCanvas, mapOptions);
-        
-          var marker;     
-      google.maps.event.addListener(map,'click', function(event) {
-        placeMarker(map, event.latLng);
-      });
-      
-     
-         if (navigator.geolocation) {
-           navigator.geolocation.getCurrentPosition(function(position) {
-            var pos = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude
-           };
-           var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
-             var marker = new google.maps.Marker({
-                 position: pos,
-                 map: map,
-                 icon: iconBase + 'info-i_maps.png'
-                      }); 
-          map.setCenter(pos);
-        
-          map.setZoom(15);
-          }, function() {
-          handleLocationError(true, infoWindow, map.getCenter());
-          });
-             } else {
-            // Browser doesn't support Geolocation
-            handleLocationError(false, infoWindow, map.getCenter());
-           }
-         }
-    function placeMarker(map, location) {
-      if (marker == undefined){
-          marker = new google.maps.Marker({
-              position: location,
-              map: map,
-              title:"حدد الموقع"                
-          });
+    map = new google.maps.Map(document.getElementById("cat_mapxx"), {
+      center: new google.maps.LatLng(0, 0),
+      zoom: 0.5,
+      mapTypeId: google.maps.MapTypeId.ROADMAP,
+      mapTypeControl: false,
+      mapTypeControlOptions: {
+        style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR
+      },
+      navigationControl: true,
+      navigationControlOptions: {
+        style: google.maps.NavigationControlStyle.SMALL
       }
-      else{
-          marker.setPosition(location);
-      }
-      document.getElementById("map_1").value = location.lat().toFixed(15);
-      document.getElementById("map_2").value = location.lng().toFixed(15);
-      map.setPosition(location);
-     
+    });
+  
+  addMarker(document.getElementById("map_1").value ? document.getElementById("map_1").value : 15.344,document.getElementById("map_2").value ? document.getElementById("map_2").value : 44.185, document.getElementById("rname").value,icon);
+  addMarker(document.getElementById("map_3").value ? document.getElementById("map_3").value : 15.344,document.getElementById("map_4").value ? document.getElementById("map_4").value : 44.185, document.getElementById("username").value,icon1);
 
   }
-
-
-  </script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBjCQ-zcT_xB12XkBftRS5tIVRyd8AJSdk&callback=myMap"></script>
-
-
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBjCQ-zcT_xB12XkBftRS5tIVRyd8AJSdk&callback=myMap"></script>
 
 @endsection
