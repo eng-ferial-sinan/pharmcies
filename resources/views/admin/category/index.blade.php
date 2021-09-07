@@ -1,6 +1,6 @@
 @extends('admin.vadmin.lay')
 
-@section('head')   /
+@section('title')   /
 بيانات   
     الاصناف
 
