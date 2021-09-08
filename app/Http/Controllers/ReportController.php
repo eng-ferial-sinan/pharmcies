@@ -28,7 +28,7 @@ class ReportController extends Controller
 
         $filter = $request->all() ;
         $pharmacy_info= null ; 
-        $items= detail::orderBy('created_at','desc') ;
+        $items= detail::orderBy('medicine_id','desc') ;
         
         if(isset($filter['formdate'])) 
               $items=$items->whereDate('created_at','>=',$filter['formdate'] ) ;

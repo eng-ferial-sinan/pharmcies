@@ -30,8 +30,8 @@
                             {{Form::select('pharmacy_id',$pharmacies,(isset($filter['pharmacy_id'])?$filter['pharmacy_id']:'') , ['class' => 'form-control demoSelect', 'placeholder' => ' الكل'])}}
                         </div> 
                         <div class="form-group col-2">
-                            {{Form::label('status','حالة الطلب')}}
-                            {{Form::select('status[]',$status,(isset($filter['status'])?$filter['status']:'') , [ 'multiple'=>"multiple" ,'class' => 'form-control select2 demoSelect'])}}
+                            {{Form::label('status_id','حالة الطلب')}}
+                            {{Form::select('status_id[]',$status,(isset($filter['status_id'])?$filter['status_id']:'') , [ 'multiple'=>"multiple" ,'class' => 'form-control select2 demoSelect'])}}
                         </div>
                         <div class="form-group col-2 pt-4 mt-1" >
                         <input id="btn" class="btn btn-primary form-control"  type="submit" value="عرض">    
