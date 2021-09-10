@@ -68,7 +68,7 @@ class ReportController extends Controller
     public function representativeIndex(Request $request)
     {
 
-         $users= User::where("user_type",'مندوب')->orderBy('id','asc')->pluck('name','id')->all();
+         $users= User::where("user_type",'مندوب طبي')->orderBy('id','asc')->pluck('name','id')->all();
         
          $filter = $request->all() ;
         $user_info= null ; 

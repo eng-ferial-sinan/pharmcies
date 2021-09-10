@@ -66,7 +66,7 @@
         
         <div class="form-group">
         {{Form::label('price',' السعر')}}
-        {{Form::number('price',$item->price, ['class' => 'form-control', 'placeholder' => 'الاسم','required'=>true])}}
+        {{Form::number('price',$item->price, ['class' => 'form-control', 'placeholder' => 'السعر','required'=>true])}}
         </div>
         <div class="form-group">
         {{Form::label('production_date','تاريخ الانتاج')}}

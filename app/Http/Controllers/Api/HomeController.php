@@ -89,11 +89,14 @@ class HomeController extends Controller
                   ( 3959 * acos( cos( deg2rad($request->lat) ) * cos( deg2rad( $pharmacy->lat ) )
                     * cos( deg2rad( $pharmacy->lng  ) - deg2rad($request->lng) ) + sin( deg2rad($request->lat) ) 
                     * sin( deg2rad( $pharmacy->lat ) ) ) ),5 ) *1.609344 ),2)   ;
-                if($distance>20)
+                    $distance=$distance*1000;
+                    if($distance>20)
                 {
                   $response['messages']=["الصيدلية بعيدة عنك"];
                   return response()->json($response,200);
                 }
+                // return response()->json($distance,200);
+
                 $visit=new visit;
                 $visit->user_id=$user->id;
                 $visit->pharmacy_id=$pharmacy->id;
