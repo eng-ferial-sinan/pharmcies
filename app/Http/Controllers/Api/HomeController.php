@@ -14,6 +14,9 @@ use App\Models\usertoken;
 use App\Models\Pharmacy;
 use Validator;
 use App\Models\visit;
+use App\Notifications\VisitNotification;
+use Illuminate\Support\Facades\Notification;
+
 class HomeController extends Controller
 {
     /**
@@ -36,7 +39,7 @@ class HomeController extends Controller
                   $deleted['categories']= category::withTrashed()->select('id')->whereNotNull('deleted_at')->where('updated_at','>',$category_date)->get() ;
                   $deleted['medicines']= medicine::withTrashed()->select('id')->whereNotNull('deleted_at')->where('updated_at','>',$medicine_date)->get() ;
 
-        return response()->json(array('data'=>$data,'deleted'=>$deleted ));
+        return response()->json(array('data'=>$data,'deleted'=>$deleted ),200);
     }
 
     public function pharmacies(Request $request)
@@ -55,7 +58,7 @@ class HomeController extends Controller
                 $response['status']=true;
                 }
                 }
-               return response()->json($response);
+               return response()->json($response,200);
     
   }
 
@@ -82,7 +85,7 @@ class HomeController extends Controller
                 $pharmacy = Pharmacy::find($pharmacy_id);
                 if(!$pharmacy)
                 {
-                  return response()->json($response);
+                  return response()->json($response,200);
 
                 }
                 $distance =round((round( 
@@ -101,11 +104,14 @@ class HomeController extends Controller
                 $visit->user_id=$user->id;
                 $visit->pharmacy_id=$pharmacy->id;
                 $visit->save();
+                $users=User::where('user_type','مدير')->get();
+                Notification::send($users, new VisitNotification($visit,$user,$pharmacy));
+
                 $response['messages']=["تم تسجيل الزيارة"];
                 $response['status']=true;
                 }
                 }
-               return response()->json($response);
+               return response()->json($response,200);
     
   }
 }

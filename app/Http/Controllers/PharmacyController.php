@@ -55,7 +55,7 @@ class PharmacyController extends Controller
         $this->validate($request, [
             'name' => 'required',
             'phone' => 'required',
-            'user_id' => 'required',
+            // 'user_id' => 'required',
         ]);
 
         $pharmacy =new pharmacy;
@@ -63,7 +63,7 @@ class PharmacyController extends Controller
         $pharmacy->phone=$request->phone;
         $pharmacy->lat=$request->lat;
         $pharmacy->lng=$request->lng;
-        $pharmacy->user_id=$request->user_id;
+        $pharmacy->user_id=isset($request->user_id)??null;
         $pharmacy->address=$request->address;
         $pharmacy->note=$request->note;
         if ($request->hasFile('image')) {

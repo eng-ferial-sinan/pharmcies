@@ -38,7 +38,7 @@
                    
                     <td>{{$visit->id}}</td>
                     <td>{{$visit->user?$visit->user->name:"-"}}</td>
-                    <td>{{$visit->pharmacy->user?$visit->pharmacy->user->name:"-"}}</td>
+                    <td>{{$visit->pharmacy?$visit->pharmacy->name:""}}</td>
                     <td>{{$visit->created_at->format('Y-m-d')}}</td>
                     <td>{{$visit->created_at->diffForHumans()}}</td>
                   </tr>                   

@@ -52,7 +52,7 @@ class OrderController extends Controller
         $response['messages'][]="الحساب غير موجود";
 
        }
-       return response()->json($response);
+       return response()->json($response,200);
     }
 
     /**
@@ -123,7 +123,7 @@ class OrderController extends Controller
                     {
                         $response['messages'][]="المنتج غير موجود";
                           $order->delete();
-                        return response()->json($response);
+                        return response()->json($response,200);
 
                     }
                 }
@@ -151,7 +151,7 @@ class OrderController extends Controller
        {
         $response['messages'][]="الحساب غير موجود";
        }
-       return response()->json($response);
+       return response()->json($response,200);
    
     }
 

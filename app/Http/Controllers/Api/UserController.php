@@ -40,7 +40,7 @@ class UserController extends Controller
                   $deleted['medicines']= medicine::withTrashed()->select('id')->whereNotNull('deleted_at')->where('updated_at','>',$medicine_date)->get() ;
                   $deleted['settings']= setting::withTrashed()->select('id')->whereNotNull('deleted_at')->where('updated_at','>',$setting_date)->get() ;
 
-        return response()->json(array('data'=>$data,'deleted'=>$deleted ));
+        return response()->json(array('data'=>$data,'deleted'=>$deleted ),200);
     }
 
     public function login(Request $request)
@@ -70,7 +70,7 @@ class UserController extends Controller
 			$response['status']=true;
          //    $response['user']['addresses']=$user->addresses;
          }
-         return response()->json($response);
+         return response()->json($response,200);
     }
 
          public function register(Request $request)
@@ -132,7 +132,7 @@ class UserController extends Controller
 			$response['user']=$User;
 			//    $response['user']['addresses']=$user->addresses;
 	   }
-		return response()->json($response);
+		return response()->json($response,200);
          }
 
              public function dataUser(Request $request)
@@ -150,7 +150,7 @@ class UserController extends Controller
                  $response['pharmacy']=$user->pharmacy;
                  $response['status']=true;
 	                }
-	          return response()->json($response);
+	          return response()->json($response,200);
 			 
 	       }
            
@@ -169,6 +169,6 @@ class UserController extends Controller
 									$response['messages']="الحساب غير موجود";
 									$response['status']=false;
 				}
-				return response()->json($response);
+				return response()->json($response,200);
              }
 }
