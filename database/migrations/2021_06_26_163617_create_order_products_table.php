@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDetailsTable extends Migration
+class CreateOrderProductsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,14 @@ class CreateDetailsTable extends Migration
      */
     public function up()
     {
-        Schema::create('details', function (Blueprint $table) {
+        Schema::create('order_products', function (Blueprint $table) {
             $table->id();
-            $table->longText("medicine")->nullable(true);
-            $table->integer("medicine_id")->unsigned();
+            $table->longText("product")->nullable(true);
+            $table->integer("product_id")->unsigned();
             $table->integer('price')->default(0);
             $table->integer("count")->default(0);
             $table->integer("sum")->default(0);
             $table->integer("order_id")->unsigned();
-            
             $table->timestamps();
             $table->softDeletes(); 
 
@@ -35,6 +34,6 @@ class CreateDetailsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('details');
+        Schema::dropIfExists('order_products');
     }
 }

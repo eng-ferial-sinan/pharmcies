@@ -6,16 +6,15 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use App\Notifications\OffersNotification;
-use Illuminate\Notifications\Notification;
-use App\Notifications\OrderNotification;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Auth;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
     use Notifiable;
     use HasFactory,SoftDeletes;
+    use HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -26,7 +25,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'user_type',
+        'token',
+        'phone',
+        'url'
     ];
 
     /**
@@ -47,41 +48,17 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    public function pharmacy()
-    {
-        return $this->hasOne('App\Models\Pharmacy');
-    }
+    
     public function routeNotificationForOneSignal()
     {
         return ['include_external_user_ids' => [(string)$this->id]];
     }
-    public static function hasPermission($name)
-    {
-        $ret = false;
-        $user = Auth::user();
-        $permission = permission::where('name', '=', $name)->first();
-        $user_permission = user_permission::where('permission_id',$permission->id)->where('user_id',$user->id)->first();
-
-       if ($user_permission)
-       $ret = true;
-
-        return $ret;
-    }
-    public function apiTokens()
-    {
-    	return $this->hasOne(usertoken::class);
-    }
-
+    
     public function generateToken()
     {
         $token = bin2hex(random_bytes(16));
-        while (usertoken::where('token', $token)->count() > 0) {
-            $token = bin2hex(random_bytes(16));
-        }
-        usertoken::where('user_id', $this->id)->delete();
-        return usertoken::create([
+        return $this->update([
             'token' => $token,
-            'user_id' => $this->id
         ]);
     }
 }

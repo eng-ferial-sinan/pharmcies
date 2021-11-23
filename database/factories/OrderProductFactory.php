@@ -1,0 +1,30 @@
+<?php
+
+namespace Database\Factories;
+
+use App\Models\OrderProduct;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+class OrderProductFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = OrderProduct::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            'price' => rand(0,100) ,
+            'count' => rand(0,100) ,
+            'sum' => rand(0,100) ,
+        ];
+    }
+}

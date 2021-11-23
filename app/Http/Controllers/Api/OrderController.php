@@ -4,11 +4,10 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\usertoken;
-use App\Models\order;
-use App\Models\detail;
+use App\Models\Order;
 use App\Models\User;
-use App\Models\medicine;
-use App\Models\Pharmacy;
+use App\Models\OrderProduct;
+use App\Models\Product;
 use App\Notifications\OrderNotification;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Notification;
@@ -28,21 +27,10 @@ class OrderController extends Controller
         $response['status']=false;
         $token=$request->header('token');
 
-        $usertoken=usertoken::where('token',$token)->first();
-        if($usertoken)
+        $user=User::where('token',$token)->first();
+        if($user)
         {
-
-         $user_id=$usertoken->user_id;
-         $user=User::find($user_id);
-         if($user->user_type !='صيدلية')
-         {
-         $order = order::with('details')->where('user_id',$user->id)->where('updated_at','>',$order_date)->get();
-         }else
-         {
-            if($user->pharmacy)
-         $order = order::with('details')->where('pharmacy_id',$user->pharmacy->id)->where('updated_at','>',$order_date)->get();
-         }
-         $response['user']=$user;
+         $order = Order::with('orderProduct')->where('user_id',$user->id)->where('updated_at','>',$order_date)->get();
          $response['orders']=$order;
          $response['status']=true;
          $response['messages'][]="الطلبيات";
@@ -77,47 +65,48 @@ class OrderController extends Controller
         $response['data']=array();
         $response['status']=false;
         $token=$request->header('token');
-        $usertoken=usertoken::where('token',$token)->first();
-        if($usertoken)
+        $user=User::where('token',$token)->first();
+        if($user)
         {
             $validator = Validator::make($request->all(), [
-                'detalis' => 'required|string',
+                'products' => 'required|string',
+                'address' => 'required|string',
+                'lat' => 'required',
+                'lng' => 'required',
+                'delivery_price' => 'required',
             ]);
     
             if ($validator->fails()) {
                 return response()->json(['status'=>$status ,'data'=>array() ,'messages'=>$validator->errors()->all()],200);
             }
-         $user_id=$usertoken->user_id;
-         $user=User::find($user_id);
-         if($user->user_type !='صيدلية')
-         {
-            return response()->json(['status'=>$status ,'data'=>array() ,'messages'=>['لايمكنك الطلب']],200);
-         }
-        if($user->pharmacy)
-        {
-            $order=new order;
+
+            $order=new Order;
             $order->status_id=1;
-            $order->pharmacy_id=$user->pharmacy->id;
+            $order->user_id=$user->id;
+            $order->address=$request->address;
+            $order->lat=$request->lat;
+            $order->lng=$request->lng;
+            $order->delivery_price=$request->delivery_price;
             $order->save();
             $total_sum=0;
 
-        $detalis=json_decode($request->detalis,true);
+           $products=json_decode($request->products,true);
 
-        foreach ($detalis as $datat) 
-                {
+            foreach ($products as $p) 
+            {
 
-                    $medicine=medicine::find($datat['id']);
-                    if($medicine)
+                    $product=Product::find($p['id']);
+                    if($product)
                     {
-                    $detail=new detail;
-                    $detail->order_id=$order->id;
-                    $detail->medicine_id=$datat['id'];
-                    $detail->medicine=json_encode($medicine);
-                    $detail->count=$datat['count'];
-                    $detail->price=$medicine->price;
-                    $detail->sum=($datat['count']*$medicine->price);
-                    $detail->save();
-                    $total_sum+=($datat['count']*$medicine->price);
+                    $order_product=new OrderProduct();
+                    $order_product->order_id=$order->id;
+                    $order_product->product_id=$p['id'];
+                    $order_product->product=json_encode($product);
+                    $order_product->count=$p['count'];
+                    $order_product->price=$product->price;
+                    $order_product->sum=($p['count']*$product->price);
+                    $order_product->save();
+                    $total_sum+=($p['count']*$product->price);
                      }
                       else
                     {
@@ -126,26 +115,17 @@ class OrderController extends Controller
                         return response()->json($response,200);
 
                     }
-                }
+            }
         
-            $order->total_pice=$total_sum;
+            $order->sub_total=$total_sum;
+            $order->total=$order->delivery_price+$total_sum;
             $order->save();
-            $order=order::with(['details','status'])->find($order->id);
-            $pharmacy=$user->pharmacy;
-            $pharmacy->order_count=$pharmacy->order_count+1;
-            $pharmacy->save();
-            $users=User::where('user_type','مدير')->get();
-            Notification::send($users, new OrderNotification($order,$user,$pharmacy,$order->status));       
-            $response['data']['user']=$user;
+            $order=order::with(['orderProduct','status'])->find($order->id);
+            $users=User::role('admin')->get();
+            Notification::send($users, new OrderNotification($order));       
             $response['data']['order']=$order;
             $response['status']=true;
             $response['messages'][]="تم انشاء الطلبية ";
-            
-        }else
-        {
-            $response['messages'][]="الصيدلية غير موجود";
- 
-        }
 
        }else
        {
@@ -186,58 +166,9 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $response['data']=array();
-        $response['status']=false;
-        $token=$request->header('token');
-        $usertoken=usertoken::where('token',$token)->first();
-        if(!$usertoken)
-        {
-            $response['messages']=["يجب تسجيل الدخول"];
-            return response()->json($response,200);
-        }
-        $validator = Validator::make($request->all(), [
-            'status' => 'required|string',            
-        ]);
-
-        if ($validator->fails()) {
-             $response['messages']=$validator->errors()->all();
-             return response()->json($response,200);
-            }
-
-        $order = order::find($id);
-        if(!is_null($order))
-        {
-        $order->status_id=$request->status;
-        $order->save();
-        $order->refresh();
-        if(isset($request->lat )&& isset($request->lng))
-        {
-            $user=$usertoken->user;
-            $user->lat=$request->lat;
-            $user->lng=$request->lng;
-            $user->save();
-        }
-        $users=User::where('user_type','مدير')->get();
-        $order = order::with(['user','pharmacy','status'])->find($id);
-        // dd($order->status);
-        foreach($users as $user)
-        {
-                try {
-                    Notification::send($user, new OrderNotification($order,$order->pharmacy->user,$order->pharmacy,$order->status));
-                    } catch (\Exception $error) {
-
-                    }
-        }
-        $response['data']=$order;
-        $response['status']=true;
-        $response['messages'][]="تم تعير الحالة";
-        }else
-        {
-        $response['messages'][]="الحساب غير موجود";
-
-        }
-      return response()->json($response ,200);
-        }
+        
+        
+    }
 
     /**
      * Remove the specified resource from storage.

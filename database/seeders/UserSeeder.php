@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -15,16 +17,17 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        //
-        DB::table('users')->insert([
-            'name' => 'Admin',
-            'email' => 'admin@gmail.com',
-            'phone' => '774452212',
-            'password' => Hash::make('123456'),
-            'address' => 'صنعاء',
-            'user_type' => 'مدير',
-            'created_at' =>now(),
-            'updated_at' => now(),
-        ]);
+        try {
+            $user = User::create([
+                'name' => 'Admin',
+                'email' => 'admin@gmail.com',
+                'password' => bcrypt('123456'),
+                'email_verified_at' => Carbon::now(),
+
+            ]);
+            $user->assignRole('admin');
+        } catch (\Exception $exception) {
+            //do nothing
+        }
     }
 }

@@ -6,19 +6,19 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class detail extends Model
+class OrderProduct extends Model
 {
     use HasFactory,SoftDeletes;
 
     public function order()
     {
-        return $this->belongsTo('App\Models\order');
+        return $this->belongsTo('App\Models\Order');
     }
-    public function medicined()
+    public function products()
     {
-        return $this->belongsTo('App\Models\medicine','medicine_id');
+        return $this->belongsTo('App\Models\Product','product_id');
     }
-    public function getMedicineAttribute($value)
+    public function getProductAttribute($value)
     {
         return  json_decode($value);
     }

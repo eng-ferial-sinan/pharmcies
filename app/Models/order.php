@@ -6,25 +6,21 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class order extends Model
+class Order extends Model
 {
     use HasFactory,SoftDeletes;
 
 
-    public function details()
+    public function orderProduct()
     {
-        return $this->hasMany('App\Models\detail');
+        return $this->hasMany('App\Models\OrderProduct');
     }
     public function user()
     {
         return $this->belongsTo('App\Models\User');
     }
-    public function pharmacy()
-    {
-        return $this->belongsTo('App\Models\Pharmacy');
-    }
     public function status()
     {
-        return $this->belongsTo('App\Models\status');
+        return $this->belongsTo('App\Models\Status');
     }
 }

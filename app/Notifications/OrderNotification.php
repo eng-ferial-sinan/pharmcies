@@ -3,13 +3,8 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use App\Models\order;
-use App\Models\Pharmacy;
-use App\Models\User;
-use App\Models\status;
+use App\Models\Order;
 use NotificationChannels\OneSignal\OneSignalChannel;
 use NotificationChannels\OneSignal\OneSignalMessage;
 
@@ -23,17 +18,11 @@ class OrderNotification extends Notification
      * @return void
      */
     private $order;
-    private $user;
-    private $pharmacy;
-    private $status;
 
-    public function __construct(order $order, User $user, Pharmacy $pharmacy,status $status)
+    public function __construct(order $order)
     {
 
         $this->order=$order;
-        $this->user=$user;
-        $this->pharmacy=$pharmacy;
-        $this->status=$status;
         //
     }
 
@@ -53,31 +42,17 @@ class OrderNotification extends Notification
     {
         $url = route('order.show', $this->order->id);
 
-        if($this->status->id==1)
-        {
            return OneSignalMessage::create()
             ->setSubject("الطلب رقم {$this->order->id} طلب جديد.")
             ->setBody("اضغط هنا لمعرفة المزيد .")
-            ->setData('الصيدلية ', $this->pharmacy->name)
             ->setUrl($url);
-        }else
-        {
-            return OneSignalMessage::create()
-            ->setSubject("الطلب رقم {$this->order->id} تم تغير حالة.")
-            ->setBody("اضغط هنا لمعرفة المزيد .")
-            ->setData('الحالة ', $this->status->name)
-            ->setUrl($url);
-        }
     }
     public function toDatabase($notifiable)
     {
         return [
             'id'=>$this->order->id,
-            'pharmacy'=>$this->pharmacy->name,
-            'user'=>$this->user->name,
-            'driver'=>$this->order->user?$this->order->user->name:'',
-            'price'=>$this->order->total_pice,
-            'status'=>$this->status->name,
+            'user'=>$this->order->user?$this->order->user->name:'',
+            'date'=>$this->order->created_at,
         ];
     }
     /**
@@ -88,15 +63,7 @@ class OrderNotification extends Notification
      */
     public function toMail($notifiable)
     {
-        return (new MailMessage)
-                    ->greeting('طلب جديد ')
-                    ->line('  رقم الطلبية: '.$this->order->id)
-                    ->line('الصيدلية  : '.$this->pharmacy->name)
-                    ->line('الزبون : '.$this->user->name)
-                    ->line('المبلغ : '.$this->order->total_pice)
-                    ->action('تفاصيل اكثر ', url('order/'.$this->order['id']))
-                    ->line('                       ')
-                    ->line('شكرا لاستخدامك تطبيقانا!');
+        
     }
 
     /**

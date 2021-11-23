@@ -16,12 +16,15 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-          // $table->string("address")->nullable(true);
+            $table->string("address")->nullable(true);
+            $table->string("lat")->nullable(true);
+            $table->string("lng")->nullable(true);
             $table->integer("status_id")->unsigned();
-            $table->integer("total_pice")->nullable(true);
-            $table->integer("pharmacy_id")->unsigned();
+            $table->integer("sub_total")->nullable(true);
+            $table->integer("delivery_price")->nullable(true);
+            $table->integer("total")->nullable(true);
             $table->integer("user_id")->unsigned()->Nullable();
-            
+            $table->integer("driver_id")->nullable(true);
             $table->timestamps();
             $table->softDeletes(); 
 
