@@ -35,7 +35,7 @@
         {{Form::text('name', $item->name , ['class' => 'form-control', 'placeholder' => 'الاسم','required'=>true])}}
         </div>
         @php
-        $categories=\App\Models\category::all();
+        $categories=\App\Models\Category::all();
         @endphp
         
         

@@ -27,7 +27,6 @@ class RoleSeeder extends Seeder
 
         $role1->givePermissionTo('list settings');
         $role1->givePermissionTo('edit settings');
-        $role1->givePermissionTo('show settings');
 
         $role1->givePermissionTo('add category');
         $role1->givePermissionTo('edit category');

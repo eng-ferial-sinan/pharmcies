@@ -9,4 +9,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Setting extends Model
 {
     use HasFactory,SoftDeletes;
+    
+    public function getImageAttribute($value)
+    {
+        return $value?url($value):url("no_image.jpg");
+    }
 }

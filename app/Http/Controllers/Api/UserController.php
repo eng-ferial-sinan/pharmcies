@@ -3,13 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
-use App\Models\setting ;
-use App\Models\medicine ;
-use App\Models\Category;
 use App\Models\User;
-use App\Models\Pharmacy;
-use App\Models\Order;
-use App\Models\usertoken;
 use App\Http\Controllers\Controller;
 use DB ;
 use Auth;
@@ -82,7 +76,7 @@ class UserController extends Controller
 	   if ($result) {
 			$Users=Auth()->user();
 			$Users->generateToken();
-			$response['user']=$Users;
+			$response['usser']=$Users;
 	    }
 
 		return response()->json($response,200);
@@ -93,7 +87,7 @@ class UserController extends Controller
 	   $response['status']=false;
 			   
 	   $token=$request->header('token');
-	   $user=user::where('token',$token)->first();
+	   $user=User::where('token',$token)->first();
 	   if ($user) 
 	   {
 		$validator = Validator::make($request->all(), [
@@ -127,7 +121,7 @@ class UserController extends Controller
 		$response['status']=false;
 		$token=$request->header('token');
 
-		$user=user::where('token',$token)->first();
+		$user=User::where('token',$token)->first();
 		if ($user) 
 		{
 			$response['user']=$user;
@@ -144,7 +138,7 @@ class UserController extends Controller
 		$response['status']=false;
 		$token=$request->header('token');
 
-		$usertoken=user::where('token',$token)->first();
+		$usertoken=User::where('token',$token)->first();
 		if ($usertoken)
 			{
 			$usertoken->update([

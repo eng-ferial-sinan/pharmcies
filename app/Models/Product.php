@@ -12,9 +12,9 @@ class Product extends Model
 
     public function getImageAttribute($value)
     {
-        return $value?url($value):url("products.jpg");
+        return $value?url($value):url("no_image.jpg");
     }
-
+    
     public function category()
     {
         return $this->belongsTo('App\Models\Category');

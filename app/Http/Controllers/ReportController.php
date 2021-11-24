@@ -2,14 +2,10 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
-use App\Models\User;
-use App\Models\order;
-use App\Models\detail;
+use App\Models\Order;
 use App\Models\OrderProduct;
-use App\Models\Pharmacy;
 use App\Models\Product;
-use App\Models\status;
-use App\Models\visit;
+use App\Models\Status;
 use Illuminate\Support\Facades\DB;
 
 class ReportController extends Controller
@@ -29,9 +25,15 @@ class ReportController extends Controller
         $products=Product::pluck('name','id')->all();
 
         $filter = $request->all() ;
-        $pharmacy_info= null ; 
+        $product_info= null ; 
         $items= OrderProduct::orderBy('id','desc') ;
-        
+
+          if(isset($filter['product_id'])) 
+          {     
+            $items=$items->where('product_id',$filter['product_id']);
+            $product_info=Product::find($filter['product_id']);
+          }
+
         if(isset($filter['formdate'])) 
               $items=$items->whereDate('created_at','>=',$filter['formdate'] ) ;
 
@@ -44,6 +46,14 @@ class ReportController extends Controller
                $order_ids=Order::whereIn('status_id',$filter['status_id'])->pluck('id');
                $items=$items->whereIn('order_id',$order_ids) ;
         }
+        
+        $items=$items->select([
+          DB::raw('SUM(price) as price'),
+          DB::raw('SUM(sum) as sum'),
+          DB::raw('SUM(count) as count'),
+          DB::raw('product_id')
+      ])->groupBy('product_id');  
+      
         $total_count=$items->sum('count'); 
         $total_price=$items->sum('price'); 
         $total_sum=$items->sum('sum'); 
@@ -51,7 +61,12 @@ class ReportController extends Controller
 
       return view('admin.reports.orders')->with('items',$items)
       ->with('status',$status)->with('filter',$filter)
-      ->with('total_count',$total_count)->with('total_price',$total_price)->with('total_sum',$total_sum);
+      ->with('total_count',$total_count)
+      ->with('total_price',$total_price)
+      ->with('total_sum',$total_sum)
+      ->with('product_info',$product_info)
+      ->with('products',$products)
+      ;
     }
 
     /**

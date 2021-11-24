@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
-use App\Models\category;
+use App\Models\Category;
 
 class ProductController extends Controller
 {
@@ -15,7 +15,7 @@ class ProductController extends Controller
     }
     public function index()
     {
-       $categories=category::pluck('name','id')->all();
+       $categories=Category::pluck('name','id')->all();
         $product = Product::all();
       return view('admin.product.index')->with('products',$product)
       ->with('categories',$categories);

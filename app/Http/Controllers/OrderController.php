@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\order;
+use App\Models\Order;
 
 use Illuminate\Http\Request;
 
@@ -44,7 +44,7 @@ class OrderController extends Controller
     }
     public function setUser(Request $request)
     {
-        $order =order::find($request->order_id);
+        $order =Order::find($request->order_id);
         $order->driver_id = $request->user_id ;
         $order->status_id = 3 ;
         $order->save() ;

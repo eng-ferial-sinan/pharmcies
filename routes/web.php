@@ -21,8 +21,8 @@ Route::resource('/product',App\Http\Controllers\ProductController::class);
 Route::get('/order/setStatus',[App\Http\Controllers\OrderController::class,'setStatus'])->name('order.setStatus');
 Route::get('/order/setUser',[App\Http\Controllers\OrderController::class,'setUser']);
 Route::resource('/order',App\Http\Controllers\OrderController::class);
-Route::post('/setting',[App\Http\Controllers\SettingController::class, 'update']);
-Route::get('/setting', [App\Http\Controllers\SettingController::class, 'index']);
+Route::get('/settings', [App\Http\Controllers\SettingController::class, 'index']);
+Route::post('/settings',[App\Http\Controllers\SettingController::class, 'update']);
 Route::resource('/roles', App\Http\Controllers\RoleController::class);
 Route::get('/user/profile',[App\Http\Controllers\UserController::class, 'profiles']);
 Route::post('/profile/updated', [App\Http\Controllers\UserController::class, 'profile']);
@@ -37,4 +37,4 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'home'])->name('hom
 Route::get('/clear', [App\Http\Controllers\HomeController::class, 'clear'])->name('clear');
 
 Route::get('/reports', [App\Http\Controllers\ReportController::class,'index']);
-Route::get('/reports/driver', [App\Http\Controllers\ReportController::class,'driver']);
+// Route::get('/reports/driver', [App\Http\Controllers\ReportController::class,'driver']);

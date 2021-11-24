@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\setting;
+use App\Models\Setting;
 
 class SettingController extends Controller
 {
@@ -14,9 +14,9 @@ class SettingController extends Controller
     }
     public function index()
     {
-        $info = setting::first();
+        $info = Setting::first();
         if ($info==null) {
-            $info = new setting;
+            $info = new Setting;
         }
 
     return view('admin.setting.index')->with('info',$info);

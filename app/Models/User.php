@@ -54,6 +54,11 @@ class User extends Authenticatable
         return ['include_external_user_ids' => [(string)$this->id]];
     }
     
+    public function getUrlAttribute($value)
+    {
+        return $value?url($value):url("no_image.jpg");
+    }
+
     public function generateToken()
     {
         $token = bin2hex(random_bytes(16));

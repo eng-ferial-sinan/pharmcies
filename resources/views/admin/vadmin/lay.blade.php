@@ -39,7 +39,24 @@ $info= sitinfo();
 
   </head>
   <body class="app sidebar-mini rtl">
- 
+  <style>
+.app-header {
+    background-color: #7572b5;
+}
+.app-header__logo {
+    background-color: #2e46af;
+}
+.widget-small.info.coloured-icon .icon {
+    background-color: #7572b5;
+}
+.app-sidebar {
+    background-color: #212529;
+}
+.btn-info {
+    background-color: #7572b5;
+    border-color: #7572b5;
+}
+  </style>
     <!-- Navbar-->
     @include('admin.vadmin.header');
     <!-- Sidebar menu-->

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\category;
+use App\Models\Category;
 
 class CategoryController extends Controller
 {
@@ -14,7 +14,7 @@ class CategoryController extends Controller
     }
     public function index()
     {
-        $category = category::all();
+        $category = Category::all();
       return view('admin.category.index')->with('categorys',$category);
     }
     /**
@@ -82,7 +82,7 @@ class CategoryController extends Controller
             'sort' => 'required',
         ]);
 
-        $category = category::find($id);
+        $category = Category::find($id);
         $category->name=$request->name;
         $category->sort=$request->sort;
         if ($request->hasFile('image')) {
@@ -104,7 +104,7 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        $category =  category::find($id);
+        $category =  Category::find($id);
         $category->delete();
     return back()-> with('success','تم حذف  '.$category->name.'');
     }

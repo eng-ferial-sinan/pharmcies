@@ -2,6 +2,6 @@
 
 function sitinfo()
 {
-        $info = \App\Models\setting::first();
+        $info = \App\Models\Setting::first();
         return $info;
 }

@@ -12,7 +12,7 @@ class Category extends Model
 
     public function getImageAttribute($value)
     {
-        return $value?url($value):url("category.jpg");
+        return $value?url($value):url("no_image.jpg");
     }
 
 }

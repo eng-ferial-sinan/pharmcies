@@ -22,11 +22,11 @@ class HomeController extends Controller
        
                 $data=array() ;
                 $deleted=array() ;
-                $data['categories']= category::select('id','name','image','sort','updated_at as date')->where('updated_at','>',$category_date)->get() ;
+                $data['categories']= Category::select('id','name','image','sort','updated_at as date')->where('updated_at','>',$category_date)->get() ;
                 $data['products'] = Product::select('id','name','image','category_id','price','sort','updated_at as date')->where('updated_at','>',$product_date)->get();
                 $data['settings']= Setting::select('id','nameAr','nameEn','email','address','phone','updated_at as date')->first();
                   //======================================== deleted
-                  $deleted['categories']= category::withTrashed()->select('id')->whereNotNull('deleted_at')->where('updated_at','>',$category_date)->get() ;
+                  $deleted['categories']= Category::withTrashed()->select('id')->whereNotNull('deleted_at')->where('updated_at','>',$category_date)->get() ;
                   $deleted['products']= Product::withTrashed()->select('id')->whereNotNull('deleted_at')->where('updated_at','>',$product_date)->get() ;
 
         return response()->json(array('data'=>$data,'deleted'=>$deleted ),200);

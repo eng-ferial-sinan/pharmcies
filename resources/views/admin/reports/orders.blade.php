@@ -2,7 +2,7 @@
 
 @section('title') - 
 
-حسابات الصيدليات   
+حسابات الطلبات   
 
 @endsection
 
@@ -25,15 +25,15 @@
                           <label for="name">الى تاريخ  </label>
                           <input type="date" name="todate" value="{{isset($filter['todate'])?$filter['todate']:date('Y-m-d')}}" class="form-control">
                         </div>
-                        <div class="form-group col-2" >
-                            {{Form::label('pharmacy_id','  الصيدلية  ')}}
-                            {{Form::select('pharmacy_id',$pharmacies,(isset($filter['pharmacy_id'])?$filter['pharmacy_id']:'') , ['class' => 'form-control demoSelect', 'placeholder' => ' الكل'])}}
+                        <div class="form-group col-md-2" >
+                            {{Form::label('product_id','  المنتج  ')}}
+                            {{Form::select('product_id',$products,(isset($filter['product_id'])?$filter['product_id']:'') , ['class' => 'form-control select2 ', 'placeholder' => ' الكل'])}}
                         </div> 
-                        <div class="form-group col-2">
+                        <div class="form-group col-md-2">
                             {{Form::label('status_id','حالة الطلب')}}
-                            {{Form::select('status_id[]',$status,(isset($filter['status_id'])?$filter['status_id']:'') , [ 'multiple'=>"multiple" ,'class' => 'form-control select2 demoSelect'])}}
+                            {{Form::select('status_id[]',$status,(isset($filter['status_id'])?$filter['status_id']:'') , [ 'multiple'=>"multiple" ,'class' => 'form-control select2 '])}}
                         </div>
-                        <div class="form-group col-2 pt-4 mt-1" >
+                        <div class="form-group col-md-2 pt-4 mt-1" >
                         <input id="btn" class="btn btn-primary form-control"  type="submit" value="عرض">    
                         </div>
                     </div>
@@ -48,12 +48,12 @@
                               <table class="table table-hover table-bordered">
                                     <thead>
                                       <tr>               
-                                        <th colspan="1"> اجمالي عدد الادوية : {{$total_count}}</th>
-                                        <th colspan="1">   اجمالي سعر الادوية: {{number_format($total_price)}}</th>
+                                        <th colspan="1"> اجمالي عدد المنتجات : {{$total_count}}</th>
+                                        <th colspan="1">   اجمالي سعر المنتجات: {{number_format($total_price)}}</th>
                                         <th colspan="2">   الاجمالي  الكلي   : {{number_format($total_sum)}}</th>
                                       </tr>
                                       <tr>               
-                                        <th colspan="2">  الصيدلية :{{$pharmacy_info?$pharmacy_info->name : 'غير محدد'}}</th>
+                                        <th colspan="2">  المنتج :{{$product_info?$product_info->name : 'غير محدد'}}</th>
                                         <th colspan="2">الفترة:{{isset($filter['fromdate'])?$filter['fromdate']:date('Y-m-d')}} - {{isset($filter['todate'])?$filter['todate']:date('Y-m-d')}}</th>
                                       </tr>
                                   <thead>
@@ -70,7 +70,7 @@
                                 <tbody>
                                   @foreach($items as $item)
                                   <tr>
-                                  <td>{{$item->medicined?$item->medicined->name:'='}}</td>
+                                  <td>{{$item->products?$item->products->name:'='}}</td>
                                   <td>{{$item->count}}</td>
                                   <td>{{number_format($item->price)}} </td>
                                   <td>{{number_format($item->sum)}}</td> 
