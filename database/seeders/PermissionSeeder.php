@@ -27,9 +27,7 @@ class PermissionSeeder extends Seeder
             ['name' => 'delete role','guard_name'=> 'web'],
             ['name' => 'list roles','guard_name'=> 'web'],
 
-            ['name' => 'list settings','guard_name'=> 'web'],
-            ['name' => 'edit settings','guard_name'=> 'web'],
-            ['name' => 'show settings','guard_name'=> 'web'],
+            ['name' => 'list report','guard_name'=> 'web'],
 
             ['name' => 'list categories','guard_name'=> 'web'],
             ['name' => 'add category','guard_name'=> 'web'],
@@ -40,12 +38,6 @@ class PermissionSeeder extends Seeder
             ['name' => 'add product','guard_name'=> 'web'],
             ['name' => 'edit product','guard_name'=> 'web'],
             ['name' => 'delete product','guard_name'=> 'web'],
-
-            ['name' => 'list drivers','guard_name'=> 'web'],
-            ['name' => 'add driver','guard_name'=> 'web'],
-            ['name' => 'edit driver','guard_name'=> 'web'],
-            ['name' => 'delete driver','guard_name'=> 'web'],
-            ['name' => 'change status','guard_name'=> 'web'],
 
             ['name' => 'list settings','guard_name'=> 'web'],
             ['name' => 'edit settings','guard_name'=> 'web'],

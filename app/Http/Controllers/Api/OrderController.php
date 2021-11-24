@@ -121,7 +121,7 @@ class OrderController extends Controller
             $order->total=$order->delivery_price+$total_sum;
             $order->save();
             $order=order::with(['orderProduct','status'])->find($order->id);
-            $users=User::role('admin')->get();
+            $users=User::role('مدير')->get();
             Notification::send($users, new OrderNotification($order));       
             $response['data']['order']=$order;
             $response['status']=true;

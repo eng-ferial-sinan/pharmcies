@@ -52,8 +52,14 @@
                     <td><a href="/member/{{$user->id}}/edit" class="btn btn-default">{{$user->name}}</a></td>
                     <td><a href="/member/{{$user->id}}/edit" class="btn btn-default">{{$user->email}}
                      </td>
-                    <td> {{$user->user_type}}</a></td>
-                    <td>
+                     <td>
+                        @if(!empty($user->getRoleNames()))
+                        @foreach($user->getRoleNames() as $v)
+                       <a class="badge-success btn btn-default">{{ $v }}</a>
+                        @endforeach
+                       @endif    
+                   </td>                     
+                   <td>
                         <a href="/member/{{$user->id}}/edit" class="btn btn-default">
                         <i class="fa fa-edit"></i>
                         التحرير</a>

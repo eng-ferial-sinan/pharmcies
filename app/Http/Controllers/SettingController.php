@@ -21,14 +21,7 @@ class SettingController extends Controller
 
     return view('admin.setting.index')->with('info',$info);
     }
-    // public function index1()
-    // {
-    //     $info = setting::first();
-
-    // return view('admin.setting.index1')->with('info',$info);
-    // }
-
-
+   
     /**
      * Show the form for creating a new resource.
      *
@@ -80,34 +73,23 @@ class SettingController extends Controller
      */
     public function update(Request $request)
     {
-        $info = setting :: find($request->input('num'));
+        // dd(1);
+        $info = Setting::find($request->input('num'));
         $info->nameAr =  $request->input('nameAr');
         $info->nameEn =  $request->input('nameEn');
         $info->address =  $request->input('address');
         $info->phone =  $request->input('phone');
         $info->email =  $request->input('email');
-       
-        // if($request->hasFile("url")){
-        //     $image=$request->file('url');
-        //     $name=time().$image->getClientOriginalName();
-        //     Image::make($image->getRealPath())->interlace()->resize(230, 66)->save(public_path('/images/'. $name), 80);
-        //    $info->url=url('/images/'.$name);
-        //               // $smallpath= "/storage/users_thumb_".$fileNameToStore;
-        //         // Image::make($imagename)->resize(450, 350)->save( public_path($smallpath),100 );
-        //     }
-            
-
+        $info->lat =  $request->input('map_1');
+        $info->lng =  $request->input('map_2');
+        if ($request->hasFile('image')) {
+            $imagename = $request->file('image');
+            $fileNameToStore= "setting_" .time().'.jpg';
+            $imagename->move(public_path('setting/'), $fileNameToStore);
+            $info->image='/setting/'.$fileNameToStore;
+        }
         $info->save();
         return back()->with('success','تم حفظ  بنجاح');
-    }
-    public function update1(Request $request)
-    {
-        // $info = setting :: first();
-        // $info->f_title =  $request->input('f_title');
-        // $info->s_title =  $request->input('s_title');
-        // $info->desc =  $request->input('desc');
-        // $info->save();
-        // return back()->with('success','تم حفظ  بنجاح');
     }
 
     /**

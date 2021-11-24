@@ -70,32 +70,12 @@ switch($name)
             {{Form::label('title','  تاكيد كلمة المرور')}}
             {!! Form::text('confirm-password','', array('placeholder' => ' تاكيد كلمة المرور','class' => 'form-control')) !!}
         </div>
-        <div class="form-group col-md-4">
-          {{Form::label('permission','الصلاحيات')}}
-          <select name="permission[]" class="select2 w-100" multiple >
-            @foreach ($user_permission as $per)
-            <option value="{{$per->id}}" selected>
-               {{ roleName1($per->name)}}
-            </option>
-            @endforeach
-
-          @foreach ($permission as $item)
-          <option value="{{$item->id}}">
-             {{ roleName1($item->name)}}
-          </option>
-          @endforeach
-
-          </select>
-          {{-- {{Form::select('',$permission,null, [ 'multiple'=>"multiple" ,'class' => 'form-control select2'])}} --}}
-        </div>      
-
-        
-
         <div class="form-group">
-          {{-- {!! Form::select('roles', $roles,[], array('class' => 'form-control','multiple')) !!} --}}
-          {{Form::select('user_type',['مدير'=>'مدير','مدخل بيانات'=>'مدخل بيانات','مندوب طبي'=>'مندوب طبي','مندوب'=>'مندوب','صيدلية'=>'صيدلية'],$user->user_type, ['class' => 'custom-select', 'placeholder' => 'اختر نوع المستخدم','required'=>true])}}
-        </div>
-       
+          {{Form::label('title','الصلاحيات')}}
+          {{-- {!! Form::select('roles[]', $roles,$userRole, array('class' => 'form-control','multiple')) !!} --}}
+          {{Form::select('roles', $roles,$userRole, ['class' => 'custom-select', 'placeholder' => 'اختر نوع المستخدم','required'=>true])}}
+
+      </div>      
      
     
        

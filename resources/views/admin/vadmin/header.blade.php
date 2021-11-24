@@ -17,9 +17,7 @@
               <li><a class="app-notification__item {{($item->read_at ? '' : 'app-notification__unread')}}" href="/order/{{$item->data['id']}}"><span class="app-notification__icon"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x text-danger"></i><i class="fa fa-hdd-o fa-stack-1x fa-inverse"></i></span></span>
               <div >
                 <p class="app-notification__message">
-                   {{$item->data['pharmacy']}} : {{$item->data['user']}}
-                   <br>
-                   {{$item->data['driver']}} : {{$item->data['status']}}
+                    {{$item->data['user']}}
                   <br > {{$item->created_at->diffForHumans()}}</p>
               </div></a></li>
                 <?php $item->markAsRead() ?>

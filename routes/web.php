@@ -16,16 +16,14 @@ use Illuminate\Support\Facades\Route;
 
 
 Auth::routes();
-Route::resource('/visit',App\Http\Controllers\VisitController::class);
 Route::resource('/category',App\Http\Controllers\CategoryController::class);
-Route::resource('/pharmacy',App\Http\Controllers\PharmacyController::class);
-Route::resource('/medicine',App\Http\Controllers\MedicineController::class);
+Route::resource('/product',App\Http\Controllers\ProductController::class);
 Route::get('/order/setStatus',[App\Http\Controllers\OrderController::class,'setStatus'])->name('order.setStatus');
 Route::get('/order/setUser',[App\Http\Controllers\OrderController::class,'setUser']);
 Route::resource('/order',App\Http\Controllers\OrderController::class);
 Route::post('/setting',[App\Http\Controllers\SettingController::class, 'update']);
 Route::get('/setting', [App\Http\Controllers\SettingController::class, 'index']);
-Route::resource('/roles', App\Http\Controllers\PermissionController::class);
+Route::resource('/roles', App\Http\Controllers\RoleController::class);
 Route::get('/user/profile',[App\Http\Controllers\UserController::class, 'profiles']);
 Route::post('/profile/updated', [App\Http\Controllers\UserController::class, 'profile']);
 Route::post('/profile/updated/saveimage', [App\Http\Controllers\UserController::class, 'saveimage']);
@@ -38,5 +36,5 @@ Route::get('/members/{id}', [App\Http\Controllers\UserController::class, 'user']
 Route::get('/', [App\Http\Controllers\HomeController::class, 'home'])->name('home');
 Route::get('/clear', [App\Http\Controllers\HomeController::class, 'clear'])->name('clear');
 
-Route::get('/reports/representative', [App\Http\Controllers\ReportController::class,'representativeIndex']);
 Route::get('/reports', [App\Http\Controllers\ReportController::class,'index']);
+Route::get('/reports/driver', [App\Http\Controllers\ReportController::class,'driver']);

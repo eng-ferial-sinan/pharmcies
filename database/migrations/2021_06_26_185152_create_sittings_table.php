@@ -22,6 +22,7 @@ class CreateSittingsTable extends Migration
             $table->string('phone')->nullable($value = true); 
             $table->string("lat")->nullable(true);
             $table->string("lng")->nullable(true);
+            $table->string("image")->nullable(true);
             $table->timestamps();
             $table->softDeletes(); 
 

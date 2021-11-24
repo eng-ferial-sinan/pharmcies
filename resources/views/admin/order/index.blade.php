@@ -25,14 +25,13 @@
                   <tr>
                     <th>رقم الطلبية</th>
                     <th>الزبون </th>
-                    <th>الصيدلية </th>
-                    <th>المندوب </th>
+                    <th>السائق </th>
                     <th>حالة الطلبية</th>
                   
                     <th>عرض</th>
-                    @if (auth()->user()->hasPermission('order-delete'))
+                    @can ('edit order')
                     <th>-</th>
-                    @endif
+                    @endcan
                     {{-- @endcan --}}
 
                   </tr>
@@ -42,17 +41,15 @@
                  <tr>
                    
                     <td>{{$order->id}}</td>
-                    {{-- <td>{{$order->pharmacy_id}}</td> --}}
-                    <td>{{$order->pharmacy?($order->pharmacy->user?$order->pharmacy->user->name:"-"):"-"}}</td>
-                    <td>{{$order->pharmacy?$order->pharmacy->name:""}}</td>
-                    <td>{{$order->user?$order->user->name:"لم يتم تعين مندوب بعد"}}</td>
+                    <td>{{$order->user?$order->user->name:"-"}}</td>
+                    <td>{{$order->driver?$order->driver->name:"لم يتم تعين سائق بعد"}}</td>
                     <td>{{$order->status?$order->status->name:""}}</td>
 
               <td>
               <a href="\order\{{$order->id}}" class="btn btn-success ">
               <i class="fa fa-eye"></i></a>
                     </td>
-                    @if (auth()->user()->hasPermission('order-delete'))
+                    @can ('edit order')
               <td>
                     {!!Form::open(['action' => ['App\Http\Controllers\OrderController@destroy',$order->id],'method'=>'POST', 'class'=>'pull-right','onsubmit' => 'return ConfirmDelete()'])!!}
                     {{Form::hidden('_method','DELETE')}}
@@ -60,7 +57,7 @@
                        </button>
                        {!!Form::close()!!}
                     </td>
-                    @endif
+                    @endcan
                   </tr>                   
                   @endforeach
                    

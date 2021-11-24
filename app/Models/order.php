@@ -19,6 +19,10 @@ class Order extends Model
     {
         return $this->belongsTo('App\Models\User');
     }
+    public function driver()
+    {
+        return $this->belongsTo('App\Models\User','driver_id');
+    }
     public function status()
     {
         return $this->belongsTo('App\Models\Status');

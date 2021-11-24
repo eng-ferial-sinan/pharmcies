@@ -49,7 +49,7 @@ class UserFactory extends Factory
         return $this->afterMaking(function (User $user) {
             //
         })->afterCreating(function (User $user) {
-            $user->assignRole('customer');
+            $user->assignRole('عميل');
         });
     }
 }

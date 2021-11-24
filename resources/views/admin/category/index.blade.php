@@ -14,11 +14,11 @@
 
     <div class="row">
         <div class="col-md-12  " style="text-align: center;">
-                @if (auth()->user()->hasPermission('category-create'))
-                <a href="" data-toggle="modal" data-target="#add" class="btn btn-info float-left">
+          @can('add category')
+          <a href="" data-toggle="modal" data-target="#add" class="btn btn-info float-left">
                     <i class="fa fa-plus fa-2x"></i> اضافة صنف
                 </a>
-            @endif
+            @endcan
 
     </div>
 </div>
@@ -33,20 +33,26 @@
                         <thead>
                        <tr>
                     <th>#</th>
+                    <th>#</th>
                     <th>الصنف</th>
+                    @can('edit category')
                     <th>-</th>
+                    @endcan
+                    @can('delete category')
                     <th>-</th>
+                    @endcan
                 </tr>
                 </thead>
                 <tbody>  
                     @foreach($categorys as $category)
                     <tr>
                     <td>{{$category->id}} </td>
+                    <td><img src="{{$category->image}}" height="80" width="75"></td>
+
                     <td>{{$category->name}}</a></td>
 
-                    {{-- @if (auth()->user()->hasPermission('category-edit')) --}}
             
-                    {{-- @can('category-edit') --}}
+                    @can('edit category')
                     <td> <a  href="" data-toggle="modal" data-target="#edit{{$category->id}}" class="btn btn-warning mr-3 ml-2">
                         <i class="fa fa-edit fa-2x"></i>
                         </a>
@@ -68,6 +74,17 @@
 {{Form::label('name','اسم الصنف')}}
 {{Form::text('name', $category->name, ['class' => 'form-control', 'placeholder' => 'الاسم'])}}
 </div>
+<div class="form-group">
+  {{Form::label('sort',' الترتيب')}}
+  {{Form::number('sort',$category->sort, ['class' => 'form-control', 'placeholder' => 'الترتيب','required'=>true])}}
+  </div>
+
+<div class="form-group">
+  <img src="{{$category->image}}" class="img-rounded" height="50" width="70" alt="{{$category->name}}">
+   <br/>
+    {{Form::label('image','صورة معبرة')}}
+     {{Form::file('image')}}
+ </div>
 {{Form::hidden('_method','PUT')}}
 
 </div>
@@ -82,13 +99,11 @@
 </div>
 
 </td>
-                    {{-- @endif --}}
                      
-                    {{-- @endcan --}}
+                    @endcan
                     
-                    {{-- @if (auth()->user()->hasPermission('category-delete')) --}}
                 
-                    {{-- @can('category-delete') --}}
+                    @can('delete category')
                     <td>
 
  
@@ -99,9 +114,8 @@
                        
                         
                     </td>
-                    {{-- @endif --}}
 
-                    {{-- @endcan --}}
+                    @endcan
       
                 </tr>
                     @endforeach 
@@ -136,7 +150,16 @@
   {{Form::label('name','اسم الصنف ')}}
   {{Form::text('name', '', ['class' => 'form-control', 'placeholder' => 'الاسم','required'=>true])}}
   </div>
+  <div class="form-group">
+    {{Form::label('sort',' الترتيب')}}
+    {{Form::number('sort',0, ['class' => 'form-control', 'placeholder' => 'الترتيب','required'=>true])}}
+    </div>
   
+  <div class="form-group">
+     <br/>
+      {{Form::label('image','صورة معبرة')}}
+       {{Form::file('image')}}
+   </div>
            </div>
         <div class="modal-footer justify-content-between">
           <button type="submit" class="btn btn-primary">حفظ </button>

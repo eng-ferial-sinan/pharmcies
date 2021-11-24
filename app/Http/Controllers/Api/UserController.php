@@ -75,7 +75,7 @@ class UserController extends Controller
 	   $user->password= Hash::make($data['password']);
 	   $user->phone=$data['phone'];
 	   $user->save();
-	   $user->assignRole('customer');
+	   $user->assignRole('عميل');
 
 	   $result=Auth()->guard()->attempt(['email'=>$data['email'],'password'=>$data['password']]);
 	   $response['status']=$result;

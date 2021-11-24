@@ -24,9 +24,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        // $category =new category;
-        // return view('admin.category.form')->with('item',$category);
-    }
+        }
 
     /**
      * Store a newly created resource in storage.
@@ -38,10 +36,12 @@ class CategoryController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
+            'sort' => 'required',
         ]);
 
         $category =new category;
         $category->name=$request->name;
+        $category->sort=$request->sort;
         $category->save();
         return redirect()->back()
                         ->with('success','تم انشاء ');
@@ -79,10 +79,18 @@ class CategoryController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
+            'sort' => 'required',
         ]);
 
         $category = category::find($id);
         $category->name=$request->name;
+        $category->sort=$request->sort;
+        if ($request->hasFile('image')) {
+            $imagename = $request->file('image');
+            $fileNameToStore= "category_" .time().'.jpg';
+            $imagename->move(public_path('categories/'), $fileNameToStore);
+            $category->image='/categories/'.$fileNameToStore;
+        }
         $category->save();
 
         return  back()-> with('success','تم حفظ التعديلات ');

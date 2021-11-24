@@ -1,6 +1,6 @@
 @extends('admin.vadmin.lay')
 @section('title') - 
-إدارة الادوية
+إدارة  المنتجات
 @endsection
 
 @section('content')
@@ -9,15 +9,16 @@
                
                   <div class="row">
                 <div class="col-md-12">
-                  @if (auth()->user()->hasPermission('medicine-create'))
-       <a href="/medicine/create" class="btn btn-info float-left">
-                                       <i class="fa fa-plus fa-2x"></i> اضافة دواء
-                                       </a>
-                      @endif
+                  @can('add product')
+                  <a href="/product/create" class="btn btn-info float-left">
+                                       <i class="fa fa-plus fa-2x"></i> اضافة منتج
+                                       
+                    </a>
+                  @endcan
 
        </div></div>
       
-       @if(count($medicines)>0)
+       @if(count($products)>0)
        <div class="row">
         <div class="col-md-12">
           <div class="tile">
@@ -31,46 +32,43 @@
                     <th>الاسم</th>
                     <th>الصنف</th>
                     <th>السعر</th>
-                    <th>تاريخ الانتاج</th>
-                    <th>تاريخ الانتهاء</th>
-                    @if (auth()->user()->hasPermission('medicine-edit'))
+                  
+                    @can('edit product')
                     <th>تعديل</th>
-                    @endif
-                    @if (auth()->user()->hasPermission('medicine-delete'))
+                    @endcan
+                    @can('delete product')
                     <th>حذف</th>
-                    @endif
+                    @endcan
 
                   </tr>
                 </thead>
                 <tbody>
-                @foreach($medicines as $medicine)
+                @foreach($products as $product)
                  <tr>
-                  <td>{{$medicine->id}}</td>
-                  <td><img src="{{$medicine->image}}" height="80" width="75"></td>
-                    <td>{{$medicine->name}}</td>
-                    <td>{{$medicine->category?$medicine->category->name:''}}</td>
-                    <td>{{$medicine->price}}</td>
-                    <td>{{$medicine->production_date}}</td>
-                    <td>{{$medicine->expiry_date}}</td>
+                  <td>{{$product->id}}</td>
+                  <td><img src="{{$product->image}}" height="80" width="75"></td>
+                    <td>{{$product->name}}</td>
+                    <td>{{$product->category?$product->category->name:''}}</td>
+                    <td>{{$product->price}}</td>
+                  @can('edit product')
                     <td> 
-                       @if (auth()->user()->hasPermission('medicine-edit'))
 
-                      <a href="/medicine/{{$medicine->id}}/edit" class="btn btn-info float-left">
+                      <a href="/product/{{$product->id}}/edit" class="btn btn-info float-left">
                                                       <i class="fa fa-edit fa-2x"></i> تعديل
                                                       </a>
-                                                      @endif
+                                                      
                                        
                                                     </td>
-
-              @if (auth()->user()->hasPermission('medicine-delete'))
-              <td>
-                    {!!Form::open(['action' => ['App\Http\Controllers\MedicineController@destroy',$medicine->id],'method'=>'POST', 'class'=>'pull-right','onsubmit' => 'return ConfirmDelete()'])!!}
+               @endcan
+               @can('delete product')
+               <td>
+                    {!!Form::open(['action' => ['App\Http\Controllers\ProductController@destroy',$product->id],'method'=>'POST', 'class'=>'pull-right','onsubmit' => 'return ConfirmDelete()'])!!}
                     {{Form::hidden('_method','DELETE')}}
                        <button class ="btn btn-danger mr-3 ml-3" type="submit"><i class="fa fa-md fa-trash"></i>
                        </button>
                        {!!Form::close()!!}
                     </td>
-                    @endif
+                    @endcan
 
                     
                   </tr>

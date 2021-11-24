@@ -27,15 +27,15 @@
                  
                   <div class="col-md-3 col-sm-12"> 
 
-                      @if($order->pharmacy)
-                        <address><strong>اسم العميل:   {{$order->pharmacy->user->name}}</strong>   
+                      @if($order->user)
+                        <address><strong>اسم العميل:   {{$order->user->name}}</strong>   
                           <br><strong>تلفون:</strong>
-                          <a href="tel:{{str_replace("+967","", $order->pharmacy->user->phone)}}">
-                          {{str_replace("+967","", $order->pharmacy->user->phone)}}
+                          <a href="tel:{{str_replace("+967","", $order->user->phone)}}">
+                          {{str_replace("+967","", $order->user->phone)}}
                           </a>
                           <br> <strong>عنوان: </strong>
                         
-                          {{$order->pharmacy->address?$order->pharmacy->address:'لايوجد'}} 
+                          {{$order->address?$order->address:'لايوجد'}} 
                                         
                           </address>
                           @else غير متوفر
@@ -47,9 +47,7 @@
                           
                           {{$order->created_at->diffForHumans()}}
                           <br>
-                      <b>   الصيدلية:  </b>
-                      {{$order->pharmacy?$order->pharmacy->name:'لايوجد'}} 
-                      <br>
+                      
                       
                 </div>
                 <div class="col-md-3 col-sm-12">
@@ -63,7 +61,7 @@
                   <div class="col-md-3 col-sm-12">
                       <b>  المندوب   :</b>
                       <span id="user_text">
-                        {{$order->user?$order->user->name:"-"}} </span>
+                        {{$order->driver?$order->driver->name:"-"}} </span>
                         <br>
                       <a onclick="$('#user').show();$('#status').hide();" class="btn d-print-none btn-outline-secondary float-left"><i class="fa fa-edit"></i>تغير المندوب</a>
                     
@@ -80,9 +78,9 @@
                
                       <div id="user" style="display:none" >
                         <select name="user" id="user_id"  class="custom-select"> 
-                        <option value=""  > حدد الحالة</option>
-                        @foreach(\App\Models\User::where('user_type','مندوب')->get() as $user)
-                        <option value="{{$user->id}}" @if($order->user_id== $user->id) selected @endif> {{$user->name}} </option>
+                        <option value=""  > حدد السائق</option>
+                        @foreach(\App\Models\User::role('سائق')->get() as $user)
+                        <option value="{{$user->id}}" @if($order->driver_id== $user->id) selected @endif> {{$user->name}} </option>
                         @endforeach
                     </select>                  
                   <a id="user_save" class="btn btn-outline-secondary float-left"><i class="fa fa-edit"></i> حفظ المندوب  </a>
@@ -95,7 +93,7 @@
               <div class="row">
                 <div class="bs-component col-6">
 
-               @if (count($order->details)>0)
+               @if (count($order->orderProduct)>0)
                 <table class="table table-hover table-bordered">
                  <thead>
                  <tr>
@@ -108,10 +106,10 @@
                  </thead>
                  <tbody>
 
-                  @foreach ($order->details as $item)
+                  @foreach ($order->orderProduct as $item)
                       <tr>
                      <td> {{$item->id}} </td>
-                     <td> {{$item->medicined?$item->medicined->name:"-"}} </td>
+                     <td> {{$item->products?$item->products->name:"-"}} </td>
                      <td> {{$item->count}} </td>
                      <td> {{$item->price}} </td>
                      <td> {{$item->sum}} </td>
@@ -120,9 +118,17 @@
                  </tbody>
                  <tfoot>
                      <tr>
-                         <td>الاجمالي الكلي </td>
-                         <td colspan="4" class="text-center"> {{$order->total_pice}} </td>
-                     </tr>
+                         <td>الاجمالي  </td>
+                         <td colspan="4" class="text-center"> {{$order->sub_total}} </td>
+                      </tr>
+                     <tr>
+                      <td> سعر التوصيل </td>
+                      <td colspan="4" class="text-center"> {{$order->delivery_price}} </td>
+                      </tr>
+                  <tr>
+                    <td>الاجمالي الكلي </td>
+                    <td colspan="4" class="text-center"> {{$order->total}} </td>
+                </tr>
                  </tfoot>
                 </table>
 
@@ -136,13 +142,10 @@
 
                         <div class="form-group  ">
                       
-                          <input type="hidden" name='rname'value="{{$order->pharmacy?$order->pharmacy->name:''}}" id = 'rname'>
-                          <input type="hidden" name='username' value="{{$order->user?$order->user->name:''}}"  id='username' >
+                          <input type="hidden" name='address' value="{{$order->address}}"  id='address' >
 
-                          <input hidden type="text" name='lat' value="{{$order->pharmacy?$order->pharmacy->lat:15.344}}" id='map_1'>
-                          <input hidden type="text" name='lang' value="{{$order->pharmacy?$order->pharmacy->lng:14.344}}" id='map_2'>
-                          <input hidden type="text" name='rlat' value="{{$order->user?$order->user->lat:15.344}}" id='map_3'>
-                          <input hidden type="text" name='rlang' value="{{$order->user?$order->user->lng:14.344}}" id='map_4'>
+                          <input hidden type="text" name='lat' value="{{$order->lat}}" id='map_1'>
+                          <input hidden type="text" name='lang' value="{{$order->lng}}" id='map_2'>
               
                       </div>
                         <div class="form-group">
@@ -273,8 +276,7 @@
       }
     });
   
-  addMarker(document.getElementById("map_1").value ? document.getElementById("map_1").value : 15.344,document.getElementById("map_2").value ? document.getElementById("map_2").value : 44.185, document.getElementById("rname").value,icon);
-  addMarker(document.getElementById("map_3").value ? document.getElementById("map_3").value : 15.344,document.getElementById("map_4").value ? document.getElementById("map_4").value : 44.185, document.getElementById("username").value,icon1);
+  addMarker(document.getElementById("map_1").value ? document.getElementById("map_1").value : 15.344,document.getElementById("map_2").value ? document.getElementById("map_2").value : 44.185, document.getElementById("address").value,icon);
 
   }
 </script>

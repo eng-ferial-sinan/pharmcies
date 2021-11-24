@@ -25,7 +25,7 @@ class UserSeeder extends Seeder
                 'email_verified_at' => Carbon::now(),
 
             ]);
-            $user->assignRole('admin');
+            $user->assignRole('مدير');
         } catch (\Exception $exception) {
             //do nothing
         }

@@ -15,7 +15,7 @@ class RoleSeeder extends Seeder
      */
     public function run()
     {
-        $role1 = Role::findOrCreate('admin', 'web');
+        $role1 = Role::findOrCreate('مدير', 'web');
         $role1->givePermissionTo('add user');
         $role1->givePermissionTo('edit user');
         $role1->givePermissionTo('delete user');
@@ -46,10 +46,14 @@ class RoleSeeder extends Seeder
 
 
 
-        $role2 = Role::findOrCreate('customer', 'web');
+        $role2 = Role::findOrCreate('عميل', 'web');
         $role2->givePermissionTo('list orders');
         $role2->givePermissionTo('add order');
         $role2->givePermissionTo('edit order');
         $role2->givePermissionTo('delete order');
+
+        $role2 = Role::findOrCreate('سائق', 'web');
+        $role2->givePermissionTo('list orders');
+
     }
 }

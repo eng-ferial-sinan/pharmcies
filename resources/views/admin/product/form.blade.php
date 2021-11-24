@@ -1,7 +1,7 @@
 @extends('admin.vadmin.lay')
 
 @section('head')   /
-بيانات   الادوية
+بيانات   المنتجات
 
 @endsection
 
@@ -25,26 +25,14 @@
   @endif
     
   <div class="panel-body">     
-        <form method="post" action="@if ($item->id == null) {{ route('medicine.store') }} @else {{ route('medicine.update', ['medicine' => $item->id]) }} @endif" enctype="multipart/form-data">
+        <form method="post" action="@if ($item->id == null) {{ route('product.store') }} @else {{ route('product.update', ['product' => $item->id]) }} @endif" enctype="multipart/form-data">
         {{ csrf_field() }}
         @if ($item->id != null)
             {{ method_field('PUT') }}
         @endif       
         <div class="form-group">
-        {{Form::label('name','اسم الدواء')}}
+        {{Form::label('name','اسم المنتج')}}
         {{Form::text('name', $item->name , ['class' => 'form-control', 'placeholder' => 'الاسم','required'=>true])}}
-        </div>
-        <div class="form-group">
-        {{Form::label('traite','الفوائد')}}
-        {{Form::textarea('traite', $item->traite, [ 'rows'=>'4','class' => 'form-control', 'placeholder' => 'الفوائد'])}}
-        </div>
-        <div class="form-group">
-        {{Form::label('demerites','العيوب')}}
-        {{Form::textarea('demerites', $item->demerites, [ 'rows'=>'4','class' => 'form-control', 'placeholder' => 'العيوب'])}}
-        </div>
-        <div class="form-group">
-        {{Form::label('relics','الاثار الجانبية')}}
-        {{Form::textarea('relics',$item->relics, [ 'rows'=>'4','class' => 'form-control', 'placeholder' => 'الاثار الجانبية'])}}
         </div>
         @php
         $categories=\App\Models\category::all();
@@ -69,27 +57,20 @@
         {{Form::number('price',$item->price, ['class' => 'form-control', 'placeholder' => 'السعر','required'=>true])}}
         </div>
         <div class="form-group">
-        {{Form::label('production_date','تاريخ الانتاج')}}
-        {{Form::date('production_date',$item->production_date, ['class' => 'form-control','required'=>true])}}
-        </div>
-        <div class="form-group">
-        {{Form::label('expiry_date','تاريخ الانتهاء')}}
-        {{Form::date('expiry_date',$item->expiry_date, ['class' => 'form-control','required'=>true])}}
-        </div>
+          {{Form::label('sort',' الترتيب')}}
+          {{Form::number('sort',$item->sort, ['class' => 'form-control', 'placeholder' => 'الترتيب','required'=>true])}}
+          </div>
+
         <div class="form-group">
           <img src="{{$item->image}}" class="img-rounded" height="50" width="70" alt="{{$item->name}}">
            <br/>
             {{Form::label('image','صورة معبرة')}}
              {{Form::file('image')}}
          </div>
-        {{-- <div class="form-group">
-            {{Form::label('image','صورة معبرة')}}
-             {{Form::file('image')}}
-         </div> --}}
                  </div>
               <div class="modal-footer justify-content-between">
                 <button type="submit" class="btn btn-primary">حفظ </button>
-                <a href="\medicine" class="btn btn-default" data-dismiss="modal">الغاء</a>
+                <a href="\product" class="btn btn-default" data-dismiss="modal">الغاء</a>
               </div>
         </form>
       </div>

@@ -12,23 +12,14 @@ a {
 }
 </style>
   
-<div class="col-md-6 col-lg-3">
-  <a href="/pharmacy">
-    <div class="widget-small info coloured-icon"><i class="icon fa fa-tag fa-3x"></i>
-      <div class="info">
-        <h4>الصيدليات</h4>
-        <p><b>{{\App\Models\pharmacy::count()}}</b></p>
-      </div>
-    </div>
-    </a>
-  </div>
+
   
   <div class="col-md-6 col-lg-3">
-    <a href="/medicine">
+    <a href="/product">
       <div class="widget-small info coloured-icon"><i class="icon fa fa-tag fa-3x"></i>
         <div class="info">
-          <h4>الادوية</h4>
-          <p><b>{{\App\Models\medicine::count()}}</b></p>
+          <h4>المنتجات</h4>
+          <p><b>{{\App\Models\Product::count()}}</b></p>
         </div>
       </div>
       </a>
@@ -40,7 +31,7 @@ a {
         <div class="widget-small info coloured-icon"><i class="icon fa fa-tag fa-3x"></i>
           <div class="info">
             <h4>الطلبات</h4>
-            <p><b>{{\App\Models\order::count()}}</b></p>
+            <p><b>{{\App\Models\Order::count()}}</b></p>
           </div>
         </div>
         </a>

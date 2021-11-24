@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Auth;
 use File ;
-use Image;
 use \App\Models\User;
 use \App\Models\user_permission;
 use \App\Models\permission;
@@ -12,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -57,8 +57,8 @@ class UserController extends Controller
     {
         //
         // dd($groups);
-                $permission = permission::all();
-        return view('admin.users.create',compact('permission'));
+        $roles = Role::whereNotIn('id', [2])->pluck('name', 'name')->all();
+        return view('admin.users.create', compact('roles'));
 
     //   return view('users.create');
     }
@@ -86,14 +86,7 @@ class UserController extends Controller
         $user->password=Hash::make($request['password']);;
         $user->address=isset($request->address)??'';
         $user->save();
-
-        if (isset($request->permission))
-        foreach ($request->permission as $value) {
-            $user_permission =new user_permission;
-            $user_permission->user_id=$user->id;
-            $user_permission->permission_id=$value;
-            $user_permission->save();
-        }
+        $user->assignRole($request->input('roles'));
         
 
         return redirect()->back()
@@ -131,23 +124,18 @@ class UserController extends Controller
     
     public function saveimage(Request $request)
     {
-         if ($request->hasFile('myimg')) {
+    if ($request->hasFile('myimg')) {
         $user=User::find(auth()->user()->id);
 
+        if ($request->hasFile('myimg')) {
             $imagename = $request->file('myimg');
-            $temp =$user->image ;
-            $fileNameToStore= 'user_sama'.time().'.jpg';
-            $largepath= "/storage/".$fileNameToStore;
-            Image::make($imagename)->save(public_path($largepath));
-            $smallpath= "/storage/users_thumb_".$fileNameToStore;
-            Image::make($imagename)->resize(450, 350)->save(public_path($smallpath),100);
-            $user->url= $smallpath;
-            $user->save();
-
-            File::delete(public_path($temp));
-                     
+            $fileNameToStore= "user_" .time().'.jpg';
+            $imagename->move(public_path('users/'), $fileNameToStore);
+            $user->url='/users/'.$fileNameToStore;
+        }            
+         $user->save();                     
          return  back()-> with('success','تم حفظ التعديلات ');
-         }
+    }
     return  back()-> with('error','يرجي التأكد م صحة الملف ');
     }
     /**
@@ -173,13 +161,9 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
-
-        $permission_id = user_permission::where('user_id',$id)->pluck('permission_id')->toArray();
-
-        $permission = permission::whereNotIn('id',$permission_id)->get();
-        $user_permission = permission::whereIn('id',$permission_id)->get();
-
-         return view('admin.users.edit',compact('user','permission','user_permission'));
+        $roles = Role::pluck('name', 'name')->all();
+        $userRole = $user->roles->pluck('name', 'name')->all();
+        return view('admin.users.edit', compact('user', 'roles', 'userRole'));
     }
 
     /**
@@ -196,24 +180,17 @@ class UserController extends Controller
             'password' => 'same:confirm-password',
         ]);
 
-        $user =  User::find($id);
-        $user->name=$request->name;
-        $user->phone=$request->phone;
-        $user->user_type=$request->user_type;
-        $user->password=Hash::make($request['password']);;
-        $user->address=isset($request->address)??'';
-        $user->save();
-        
-        if (isset($request->permission))
-        foreach ($request->permission as $value) {
-            $user_permission =user_permission::where('user_id',$id)->where('permission_id',$value)->first();
-          if (is_null($user_permission)) {
-				$user_permission =new user_permission;
-				$user_permission->user_id=$user->id;
-				$user_permission->permission_id=$value;
-				$user_permission->save();
-          }
+        $input = $request->all();
+        if (!empty($input['password'])) {
+            $input['password'] = Hash::make($input['password']);
+        } else {
+            unset($input['password']);
         }
+        $user = User::find($id);
+        $user->update($input);
+        DB::table('model_has_roles')->where('model_id', $id)->delete();
+        $user->assignRole($request->input('roles'));
+        
         
         return redirect()->back()
                         ->with('success','User updated successfully');

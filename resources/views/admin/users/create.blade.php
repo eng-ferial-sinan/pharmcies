@@ -50,7 +50,8 @@
             </div>
             <div class="col-md-4">
                 {{-- {!! Form::select('roles', $roles,[], array('class' => 'form-control','multiple')) !!} --}}
-                {{Form::select('user_type',['مدير'=>'مدير','مدخل بيانات'=>'مدخل بيانات','مندوب طبي'=>'مندوب طبي','مندوب'=>'مندوب','صيدلية'=>'صيدلية'],'', ['class' => 'custom-select', 'placeholder' => 'اختر نوع المستخدم','required'=>true])}}
+                {{Form::select('roles', $roles,'', ['class' => 'custom-select', 'placeholder' => 'اختر نوع المستخدم','required'=>true])}}
+            
             </div>
     
     <div class="md-form text-right text-black col-md-12 card p-2 m-1">
@@ -67,19 +68,6 @@
                 <input type="text" name="phone" id="phone" class="form-control" required placeholder="رقم التلفون " >
                 </div> 
 
-
-                <div class="form-group col-md-4">
-                    {{Form::label('permission','الصلاحيات')}}
-                    <select name="permission[]" class="select2 w-100" multiple >
-                    @foreach ($permission as $item)
-                    <option value="{{$item->id}}">
-                       {{ roleName1($item->name)}}
-                    </option>
-                    @endforeach
-
-                    </select>
-                    {{-- {{Form::select('',$permission,null, [ 'multiple'=>"multiple" ,'class' => 'form-control select2'])}} --}}
-                  </div>
                 
         </div> 
        
