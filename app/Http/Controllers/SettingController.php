@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreSettingRequest;
 use Illuminate\Http\Request;
 use App\Models\Setting;
 
@@ -71,24 +72,21 @@ class SettingController extends Controller
      * @param  \App\Models\setting  $setting
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(StoreSettingRequest $request)
     {
         // dd(1);
-        $info = Setting::find($request->input('num'));
-        $info->nameAr =  $request->input('nameAr');
-        $info->nameEn =  $request->input('nameEn');
-        $info->address =  $request->input('address');
-        $info->phone =  $request->input('phone');
-        $info->email =  $request->input('email');
-        $info->lat =  $request->input('map_1');
-        $info->lng =  $request->input('map_2');
+        $data=$request->validated();
+        $data['lat']=$request->input('map_1');
+        $data['lng']=$request->input('map_2');
         if ($request->hasFile('image')) {
             $imagename = $request->file('image');
             $fileNameToStore= "setting_" .time().'.jpg';
             $imagename->move(public_path('setting/'), $fileNameToStore);
-            $info->image='/setting/'.$fileNameToStore;
+            $data['image']='/setting/'.$fileNameToStore;
         }
-        $info->save();
+        $info = Setting::first();
+        $info->update($data);
+        
         return back()->with('success','تم حفظ  بنجاح');
     }
 

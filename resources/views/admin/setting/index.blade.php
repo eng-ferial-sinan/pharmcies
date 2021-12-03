@@ -15,40 +15,32 @@
 </h5>
  
   <form action="/admin/settings" method="post" class="form-horizontal" enctype="multipart/form-data">
- {{ csrf_field() }}
+        {{ csrf_field() }}
              
-        <div class="form-row">
-            <div class="col-md-6">
-            <label for="from" class="font-weight-bold text-right js">     اسم الشركة     </label>
-            <input type="text" name="nameAr" id="nameAr" class="form-control" required  value="{{$info->nameAr}}">
-            <input type="hidden" name="num" id="num" class="form-control" required  value="{{$info->id}}">
-            </div> 
-              
-               <div class="col-md-6">
-                   <div class="form-group">
-                         <label for="from" class="font-weight-bold text-right js">     company Name   </label>
-                     <input type="text" name="nameEn" id="nameEn" class="form-control"  value="{{$info->nameEn}}">
-                 </div> 
-          </div>
-        </div> 
-
-             
-
-                    <div class="form-row">
-                    <label for="address" class="font-weight-bold text-right js"> العنوان      </label>
-                    <textarea name="address" id="address" class="form-control">{{$info->address}}
-                    </textarea>
-                    
+            <div class="form-row">
+                    <div class="col-md-6">
+                        <label for="from" class="font-weight-bold text-right js">     اسم الشركة     </label>
+                        <input type="text" name="nameAr" id="nameAr" class="form-control" required  value="{{$info->nameAr}}">
+                        <input type="hidden" name="num" id="num" class="form-control" required  value="{{$info->id}}">
+                    </div> 
+                    <div class="col-md-6">
+                        <div class="form-group">
+                                <label for="from" class="font-weight-bold text-right js">     company Name   </label>
+                            <input type="text" name="nameEn" id="nameEn" class="form-control"  value="{{$info->nameEn}}">
+                        </div> 
                     </div>
-
-<div class="form-row">
-
-            <div class="col-md-6">
-            <label for="from" class="font-weight-bold text-right js">    تلفون    </label>
-            <input type="text" name="phone" id="phone" class="form-control" required  value="{{$info->phone}}">
             </div> 
-              
-              
+            <div class="form-row">
+                <label for="address" class="font-weight-bold text-right js"> العنوان      </label>
+                <textarea name="address" id="address" class="form-control">{{$info->address}}
+                </textarea>   
+            </div>
+            
+        <div class="form-row">
+                <div class="col-md-6">
+                    <label for="from" class="font-weight-bold text-right js">    تلفون    </label>
+                    <input type="text" name="phone" id="phone" class="form-control" required  value="{{$info->phone}}">
+                </div> 
                 <div class="col-md-6">
                     <div class="form-group">
                             <label for="from" class="font-weight-bold text-right js">     البريد الإلكتروني  email   </label>
@@ -56,7 +48,30 @@
                     </div> 
                 </div>
         </div> 
-
+        <div class="form-row">
+            <div class="col-md-6">
+                <label for="from" class="font-weight-bold text-right js">    فيس بوك    </label>
+                <input type="text" name="facebook" id="facebook" class="form-control"   value="{{$info->facebook}}">
+            </div> 
+            <div class="col-md-6">
+                <div class="form-group">
+                        <label for="from" class="font-weight-bold text-right js">   حساب تويتر     </label>
+                    <input type="twitter" name="twitter" id="e_name" class="form-control"  value="{{$info->twitter}}">
+                </div> 
+            </div>
+       </div> 
+       <div class="form-row">
+                    <div class="col-md-6">
+                        <label for="from" class="font-weight-bold text-right js">    انستجرام    </label>
+                        <input type="text" name="instagram" id="instagram" class="form-control"   value="{{$info->instagram}}">
+                    </div> 
+                    <div class="col-md-6">
+                        <div class="form-group">
+                                <label for="from" class="font-weight-bold text-right js">  حساب جوجل بلاس  </label>
+                            <input type="google_plus" name="google_plus" id="e_name" class="form-control"  value="{{$info->google_plus}}">
+                        </div> 
+                    </div>
+        </div>
             <div class="form-group">
                 <input type="text" hidden name='map_1'value="{{$info->lat}}"    id ='map_1' >
                 <input type="text"  hidden name='map_2' value="{{$info->lng}}"  id='map_2' >

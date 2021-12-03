@@ -1,3 +1,7 @@
+@php 
+
+  $info= sitinfo();
+  @endphp
 <div id="footer">
     <div class="container">
       <div class="row">
@@ -9,38 +13,28 @@
             <li><a href="/contact">اتصل بنا</a></li>
           </ul>
           <hr>
-          <!-- <h4 class="mb-3">User section</h4>
-          <ul class="list-unstyled">
-            <li><a href="#" data-toggle="modal" data-target="#login-modal">Login</a></li>
-            <li><a href="register.html">Regiter</a></li>
-          </ul> -->
         </div>
         <!-- /.col-lg-3-->
         <!-- /.col-lg-3-->
         <div class="col-lg-6 col-md-6">
           <h4 class="mb-3">أين تجدنا</h4>
-          <p><strong>Obaju Ltd.</strong><br>13/25 New Avenue<br>New Heaven<br>45Y 73J<br>England<br><strong>Great Britain</strong>
+          <p>{{$info->address}}
           </p><a href="/contact">الذهاب لصفحة التواصل</a>
           <hr class="d-block d-md-none">
         </div>
         <!-- /.col-lg-3-->
         <div class="col-lg-3 col-md-6">
-          {{-- <h4 class="mb-3">احصل على الأخبار</h4>
-          <p class="text-muted">يمكنكم وضع اي نص هنا هذا مجرد نص للتجريب</p>
-          <form>
-            <div class="input-group">
-              <input type="text" class="form-control"><span class="input-group-append">
-                <button type="button" class="btn btn-outline-secondary">إشتراك</button></span>
-            </div>
-            <!-- /input-group-->
-          </form>
-          <hr> --}}
           <h4 class="mb-3">ابق على تواصل</h4>
-          <p class="social"><a href="#" class="facebook external"><i class="fa fa-facebook"></i></a>
-            <a href="#" class="twitter external"><i class="fa fa-twitter"></i></a><a href="#" class="instagram external">
-              <i class="fa fa-instagram"></i></a><a href="#" class="gplus external"><i class="fa fa-google-plus">
-
-              </i></a><a href="#" class="email external"><i class="fa fa-envelope"></i></a></p>
+          <p class="social"><a href="{{$info->facebook}}" class="facebook external">
+            <i class="fa fa-facebook"></i></a>
+            <a href="{{$info->twitter}}" class="twitter external">
+              <i class="fa fa-twitter"></i></a>
+            <a href="{{$info->instagram}}" class="instagram external">
+              <i class="fa fa-instagram"></i></a>
+              <a href="{{$info->google_plus}}" class="gplus external">
+                <i class="fa fa-google-plus">
+              </i></a><a href="mailto:{{$info->email}}" class="email external">
+                <i class="fa fa-envelope"></i></a></p>
         </div>
         <!-- /.col-lg-3-->
       </div>

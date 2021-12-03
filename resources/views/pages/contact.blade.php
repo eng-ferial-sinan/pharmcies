@@ -41,8 +41,8 @@ $info= sitinfo();
                 <div class="col-md-4">
                   <h3><i class="fa fa-envelope"></i> الدعم الإلكتروني</h3>
                   <p class="text-muted">لا تتردد في إرسال بريد إلكتروني إلينا أو استخدام نظام التذاكر الإلكتروني الخاص بنا.</p>
-                  <ul>
-                    <li><strong><a href="mailto:">{{$info->email}}</a></strong></li>
+                  <ul dir="rtl" class="nav nav-pills flex-column">
+                    <li><strong><a href="mailto:{{$info->email}}">{{$info->email}}</a></strong></li>
                     <li><strong></strong> منصة دعم التذاكر الخاصة بنا</li>
                   </ul>
                 </div>
