@@ -32,8 +32,8 @@ class RoleController extends Controller
      */
     public function create()
     {
-        $permission = Permission::all();
-        return view('roles.create', compact('permission'));
+        // $permission = Permission::all();
+        // return view('roles.create', compact('permission'));
     }
 
     /**
@@ -44,14 +44,14 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'name' => 'required|unique:roles,name',
-            'permission' => 'required'
-        ]);
-        $role = Role::create(['name' => $request->input('name')]);
-        $role->syncPermissions($request->input('permission'));
-        return redirect()->route('roles.index')
-                        ->with('success', 'تم انشاء الصلاحيات');
+        // $this->validate($request, [
+        //     'name' => 'required|unique:roles,name',
+        //     'permission' => 'required'
+        // ]);
+        // $role = Role::create(['name' => $request->input('name')]);
+        // $role->syncPermissions($request->input('permission'));
+        // return redirect()->route('roles.index')
+        //                 ->with('success', 'تم انشاء الصلاحيات');
     }
 
     /**

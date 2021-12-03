@@ -45,12 +45,12 @@ switch($name)
                 <div class="container">
                 <div class="row">
                 <div class="col-md-12">
-                    @can('add role')
+                    {{-- @can('add role')
        <a href="" data-toggle="modal" data-target="#add" class="btn btn-info float-left">
                                        <i class="fa fa-plus fa-2x"></i> اضافة نوع جديد 
                         
                                 </a>
-                                @endcan
+                                @endcan --}}
        </div></div>
        
        @if(count($roles)>0)
@@ -177,7 +177,7 @@ switch($name)
 
 <!--  data-backdrop="static" id="add" -->
 
-
+{{-- 
 <div class="modal hide fade in " data-keyboard="false" data-backdrop="static" id="add">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
@@ -217,6 +217,6 @@ switch($name)
                   </div>
                 </div>
               </div>
-            </div>
+            </div> --}}
             
 @endsection

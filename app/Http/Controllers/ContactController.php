@@ -7,14 +7,14 @@ use Illuminate\Http\Request;
 
 class ContactController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function __construct(Request $request)
+    {
+        $this->middleware('auth');
+    }
     public function index()
     {
-        //
+        $contact = Contact::all();
+      return view('admin.contact.index')->with('contacts',$contact);
     }
 
     /**
@@ -47,6 +47,7 @@ class ContactController extends Controller
     public function show(Contact $contact)
     {
         //
+        return view('admin.contact.form')->with('item',$contact);
     }
 
     /**
