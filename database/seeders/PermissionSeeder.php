@@ -47,6 +47,10 @@ class PermissionSeeder extends Seeder
             ['name' => 'edit order','guard_name'=> 'web'],
             ['name' => 'delete order','guard_name'=> 'web'],
 
+            ['name' => 'list slides','guard_name'=> 'web'],
+            ['name' => 'add slide','guard_name'=> 'web'],
+            ['name' => 'edit slide','guard_name'=> 'web'],
+            ['name' => 'delete slide','guard_name'=> 'web'],
 
         ]);
     }

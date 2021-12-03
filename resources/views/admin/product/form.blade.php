@@ -70,7 +70,7 @@
                  </div>
               <div class="modal-footer justify-content-between">
                 <button type="submit" class="btn btn-primary">حفظ </button>
-                <a href="\product" class="btn btn-default" data-dismiss="modal">الغاء</a>
+                <a href="\admin\product" class="btn btn-default" data-dismiss="modal">الغاء</a>
               </div>
         </form>
       </div>

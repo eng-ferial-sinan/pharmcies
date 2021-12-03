@@ -39,9 +39,15 @@ class CategoryController extends Controller
             'sort' => 'required',
         ]);
 
-        $category =new category;
+        $category =new Category;
         $category->name=$request->name;
         $category->sort=$request->sort;
+        if ($request->hasFile('image')) {
+            $imagename = $request->file('image');
+            $fileNameToStore= "category_" .time().'.jpg';
+            $imagename->move(public_path('categories/'), $fileNameToStore);
+            $category->image='/categories/'.$fileNameToStore;
+        }
         $category->save();
         return redirect()->back()
                         ->with('success','تم انشاء ');

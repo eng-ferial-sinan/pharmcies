@@ -14,7 +14,7 @@
      تعديل  البيانات الاساسية للموقع :
 </h5>
  
-  <form action="/settings" method="post" class="form-horizontal" enctype="multipart/form-data">
+  <form action="/admin/settings" method="post" class="form-horizontal" enctype="multipart/form-data">
  {{ csrf_field() }}
              
         <div class="form-row">

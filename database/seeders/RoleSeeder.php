@@ -42,6 +42,11 @@ class RoleSeeder extends Seeder
         $role1->givePermissionTo('add order');
         $role1->givePermissionTo('edit order');
         $role1->givePermissionTo('delete order');
+       
+        $role1->givePermissionTo('list slides');
+        $role1->givePermissionTo('add slide');
+        $role1->givePermissionTo('edit slide');
+        $role1->givePermissionTo('delete slide');
 
 
 

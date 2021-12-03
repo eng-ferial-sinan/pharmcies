@@ -46,7 +46,7 @@
                     <td>{{$order->status?$order->status->name:""}}</td>
 
               <td>
-              <a href="\order\{{$order->id}}" class="btn btn-success ">
+              <a href="\admin\order\{{$order->id}}" class="btn btn-success ">
               <i class="fa fa-eye"></i></a>
                     </td>
                     @can ('edit order')

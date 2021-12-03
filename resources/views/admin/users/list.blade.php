@@ -19,7 +19,7 @@
                 <div class="panel-heading"></div>
                 <div class="panel-body" >
                 <h3>
-                <a href="/member/create" class="btn btn-primary">انشاء 
+                <a href="/admin/member/create" class="btn btn-primary">انشاء 
                  عضو</a>
                 </h3>
             </div>
@@ -49,9 +49,8 @@
                     @foreach($users as $user)
                     <tr>
                     <td>{{$user->id}} </td>
-                    <td><a href="/member/{{$user->id}}/edit" class="btn btn-default">{{$user->name}}</a></td>
-                    <td><a href="/member/{{$user->id}}/edit" class="btn btn-default">{{$user->email}}
-                     </td>
+                    <td>{{$user->name}}</td>
+                    <td>{{$user->email}}</td>
                      <td>
                         @if(!empty($user->getRoleNames()))
                         @foreach($user->getRoleNames() as $v)
@@ -60,7 +59,7 @@
                        @endif    
                    </td>                     
                    <td>
-                        <a href="/member/{{$user->id}}/edit" class="btn btn-default">
+                        <a href="/admin/member/{{$user->id}}/edit" class="btn btn-default">
                         <i class="fa fa-edit"></i>
                         التحرير</a>
                     </td>

@@ -14,5 +14,8 @@ class Category extends Model
     {
         return $value?url($value):url("no_image.jpg");
     }
-
+    public function product()
+    {
+        return $this->hasMany('App\Models\Product');
+    }
 }

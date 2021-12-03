@@ -1,0 +1,221 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Address;
+use App\Models\Cart;
+use App\Models\Order;
+use App\Models\OrderProduct;
+use App\Models\Product;
+use App\Models\Setting;
+use App\Models\User;
+use App\Notifications\OrderNotification;
+use Illuminate\Http\Request;
+use Artisan;
+use Illuminate\Support\Facades\Notification;
+
+class CustomerController extends Controller
+{
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function index()
+    {
+        return view('customer.account');
+    }
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function orders()
+    {
+        $orders=Order::where('user_id',auth()->user()->id)
+        ->paginate(10);
+        return view('customer.orders',compact('orders'));
+    }
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function show(Order $order)
+    {
+        $order = Order::find($order->id);
+        return view('customer.order',compact('order'));
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function register()
+    {
+        return view('pages.register');
+    }
+  
+/**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function checkout(Request $request)
+    {
+        // dd($request);
+        $this->validate($request, [
+            'address_id' => 'required',
+        ]);
+
+        if(!auth()->user())
+        {
+            return redirect()->route('index');
+        }
+
+        if (session()->has('cart')) {
+            $cart = new Cart(session()->get('cart'));
+        } else {
+            $cart = null;
+        }
+        if(is_null($cart))
+        {
+            return redirect()->route('index');
+        }
+        
+        $setting=Setting::first();
+        $address=Address::find($request['address_id']);
+        
+        $distance=(6371 * acos(cos($this->radians( $address->lat ))
+                    * cos($this->radians($setting->lat)) * cos($this->radians($setting->lng) - $this->radians($address->lng))
+                    + sin($this->radians($address->lat)) * sin($this->radians($setting->lat))));
+        $amont=(int)$distance*100;
+
+        $order=new Order;
+        $order->status_id=1;
+        $order->user_id=auth()->user()->id;
+        $order->address=$address->address;
+        $order->lat=$address->lat;
+        $order->lng=$address->lng;
+        $order->delivery_price=$amont;
+        $order->sub_total=$cart->totalPrice;
+        $order->total=$order->delivery_price+$order->sub_total;
+        $order->save();
+
+        foreach($cart->items as $item)
+        {
+            $product=Product::find($item['id']);
+            $order_product=new OrderProduct;
+            $order_product->order_id=$order->id;
+            $order_product->product_id=$product->id;
+            $order_product->product=json_encode($product);
+            $order_product->count=$item['qty'];
+            $order_product->price=$product->price;
+            $order_product->sum=($item['qty']*$product->price);
+            $order_product->save();
+        }
+
+        $users=User::role('مدير')->get();
+        Notification::send($users, new OrderNotification($order));       
+        session()->forget('cart');
+        return redirect()->route('orders')->with('success', 'الطلب تم انشاءه');
+     }
+
+    public function calculate(Address $address)
+    {
+        $setting=Setting::first();
+
+        $distance=(6371 * acos(cos($this->radians( $address->lat ))
+                    * cos($this->radians($setting->lat)) * cos($this->radians($setting->lng) - $this->radians($address->lng))
+                    + sin($this->radians($address->lat)) * sin($this->radians($setting->lat))));
+        $amont=(int)$distance*100;
+        return response()->json(['amont'=>$amont]);
+    }
+    public function radians($degrees)
+    {
+         return 0.0174532925 * $degrees;
+    }
+
+
+    public function update(Request $request)
+    {
+        $request->validate([
+            'number' => 'required|array',
+            'number.*' => 'required|numeric|min:1'
+        ]);
+        // dd($request->number);
+        foreach($request->number as $key=> $value)
+        {
+            $cart = new Cart(session()->get('cart'));
+            $cart->updateQty($key, $value);
+            session()->put('cart', $cart);
+        }
+        return redirect()->route('cart.show')->with('success', 'Product updated');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Product  $product
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Product $product)
+    {
+        $cart = new Cart(session()->get('cart'));
+        $cart->remove($product->id);
+
+        if ($cart->totalQty <= 0) {
+            session()->forget('cart');
+        } else {
+            session()->put('cart', $cart);
+        }
+
+        return redirect()->route('cart.show')->with('success', 'Product was removed');
+    }
+
+    public function addToCart(Product $product)
+    {
+
+        if (session()->has('cart')) {
+            $cart = new Cart(session()->get('cart'));
+        } else {
+            $cart = new Cart();
+        }
+        $cart->add($product);
+        //dd($cart);
+        session()->put('cart', $cart);
+        return redirect()->route('shop.all')->with('success', 'Product was added');
+    }
+
+    public function showCart()
+    {
+        if (session()->has('cart')) {
+            $cart = new Cart(session()->get('cart'));
+        } else {
+            $cart = null;
+        }
+
+        if(auth()->user())
+        {
+            $addresses= Address::where('user_id',auth()->user()->id)->get();
+
+        }else
+        {
+            $addresses=null;
+        }
+
+        return view('pages.cart', compact('cart','addresses'));
+    }
+
+
+}

@@ -15,7 +15,7 @@ a {
 
   
   <div class="col-md-6 col-lg-3">
-    <a href="/product">
+    <a href="/admin/product">
       <div class="widget-small info coloured-icon"><i class="icon fa fa-tag fa-3x"></i>
         <div class="info">
           <h4>المنتجات</h4>
@@ -27,7 +27,7 @@ a {
        
  
     <div class="col-md-6 col-lg-3">
-      <a href="/order">
+      <a href="/admin/order">
         <div class="widget-small info coloured-icon"><i class="icon fa fa-tag fa-3x"></i>
           <div class="info">
             <h4>الطلبات</h4>

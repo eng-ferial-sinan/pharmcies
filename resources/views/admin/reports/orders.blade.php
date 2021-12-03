@@ -14,7 +14,7 @@
           <div class="row p-0 m-0">
              <div class="col-md-12 ">
 
-                    <form action="/reports" id="print" method="get" class="form-horizontal p-0 m-0"> 
+                    <form action="/admin/reports" id="print" method="get" class="form-horizontal p-0 m-0"> 
                       <div class="row tile mt-0">
                         <div class="form-group col-md-2">
                           <label for="name"> من تاريخ  </label>

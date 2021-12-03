@@ -133,7 +133,7 @@
                 </table>
 
                 @else
-                <p>لايرجد ادوية</p>
+                <p>لايرجد منتجات</p>
                 @endif
 
                 </div>
@@ -180,7 +180,7 @@
          $('#status_save').html('جاري حفظ الحالة ') ;
            $.ajax({
               type:"GET",
-              url:"{{url('/order/setStatus')}}?status_id="+status_id+"&order_id={{$order->id}}",
+              url:"{{url('/admin/order/setStatus')}}?status_id="+status_id+"&order_id={{$order->id}}",
               success:function(res){               
                if(res){
                    $('#status_text').html(res) ;
@@ -206,7 +206,7 @@
          $('#user_save').html('جاري حفظ المندوب ') ;
            $.ajax({
               type:"GET",
-              url:"{{url('/order/setUser')}}?user_id="+user_id+"&order_id={{$order->id}}",
+              url:"{{url('/admin/order/setUser')}}?user_id="+user_id+"&order_id={{$order->id}}",
               success:function(res){               
                if(res){
                    $('#user_text').html(res['user']) ;

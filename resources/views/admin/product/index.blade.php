@@ -10,7 +10,7 @@
                   <div class="row">
                 <div class="col-md-12">
                   @can('add product')
-                  <a href="/product/create" class="btn btn-info float-left">
+                  <a href="/admin/product/create" class="btn btn-info float-left">
                                        <i class="fa fa-plus fa-2x"></i> اضافة منتج
                                        
                     </a>
@@ -53,7 +53,7 @@
                   @can('edit product')
                     <td> 
 
-                      <a href="/product/{{$product->id}}/edit" class="btn btn-info float-left">
+                      <a href="/admin/product/{{$product->id}}/edit" class="btn btn-info float-left">
                                                       <i class="fa fa-edit fa-2x"></i> تعديل
                                                       </a>
                                                       
