@@ -60,5 +60,14 @@ $info= sitinfo();
     <script src="/frontend/js/map.js"></script>
     @yield('script')
 
+    <script>
+    //     $(document).ready(function(){
+    //     $(".item-remove").click(function(event) {
+    //       event.preventDefault();
+    //       $(this).parents('.item').remove();
+          
+    //    });
+    //   });
+      </script>
 </body>
 </html>

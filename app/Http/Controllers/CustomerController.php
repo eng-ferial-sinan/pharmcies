@@ -160,7 +160,7 @@ class CustomerController extends Controller
             $cart->updateQty($key, $value);
             session()->put('cart', $cart);
         }
-        return redirect()->route('cart.show')->with('success', 'Product updated');
+        return redirect()->route('cart.show')->with('success', 'تم تعديل السلة');
     }
 
     /**
@@ -180,7 +180,7 @@ class CustomerController extends Controller
             session()->put('cart', $cart);
         }
 
-        return redirect()->route('cart.show')->with('success', 'Product was removed');
+        return redirect()->route('cart.show')->with('success', ' تم الحذف من السلة');
     }
 
     public function addToCart(Product $product)
@@ -194,7 +194,7 @@ class CustomerController extends Controller
         $cart->add($product);
         //dd($cart);
         session()->put('cart', $cart);
-        return redirect()->route('shop.all')->with('success', 'Product was added');
+        return redirect()->route('shop.all')->with('success', 'تم الاضافة الى السلة');
     }
 
     public function showCart()

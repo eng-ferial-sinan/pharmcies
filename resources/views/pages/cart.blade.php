@@ -92,6 +92,7 @@
                         <td> عنوان التسليم</td>
                         <th>
                           <select name="address_id" id="address" class="form-control">
+                            <option value="0" disabled >اختار عناون</option>
                           @foreach ($addresses as $address)
                               <option value="{{$address->id}}">{{$address->address}}</option>
                           @endforeach

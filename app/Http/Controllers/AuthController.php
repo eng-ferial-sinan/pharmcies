@@ -24,8 +24,10 @@ class AuthController extends Controller
         $data['password']=Hash::make($data['password']);
         $user = User::create($data);
         $user->assignRole('عميل');
-        return redirect()->back()
-        ->with('success',' يمكنك الان تسجيل الدخول , تم انشاء ');
+        Auth::loginUsingId($user->id);
+
+        return redirect()->route('index')
+        ->with('success','  تم انشاءالحساب بنجاح ');
     }
 
 
@@ -34,7 +36,7 @@ class AuthController extends Controller
         $data = $request->validated();
         if (Auth::attempt(['email' => $data['email'], 'password' => $data['password']]))
          {
-            return  redirect()->back()
+            return  redirect()->route('index')
             ->with('success','تم تسجيل الدخول ');
         }
         return redirect()->back()

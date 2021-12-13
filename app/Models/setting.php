@@ -22,6 +22,7 @@ class Setting extends Model
         'instagram',
         'twitter',
         'facebook',
+        'image',
         ];
 
     public function getImageAttribute($value)

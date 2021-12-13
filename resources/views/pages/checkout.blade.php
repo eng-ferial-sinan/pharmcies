@@ -34,6 +34,7 @@
                       <div class="form-group">
                         <label for="address">العناوين</label>
                         <select id="address" class="form-control">
+                          <option value="0" disabled >اختار عناون</option>
                           @foreach ($addresses as $address)
                               <option value="{{$address->id}}">{{$address->address}}</option>
                           @endforeach
