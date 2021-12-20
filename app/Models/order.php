@@ -27,4 +27,12 @@ class Order extends Model
     {
         return $this->belongsTo('App\Models\Status');
     }
+    public function paymentMethod()
+    {
+        return $this->belongsTo(PaymentMethod::class,'payment_method_id');
+    }
+    public function payment()
+    {
+        return $this->hasOne(Payment::class);
+    }
 }
