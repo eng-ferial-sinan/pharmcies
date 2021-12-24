@@ -79,13 +79,13 @@
                       <div class="back"><a href="#"><img src="{{$new_product->image}}" alt="" class="img-fluid"></a></div>
                     </div>
                   </div><a href="#" class="invisible"><img src="{{$new_product->image}}" alt="" class="img-fluid"></a>
-                  <div class="text">
-                    <h3><a href="#">{{$new_product->name}}</a></h3>
-                    <p class="price"> 
-                       {{$new_product->price}}   ر.ي
+                  <div class="text-right pr-2">
+                    <h4>{{$new_product->name}}</h4>
+                    <p>{{$new_product->desc}}</p>
+                    <p class="price text-left pl-2"> 
+                        {{$new_product->price}} $
                     </p>
-                    <p class="buttons"><a href="/cart/add/{{$new_product->id}}" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>إضافةإلى السلة</a></p>
-
+                    <p class="buttons text-center"><a href="/cart/add/{{$new_product->id}}" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>إضافةإلى السلة</a></p>
                   </div>
                   <!-- /.text-->
                   <!-- /.ribbon-->
@@ -129,13 +129,13 @@
                       <div class="back"><a href="#"><img src="{{$new_product->image}}" alt="" class="img-fluid"></a></div>
                     </div>
                   </div><a href="#" class="invisible"><img src="{{$new_product->image}}" alt="" class="img-fluid"></a>
-                  <div class="text">
-                    <h3><a href="#">{{$new_product->name}}</a></h3>
-                    <p class="price"> 
-                       {{$new_product->price}}   ر.ي
+                  <div class="text-right pr-2">
+                    <h4>{{$new_product->name}}</h4>
+                    <p>{{$new_product->desc}}</p>
+                    <p class="price text-left pl-2"> 
+                        {{$new_product->price}} $
                     </p>
-                    <p class="buttons"><a href="/cart/add/{{$new_product->id}}" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>إضافةإلى السلة</a></p>
-
+                    <p class="buttons text-center"><a href="/cart/add/{{$new_product->id}}" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>إضافةإلى السلة</a></p>
                   </div>
                   <!-- /.text-->
                   <!-- /.ribbon-->

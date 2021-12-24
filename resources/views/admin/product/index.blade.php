@@ -30,6 +30,7 @@
                     <th>#</th>
                     <th>#</th>
                     <th>الاسم</th>
+                    <th>الوصف</th>
                     <th>الصنف</th>
                     <th>السعر</th>
                   
@@ -48,6 +49,7 @@
                   <td>{{$product->id}}</td>
                   <td><img src="{{$product->image}}" height="80" width="75"></td>
                     <td>{{$product->name}}</td>
+                    <td>{{$product->desc}}</td>
                     <td>{{$product->category?$product->category->name:''}}</td>
                     <td>{{$product->price}}</td>
                   @can('edit product')

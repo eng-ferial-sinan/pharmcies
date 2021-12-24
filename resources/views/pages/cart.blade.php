@@ -87,7 +87,7 @@
                 <div class="table-responsive">
                   <table class="table">
                     <tbody>
-                      <form method="get" action="/checkout">
+                      <form id="orderForm" method="get" action="/checkout">
                       <tr>
                         <td> عنوان التسليم</td>
                         <th>
@@ -118,15 +118,33 @@
                         <td>الاجمالي</td>
                         <th>
                           <div id="total">{{$cart->totalPrice??0}}</div>
+                          <input hidden id="paypal_amount" value="" type="number" min=1 >
                         </th>
                       </tr>
+                      <tr class="total">
+                        <td colspan="2" >طرق الدفع</td>
+                      </tr>
+                      @if (env('PAYPAL_CLIENT_ID') != NULL && env('PAYPAL_APP_SECRET') != NULL)
                       <tr>
-                        <td colspan="2" >            
-                          <button type="submit"   class="btn btn-primary">تنفيذ الطلبية 
+                        <td> 
+                          
+											<input type="hidden" name="orderID" id="orderID">
+											<input type="hidden" name="payerID" id="payerID">
+											<input type="hidden" name="paymentID" id="paymentID">
+											<input type="hidden" name="paymentToken" id="paymentToken">
+											
+                          {{--Paypal--}}
+                          <div id="paypal">
+                          </div>           
+                        </td>
+                        <td  >            
+                          <button type="submit" class="btn btn-primary">  كاش
                             </button>
                         </td>
-                      </form>
                       </tr>
+                      @endif
+                      
+                    </form>
                     </tbody>
                   </table>
                 </div>
@@ -144,8 +162,63 @@
       </div>
     </div>
   </div>
+  <input type="hidden" id="paypal_route" value="{{route('paypal.payment')}}">
 @endsection
 @section('script')
+@if (env('PAYPAL_CLIENT_ID') != NULL && env('PAYPAL_APP_SECRET') != NULL)
+<script src="https://www.paypalobjects.com/api/checkout.js"></script>
+		<script>
+            "use strict"
+            paypal.Button.render({
+                // Configure environment
+                env: 'sandbox',
+                client: {
+                    sandbox: '{{env('PAYPAL_CLIENT_ID')}}',
+                },
+                // Customize button (optional)
+                locale: 'en_US',
+                style: {
+                    size: 'responsive',
+                    color: 'silver',
+                    shape: 'rect',
+                    label: 'paypal',
+                    tagline: false,
+                },
+
+                // Enable Pay Now checkout flow (optional)
+                commit: true,
+                // Set up a payment
+                payment: function (data, actions) {
+                    return actions.payment.create({
+                        transactions: [{
+                            amount: {
+                                total: $('#paypal_amount').val(),
+                                currency: 'USD'
+                            }
+                        }]
+                    });
+                },
+                // Execute the payment
+                onAuthorize: function (data, actions) {
+                    return actions.payment.execute().then(function () {
+                        // Show a confirmation message to the buyer
+                        console.log(data);
+                        var payurl = $('#paypal_route').val();
+                        /*append paypar action */
+                        var b = document.getElementById("orderForm");
+                        b.setAttribute('action', payurl);
+                        /*append data in input form*/
+                        $('#orderID').val(data.orderID);
+                        $('#payerID').val(data.payerID);
+                        $('#paymentID').val(data.paymentID);
+                        $('#paymentToken').val(data.paymentToken);
+                        $('#orderForm').submit();
+                    });
+                }
+            }, '#paypal');
+		</script>
+    @endif
+
 <script>
    $("#address").change(function(){
     // console.log();
@@ -161,9 +234,27 @@
                     var total=parseInt(data['amont'])+parseInt($('#totalPrice').val());
                     console.log(total);
                     $("#total").html(total);
+                    $("#paypal_amount").val(total);
                     
                 }
             });
         });
+        $("#address").focus(function(){
+            let id=$(this).val();
+            let url = "{{  route('cart.calculate',['address' => ":id"]) }}";
+              url = url.replace(":id", id);
+                    $.ajax({
+                        url: url,
+                        method: 'GET',
+                        success: function(data) {
+                            $("#delivary").html(data['amont']);
+                            var total=parseInt(data['amont'])+parseInt($('#totalPrice').val());
+                            $("#total").html(total);
+                           $("#paypal_amount").val(total);
+                            
+                        }
+                    });
+        });
 </script>
+
 @endsection

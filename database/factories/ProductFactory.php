@@ -23,6 +23,7 @@ class ProductFactory extends Factory
     {
         return [
             'name'      => $this->faker->name,
+            'desc'      => $this->faker->name,
             'price' => rand(0,100) ,
             'sort' => 1 ,
         ];

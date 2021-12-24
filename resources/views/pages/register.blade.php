@@ -26,11 +26,11 @@
                  @csrf
                 <div class="form-group">
                   <label for="name">الاسم</label>
-                  <input name="name" id="name" type="text" class="form-control" required>
+                  <input name="name" id="name" type="text"  value="{{ old('name') }}" class="form-control" required>
                 </div>
                 <div class="form-group">
                   <label for="email">البريد الالكتروني</label>
-                  <input name="email" id="email" type="text" class="form-control" required>
+                  <input name="email" id="email" type="text" value="{{ old('email') }}" class="form-control" required>
                 </div>
                 <div class="form-group">
                   <label for="password">كلمة السر</label>
@@ -42,7 +42,7 @@
                 </div>
                 <div class="form-group">
                   <label for="phone">رقم التلفون</label>
-                  <input name="phone" id="phone" type="text" class="form-control" required>
+                  <input name="phone" id="phone" type="text" value="{{ old('phone') }}" class="form-control" required>
                 </div>
                 <div class="text-center">
                   <button type="submit" class="btn btn-primary"><i class="fa fa-user-md"></i> تسجيل</button>

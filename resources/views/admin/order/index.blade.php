@@ -24,6 +24,7 @@
                 <thead>
                   <tr>
                     <th>رقم الطلبية</th>
+                    <th>طريقة الدفع </th>
                     <th>الزبون </th>
                     <th>السائق </th>
                     <th>حالة الطلبية</th>
@@ -41,6 +42,7 @@
                  <tr>
                    
                     <td>{{$order->id}}</td>
+                    <td>{{$order->paymentMethod?$order->paymentMethod->name:'-'}}</td>
                     <td>{{$order->user?$order->user->name:"-"}}</td>
                     <td>{{$order->driver?$order->driver->name:"لم يتم تعين سائق بعد"}}</td>
                     <td>{{$order->status?$order->status->name:""}}</td>

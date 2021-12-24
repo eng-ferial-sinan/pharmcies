@@ -65,7 +65,7 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="lat">خط الطول</label>
-                      <input id="lat" name="lat"  step="any" value="{{$item->lat}}" type="number" class="form-control">
+                      <input id="lat" name="lat"  step="any" readonly value="{{$item->lat}}" type="number" class="form-control">
                       @error('lat')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -76,7 +76,7 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="lng">خط العرض</label>
-                      <input id="lng" name="lng" step="any" value="{{$item->lng}}" type="number" class="form-control">
+                      <input id="lng" name="lng" step="any" readonly value="{{$item->lng}}" type="number" class="form-control">
                       @error('lng')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>

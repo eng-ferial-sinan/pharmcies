@@ -6,6 +6,7 @@ use App\Models\Address;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderProduct;
+use App\Models\Payment;
 use App\Models\Product;
 use App\Models\Setting;
 use App\Models\User;
@@ -111,6 +112,82 @@ class CustomerController extends Controller
         $order->sub_total=$cart->totalPrice;
         $order->total=$order->delivery_price+$order->sub_total;
         $order->save();
+
+        foreach($cart->items as $item)
+        {
+            $product=Product::find($item['id']);
+            $order_product=new OrderProduct;
+            $order_product->order_id=$order->id;
+            $order_product->product_id=$product->id;
+            $order_product->product=json_encode($product);
+            $order_product->count=$item['qty'];
+            $order_product->price=$product->price;
+            $order_product->sum=($item['qty']*$product->price);
+            $order_product->save();
+        }
+
+        $users=User::role('مدير')->get();
+        Notification::send($users, new OrderNotification($order));       
+        session()->forget('cart');
+        return redirect()->route('orders')->with('success', 'الطلب تم انشاءه');
+     }
+     public function payment(Request $request)
+    {
+        // dd($request);
+        $this->validate($request, [
+            'address_id' => 'required',
+            'paymentID' => 'required',
+            'orderID' => 'required',
+            'payerID' => 'required',
+            'paymentToken' => 'required',
+        ]);
+
+        if(!auth()->user())
+        {
+            return redirect()->route('index');
+        }
+
+        if (session()->has('cart')) {
+            $cart = new Cart(session()->get('cart'));
+        } else {
+            $cart = null;
+        }
+        if(is_null($cart))
+        {
+            return redirect()->route('index');
+        }
+        
+        $setting=Setting::first();
+        $address=Address::find($request['address_id']);
+        
+        $distance=(6371 * acos(cos($this->radians( $address->lat ))
+                    * cos($this->radians($setting->lat)) * cos($this->radians($setting->lng) - $this->radians($address->lng))
+                    + sin($this->radians($address->lat)) * sin($this->radians($setting->lat))));
+        $amont=(int)$distance*100;
+
+        $order=new Order;
+        $order->status_id=1;
+        $order->user_id=auth()->user()->id;
+        $order->address=$address->address;
+        $order->lat=$address->lat;
+        $order->lng=$address->lng;
+        $order->delivery_price=$amont;
+        $order->sub_total=$cart->totalPrice;
+        $order->method_id=2;
+        $order->total=$order->delivery_price+$order->sub_total;
+        $order->save();
+        $data=array([
+            'paymentID'=>$request['paymentID'],
+            'orderID'=>$request['orderID'],
+            'payerID'=>$request['payerID'],
+            'paymentToken'=>$request['paymentToken'],
+        ]);
+        $payment=new Payment;
+        $payment->uuid=$request['paymentID'];
+        $payment->data=json_encode($data);
+        $payment->method_id=2;
+        $payment->order_id=$order->id;
+        $payment->save();
 
         foreach($cart->items as $item)
         {

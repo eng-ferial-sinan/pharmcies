@@ -33,7 +33,7 @@
                   <div class="row">
                       <div class="form-group">
                         <label for="address">العناوين</label>
-                        <select id="address" class="form-control">
+                        <select id="address" class="form-control select2">
                           <option value="0" disabled >اختار عناون</option>
                           @foreach ($addresses as $address)
                               <option value="{{$address->id}}">{{$address->address}}</option>

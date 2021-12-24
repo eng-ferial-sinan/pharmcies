@@ -54,12 +54,13 @@
                       <div class="back"><a href=#void"><img src="{{$product->image}}" alt="" class="img-fluid"></a></div>
                     </div>
                   </div><a href=#void" class="invisible"><img src="{{$product->image}}" alt="" class="img-fluid"></a>
-                  <div class="text">
-                    <h3><a href=#void">{{$product->name}}</a></h3>
-                    <p class="price"> 
-                        {{$product->price}} ر.ي
+                  <div class="text-right pr-2">
+                    <h4>{{$product->name}}</h4>
+                    <p>{{$product->desc}}</p>
+                    <p class="price text-left pl-2"> 
+                        {{$product->price}} $
                     </p>
-                    <p class="buttons"><a href="/cart/add/{{$product->id}}" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>إضافةإلى السلة</a></p>
+                    <p class="buttons text-center"><a href="/cart/add/{{$product->id}}" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>إضافةإلى السلة</a></p>
                   </div>
                   <!-- /.text-->
                 </div>

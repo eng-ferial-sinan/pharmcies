@@ -34,6 +34,11 @@
         {{Form::label('name','اسم المنتج')}}
         {{Form::text('name', $item->name , ['class' => 'form-control', 'placeholder' => 'الاسم','required'=>true])}}
         </div>
+        <div class="form-group">
+          {{Form::label('desc',' الوصف')}}
+          {{Form::text('desc', $item->desc , ['class' => 'form-control', 'placeholder' => 'الوصف','required'=>true])}}
+          </div>
+
         @php
         $categories=\App\Models\Category::all();
         @endphp

@@ -60,6 +60,7 @@ Route::post('/cart/update', [App\Http\Controllers\CustomerController::class, 'up
 Route::get('/cart/calculate/{address}', [App\Http\Controllers\CustomerController::class, 'calculate'])->name('cart.calculate');
 Route::get('/cart/', [App\Http\Controllers\CustomerController::class, 'showCart'])->name('cart.show');
 Route::get('/checkout', [App\Http\Controllers\CustomerController::class, 'checkout'])->name('cart.checkout');
+Route::post('paypal/payment', [App\Http\Controllers\CustomerController::class, 'payment'])->name('paypal.payment');
 
 Route::get('/customer/account', [App\Http\Controllers\CustomerController::class, 'index'])->name('account');
 Route::resource('/address', App\Http\Controllers\AddressController::class);
