@@ -42,7 +42,7 @@
         </a>
           <ul class="dropdown-menu settings-menu dropdown-menu-left">
             {{-- @can('role-list') --}}
-            <li><a class="dropdown-item" href="/admin/setting/"><i class="fa fa-cog fa-lg"></i> اعدادات</a></li>
+            <li><a class="dropdown-item" href="/admin/settings"><i class="fa fa-cog fa-lg"></i> اعدادات</a></li>
             {{-- @endcan --}}
             <li><a class="dropdown-item" href="/admin/user/profile"><i class="fa fa-user fa-lg"></i> البروفايل</a></li>
             <li>

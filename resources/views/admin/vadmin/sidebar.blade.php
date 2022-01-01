@@ -75,9 +75,10 @@
     @endcan
     @can('list settings')
    <li class="treeview"><a class="app-menu__item {{{ (\Request::is('/admin/settings/*') ? 'active' : '') }}}" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-cog"></i><span class="app-menu__label">  اعدادت </span><i class="treeview-indicator fa fa-angle-left"></i></a>
-          <ul class="treeview-menu">
-            <li><a class="treeview-item  mr-2" href="/admin/settings" rel="noopener"><i class="icon fa fa-edit"></i> الموقع</a></li>
-            </ul>
+      <ul class="treeview-menu">
+        <li><a class="treeview-item  mr-2" href="/admin/settings" rel="noopener"><i class="icon fa fa-edit"></i> الموقع</a></li>
+        <li><a class="treeview-item  mr-2" href="/admin/braintree" rel="noopener"><i class="icon fa fa-edit"></i> braintree الدفع</a></li>
+        </ul>
    </li>
         @endcan
       </ul>

@@ -31,4 +31,15 @@ class HomeController extends Controller
 
         return response()->json(array('data'=>$data,'deleted'=>$deleted ),200);
     }
+
+    public function braintree(Request $request)
+    {
+        $data =array(
+            'environment' => env('BRAINTREE_ENV'),
+            'merchantId' => env("BRAINTREE_MERCHANT_ID"),
+            'publicKey' => env("BRAINTREE_PUBLIC_KEY"),
+            'privateKey' => env("BRAINTREE_PRIVATE_KEY")
+        );
+        return response()->json(['data'=>$data],200);
+    }
 }

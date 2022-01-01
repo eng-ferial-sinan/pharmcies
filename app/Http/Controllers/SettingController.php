@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreSettingRequest;
 use Illuminate\Http\Request;
 use App\Models\Setting;
+use Illuminate\Support\Facades\Artisan;
 
 class SettingController extends Controller
 {
@@ -60,9 +61,20 @@ class SettingController extends Controller
      * @param  \App\Models\setting  $setting
      * @return \Illuminate\Http\Response
      */
-    public function edit(setting $setting)
+    public function braintreeShow()
     {
         //
+        return view('admin.setting.braintree');
+    }
+
+    public function braintreeUpdate(Request $request)
+    {
+        //
+        foreach ($request->types as $key => $type) {
+            overWriteEnvFile($type, $request[$type]);
+        }
+        Artisan::call("config:clear");
+        return view('admin.setting.braintree')->with('success','تم حفظ  بنجاح');
     }
 
     /**

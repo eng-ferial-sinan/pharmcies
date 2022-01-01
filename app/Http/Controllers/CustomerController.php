@@ -131,16 +131,9 @@ class CustomerController extends Controller
         session()->forget('cart');
         return redirect()->route('orders')->with('success', 'الطلب تم انشاءه');
      }
-     public function payment(Request $request)
+     public function payment(Request $request ,$id)
     {
         // dd($request);
-        $this->validate($request, [
-            'address_id' => 'required',
-            'paymentID' => 'required',
-            'orderID' => 'required',
-            'payerID' => 'required',
-            'paymentToken' => 'required',
-        ]);
 
         if(!auth()->user())
         {
@@ -158,12 +151,14 @@ class CustomerController extends Controller
         }
         
         $setting=Setting::first();
-        $address=Address::find($request['address_id']);
+        $address=Address::find($id);
         
         $distance=(6371 * acos(cos($this->radians( $address->lat ))
                     * cos($this->radians($setting->lat)) * cos($this->radians($setting->lng) - $this->radians($address->lng))
                     + sin($this->radians($address->lat)) * sin($this->radians($setting->lat))));
         $amont=(int)$distance*100;
+
+        
 
         $order=new Order;
         $order->status_id=1;
@@ -175,16 +170,40 @@ class CustomerController extends Controller
         $order->sub_total=$cart->totalPrice;
         $order->method_id=2;
         $order->total=$order->delivery_price+$order->sub_total;
-        $order->save();
-        $data=array([
-            'paymentID'=>$request['paymentID'],
-            'orderID'=>$request['orderID'],
-            'payerID'=>$request['payerID'],
-            'paymentToken'=>$request['paymentToken'],
+        $result=null;
+        $gateway = new \Braintree\Gateway([
+            'environment' => env('BRAINTREE_ENV'),
+            'merchantId' => env("BRAINTREE_MERCHANT_ID"),
+            'publicKey' => env("BRAINTREE_PUBLIC_KEY"),
+            'privateKey' => env("BRAINTREE_PRIVATE_KEY")
         ]);
+        $data=$request->input('payload');
+        if($data['nonce'] != null){
+            $nonceFromTheClient = $data['nonce'];
+           $return_data = $gateway->transaction()->sale([
+                'amount' => $order->total,
+                'paymentMethodNonce' => $nonceFromTheClient,
+                'options' => [
+                    'submitForSettlement' => True
+                ]
+            ]);
+            if( $return_data->success)
+            {
+               $result= $return_data->transaction;
+            }else
+            {
+           return response()->json(['success'=>false]);
+            }
+        }else{
+            // $clientToken = $gateway->clientToken()->generate();
+            return response()->json(['success'=>false]);
+        }
+
+        $order->save();
+       
         $payment=new Payment;
-        $payment->uuid=$request['paymentID'];
-        $payment->data=json_encode($data);
+        $payment->uuid=$result->id;
+        $payment->data=json_encode($result);
         $payment->method_id=2;
         $payment->order_id=$order->id;
         $payment->save();
@@ -205,8 +224,8 @@ class CustomerController extends Controller
         $users=User::role('مدير')->get();
         Notification::send($users, new OrderNotification($order));       
         session()->forget('cart');
-        return redirect()->route('orders')->with('success', 'الطلب تم انشاءه');
-     }
+        return response()->json(['success'=>true]);
+    }
 
     public function calculate(Address $address)
     {
@@ -276,6 +295,16 @@ class CustomerController extends Controller
 
     public function showCart()
     {
+        $gateway = new \Braintree\Gateway([
+            'environment' => env('BRAINTREE_ENV'),
+            'merchantId' => env("BRAINTREE_MERCHANT_ID"),
+            'publicKey' => env("BRAINTREE_PUBLIC_KEY"),
+            'privateKey' => env("BRAINTREE_PRIVATE_KEY")
+        ]);
+            $token = $gateway->clientToken()->generate();
+
+
+
         if (session()->has('cart')) {
             $cart = new Cart(session()->get('cart'));
         } else {
@@ -291,7 +320,7 @@ class CustomerController extends Controller
             $addresses=null;
         }
 
-        return view('pages.cart', compact('cart','addresses'));
+        return view('pages.cart', compact('cart','addresses','token'));
     }
 
 

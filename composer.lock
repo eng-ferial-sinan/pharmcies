@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ea3b95fa488edea07ace9506f3a72104",
+    "content-hash": "f2a8de73804ede0deea6de20c6df3b70",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -129,6 +129,55 @@
                 "source": "https://github.com/berkayk/laravel-onesignal/tree/v1.0.7"
             },
             "time": "2021-01-28T10:52:07+00:00"
+        },
+        {
+            "name": "braintree/braintree_php",
+            "version": "6.5.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/braintree/braintree_php.git",
+                "reference": "b79ecd9ccde4ccf34b0c1f7343656ad5eece8e9c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/braintree/braintree_php/zipball/b79ecd9ccde4ccf34b0c1f7343656ad5eece8e9c",
+                "reference": "b79ecd9ccde4ccf34b0c1f7343656ad5eece8e9c",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-dom": "*",
+                "ext-hash": "*",
+                "ext-openssl": "*",
+                "ext-xmlwriter": "*",
+                "php": ">=7.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.0",
+                "squizlabs/php_codesniffer": "^3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Braintree\\": "lib/Braintree"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Braintree",
+                    "homepage": "https://www.braintreepayments.com"
+                }
+            ],
+            "description": "Braintree PHP Client Library",
+            "support": {
+                "issues": "https://github.com/braintree/braintree_php/issues",
+                "source": "https://github.com/braintree/braintree_php/tree/6.5.1"
+            },
+            "time": "2021-12-20T19:47:39+00:00"
         },
         {
             "name": "brick/math",
@@ -2791,6 +2840,70 @@
                 }
             ],
             "time": "2021-11-17T11:47:22+00:00"
+        },
+        {
+            "name": "srmklive/paypal",
+            "version": "3.0.10",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/srmklive/laravel-paypal.git",
+                "reference": "4454f969c384ba8c3194d606239c08b4b5b993ad"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/srmklive/laravel-paypal/zipball/4454f969c384ba8c3194d606239c08b4b5b993ad",
+                "reference": "4454f969c384ba8c3194d606239c08b4b5b993ad",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "~7.0",
+                "illuminate/support": "~6.0|~7.0|~8.0",
+                "nesbot/carbon": "~2.0",
+                "php": ">=7.2|^8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^8.0|^9.0",
+                "symfony/var-dumper": "~5.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Srmklive\\PayPal\\Providers\\PayPalServiceProvider"
+                    ],
+                    "aliases": {
+                        "PayPal": "Srmklive\\PayPal\\Facades\\PayPal"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Srmklive\\PayPal\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Raza Mehdi",
+                    "email": "srmk@outlook.com"
+                }
+            ],
+            "description": "Laravel plugin For Processing Payments Through Paypal Express Checkout. Can Be Used Independently With Other Applications.",
+            "keywords": [
+                "http",
+                "laravel paypal",
+                "paypal",
+                "rest",
+                "web service"
+            ],
+            "support": {
+                "issues": "https://github.com/srmklive/laravel-paypal/issues",
+                "source": "https://github.com/srmklive/laravel-paypal/tree/3.0.10"
+            },
+            "time": "2021-12-05T14:48:21+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",

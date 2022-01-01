@@ -30,6 +30,8 @@ Auth::routes();
     Route::resource('/order',App\Http\Controllers\OrderController::class);
     Route::get('/settings', [App\Http\Controllers\SettingController::class, 'index']);
     Route::post('/settings',[App\Http\Controllers\SettingController::class, 'update']);
+    Route::get('/braintree', [App\Http\Controllers\SettingController::class, 'braintreeShow']);
+    Route::post('/braintree',[App\Http\Controllers\SettingController::class, 'braintreeUpdate']);
     Route::resource('/slide', App\Http\Controllers\SlideController::class);
     Route::resource('/roles', App\Http\Controllers\RoleController::class);
     Route::get('/user/profile',[App\Http\Controllers\UserController::class, 'profiles']);
@@ -60,7 +62,7 @@ Route::post('/cart/update', [App\Http\Controllers\CustomerController::class, 'up
 Route::get('/cart/calculate/{address}', [App\Http\Controllers\CustomerController::class, 'calculate'])->name('cart.calculate');
 Route::get('/cart/', [App\Http\Controllers\CustomerController::class, 'showCart'])->name('cart.show');
 Route::get('/checkout', [App\Http\Controllers\CustomerController::class, 'checkout'])->name('cart.checkout');
-Route::post('paypal/payment', [App\Http\Controllers\CustomerController::class, 'payment'])->name('paypal.payment');
+Route::get('paypal/payment/{id}', [App\Http\Controllers\CustomerController::class, 'payment'])->name('paypal.payment');
 
 Route::get('/customer/account', [App\Http\Controllers\CustomerController::class, 'index'])->name('account');
 Route::resource('/address', App\Http\Controllers\AddressController::class);

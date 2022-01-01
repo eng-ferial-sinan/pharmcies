@@ -78,6 +78,7 @@
           <!-- /.col-lg-9-->
           <div class="col-lg-3">
             @auth
+            @if($cart!==null)
             <div id="order-summary" class="card">
               <div class="card-header">
                 <h3 class="mt-4 mb-4">اتمام الطلبية</h3>
@@ -124,25 +125,36 @@
                       <tr class="total">
                         <td colspan="2" >طرق الدفع</td>
                       </tr>
-                      @if (env('PAYPAL_CLIENT_ID') != NULL && env('PAYPAL_APP_SECRET') != NULL)
                       <tr>
-                        <td> 
-                          
-											<input type="hidden" name="orderID" id="orderID">
-											<input type="hidden" name="payerID" id="payerID">
-											<input type="hidden" name="paymentID" id="paymentID">
-											<input type="hidden" name="paymentToken" id="paymentToken">
-											
-                          {{--Paypal--}}
-                          <div id="paypal">
-                          </div>           
+                        @if(env('BRAINTREE_MERCHANT_ID') != "" &&  env('BRAINTREE_PUBLIC_KEY') != "")
+                        <td>                           
+                              
+                          <a href="#" data-toggle="modal" data-target="#card">
+                            <i class="fa fa-credit-card fa-2x"></i></a>
+                          <div id="card" tabindex="-1" role="dialog" aria-labelledby="Login" aria-hidden="true" class="modal fade">
+                            <div class="modal-dialog modal-sm">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true">×</span></button>
+                                </div>
+                                <div class="modal-body">
+                                  <div id="dropin-container"></div>
+                                  <p class="text-center">
+                                    <a id="submit-button" class="btn btn-primary">دفع</a>
+                                  </p>
+
+                                </div>
+                              </div>
+                            </div>
+                          </div>
                         </td>
-                        <td  >            
+                        @endif
+
+                        <td>            
                           <button type="submit" class="btn btn-primary">  كاش
                             </button>
                         </td>
                       </tr>
-                      @endif
                       
                     </form>
                     </tbody>
@@ -151,6 +163,7 @@
               </div>
 
             </div>
+            @endif
             @endauth
             @guest
             <a href="#" data-toggle="modal" data-target="#login-modal" class="btn btn-primary">تسجيل الدخول</a>
@@ -162,62 +175,37 @@
       </div>
     </div>
   </div>
-  <input type="hidden" id="paypal_route" value="{{route('paypal.payment')}}">
 @endsection
 @section('script')
-@if (env('PAYPAL_CLIENT_ID') != NULL && env('PAYPAL_APP_SECRET') != NULL)
-<script src="https://www.paypalobjects.com/api/checkout.js"></script>
-		<script>
-            "use strict"
-            paypal.Button.render({
-                // Configure environment
-                env: 'sandbox',
-                client: {
-                    sandbox: '{{env('PAYPAL_CLIENT_ID')}}',
-                },
-                // Customize button (optional)
-                locale: 'en_US',
-                style: {
-                    size: 'responsive',
-                    color: 'silver',
-                    shape: 'rect',
-                    label: 'paypal',
-                    tagline: false,
-                },
+@if(env('BRAINTREE_MERCHANT_ID') != "" &&  env('BRAINTREE_PUBLIC_KEY') != "")
+<script src="https://js.braintreegateway.com/web/dropin/1.8.1/js/dropin.min.js"></script>
 
-                // Enable Pay Now checkout flow (optional)
-                commit: true,
-                // Set up a payment
-                payment: function (data, actions) {
-                    return actions.payment.create({
-                        transactions: [{
-                            amount: {
-                                total: $('#paypal_amount').val(),
-                                currency: 'USD'
-                            }
-                        }]
-                    });
-                },
-                // Execute the payment
-                onAuthorize: function (data, actions) {
-                    return actions.payment.execute().then(function () {
-                        // Show a confirmation message to the buyer
-                        console.log(data);
-                        var payurl = $('#paypal_route').val();
-                        /*append paypar action */
-                        var b = document.getElementById("orderForm");
-                        b.setAttribute('action', payurl);
-                        /*append data in input form*/
-                        $('#orderID').val(data.orderID);
-                        $('#payerID').val(data.payerID);
-                        $('#paymentID').val(data.paymentID);
-                        $('#paymentToken').val(data.paymentToken);
-                        $('#orderForm').submit();
-                    });
-                }
-            }, '#paypal');
-		</script>
-    @endif
+<script>
+  var button = document.querySelector('#submit-button');
+  var id=$('#address').val();
+  braintree.dropin.create({
+    authorization: "{{$token}}",
+    container: '#dropin-container'
+  }, function (createErr, instance) {
+    button.addEventListener('click', function () {
+
+      instance.requestPaymentMethod(function (err, payload) {
+        let url = "{{ route('paypal.payment',['id' => ":id"]) }}";
+       url = url.replace(":id", id);
+        $.get(url, {payload}, function (response) {
+          if (response.success) {
+            $('#card').modal('hide');
+            window.location.href = "{{URL::to('/customer/orders')}}"
+          } else {
+          alert('Payment failed');
+          window.location.href = "{{URL::to('/cart')}}"
+          }
+        }, 'json');
+      });
+    });
+  });
+</script>
+@endif
 
 <script>
    $("#address").change(function(){
