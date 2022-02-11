@@ -104,8 +104,7 @@ class OrderController extends Controller
                 }else
                 {
                     $response['status']=false;
-                    $response['messages'][]="لم ينجح عملية الدفع";
-    
+                    $response['messages'][]=$return_data->message;
                     return response()->json($response);
                 }
             }
