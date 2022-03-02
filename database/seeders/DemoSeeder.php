@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Salon;
+use App\Models\Service;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -19,14 +21,14 @@ class DemoSeeder extends Seeder
     public function run()
     {
         //
-        Category::factory()->count(5)->create();
+        Salon::factory()->count(5)->create();
         User::factory()->count(30)->create();
        
-        $categories=Category::all();
-        foreach($categories as $category)
+        $salons=Salon::all();
+        foreach($salons as $salon)
         {
-        Product::factory()->count(5)->create([
-          'category_id'=> $category->id
+        Service::factory()->count(5)->create([
+          'salon_id'=> $salon->id
         ]);
         }
 

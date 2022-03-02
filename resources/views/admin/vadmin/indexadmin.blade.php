@@ -15,23 +15,32 @@ a {
 
   
   <div class="col-md-6 col-lg-3">
-    <a href="/admin/product">
+    <a href="/admin/salon">
       <div class="widget-small info coloured-icon"><i class="icon fa fa-tag fa-3x"></i>
         <div class="info">
-          <h4>المنتجات</h4>
-          <p><b>{{\App\Models\Product::count()}}</b></p>
+          <h4>الصوالين</h4>
+          <p><b>{{\App\Models\Salon::count()}}</b></p>
         </div>
       </div>
       </a>
     </div>
        
- 
     <div class="col-md-6 col-lg-3">
-      <a href="/admin/order">
+      <a href="/admin/service">
         <div class="widget-small info coloured-icon"><i class="icon fa fa-tag fa-3x"></i>
           <div class="info">
-            <h4>الطلبات</h4>
-            <p><b>{{\App\Models\Order::count()}}</b></p>
+            <h4>الخدمات</h4>
+            <p><b>{{\App\Models\Service::count()}}</b></p>
+          </div>
+        </div>
+        </a>
+      </div>
+    <div class="col-md-6 col-lg-3">
+      <a href="/admin/reservation">
+        <div class="widget-small info coloured-icon"><i class="icon fa fa-tag fa-3x"></i>
+          <div class="info">
+            <h4>الحجوزات</h4>
+            <p><b>{{\App\Models\Reservation::count()}}</b></p>
           </div>
         </div>
         </a>

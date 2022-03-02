@@ -41,20 +41,20 @@ $info= sitinfo();
   <body class="app sidebar-mini rtl">
   <style>
 .app-header {
-    background-color: #7572b5;
+    background-color: #d69f88;
 }
 .app-header__logo {
-    background-color: #2e46af;
+    background-color: #a26a51;
 }
 .widget-small.info.coloured-icon .icon {
-    background-color: #7572b5;
+    background-color: #d69f88;
 }
 .app-sidebar {
     background-color: #212529;
 }
 .btn-info {
-    background-color: #7572b5;
-    border-color: #7572b5;
+    background-color: #d69f88;
+    border-color: #d69f88;
 }
   </style>
     <!-- Navbar-->

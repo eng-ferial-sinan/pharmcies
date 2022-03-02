@@ -55,6 +55,10 @@ class UserController extends Controller
 	   'password' => 'required|string|confirmed',
 	   'name' => 'required|string',
 	   'phone' => 'required|string',
+	   'address' => 'required|string',
+	   'city' => 'required|string',
+	   'lat' => 'nullable',
+	   'lng' => 'nullable',
 		]);
     
 	   if ($validator->fails()) {
@@ -66,6 +70,10 @@ class UserController extends Controller
 	   $user = new User;
 	   $user->email=$data['email'];
 	   $user->name=$data['name'];
+	   $user->address=$data['address'];
+	   $user->city=$data['city'];
+	   $user->lat=isset($data['lat'])?$data['lat']:'';
+	   $user->lng=isset($data['lng'])?$data['lng']:'';
 	   $user->password= Hash::make($data['password']);
 	   $user->phone=$data['phone'];
 	   $user->save();
@@ -95,6 +103,10 @@ class UserController extends Controller
 	   'password' => 'nullable|string|confirmed',
 	   'name' => 'nullable|string',
 	   'phone' => 'nullable',
+	   'city' => 'nullable',
+	   'address' => 'nullable',
+	   'lat' => 'nullable',
+	   'lng' => 'nullable',
 		]);
 	   if ($validator->fails()) {
 			    $response['messages']=$validator->errors()->all();
@@ -108,6 +120,15 @@ class UserController extends Controller
 	   $data['phone']=$request->phone;
 	   if(isset($request->email))
 	   $data['email']=$request->email;
+	   if(isset($request->address))
+	   $data['address']=$request->address;
+	   if(isset($request->city))
+	   $data['city']=$request->city;
+	   if(isset($request->lat))
+	   $data['lat']=$request->lat;
+	   if(isset($request->lng))
+	   $data['lng']=$request->lng;
+
        $user->update($data);
 	   $response['status']=true;
        $response['user']=$user;

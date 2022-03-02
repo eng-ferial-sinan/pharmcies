@@ -7,42 +7,37 @@
         <li><a class="app-menu__item {{{ (\Request::is('/admin') ? 'active' : '') }}}" href="/admin"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">الرئيسة</span></a></li>
             
        </li>
-      @can('list categories')
-       <li class="treeview"><a class="app-menu__item {{{ (Request::is('/admin/category*') ? 'active' : '') }}}" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-calendar-check-o">
-      </i><span class="app-menu__label"> الاصناف </span><i class="treeview-indicator fa fa-angle-left"></i></a>
+      @can('list salons')
+       <li class="treeview"><a class="app-menu__item {{{ (Request::is('/admin/salon*') ? 'active' : '') }}}" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-calendar-check-o">
+      </i><span class="app-menu__label"> الصوالين </span><i class="treeview-indicator fa fa-angle-left"></i></a>
       <ul class="treeview-menu">
-        <li><a class="treeview-item  mr-2" href="/admin/category"><i class="icon fa fa-plus-square "></i> الكل</a></li>
+        <li><a class="treeview-item  mr-2" href="/admin/salon"><i class="icon fa fa-plus-square "></i> الكل</a></li>
         </ul>
       </li>
      @endcan
-      @can('list products')
-       <li class="treeview"><a class="app-menu__item {{{ (Request::is('/admin/product*') ? 'active' : '') }}}" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-calendar-check-o">
-       </i><span class="app-menu__label">  المنتجات </span><i class="treeview-indicator fa fa-angle-left"></i></a>
+      @can('list services')
+       <li class="treeview"><a class="app-menu__item {{{ (Request::is('/admin/service*') ? 'active' : '') }}}" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-calendar-check-o">
+       </i><span class="app-menu__label">  الخدمات </span><i class="treeview-indicator fa fa-angle-left"></i></a>
        <ul class="treeview-menu">
-        <li><a class="treeview-item  mr-2" href="/admin/product/create"><i class="icon fa fa-plus-square "></i> إضافة منتج</a></li>
-         <li><a class="treeview-item  mr-2" href="/admin/product"><i class="icon fa fa-plus-square "></i> الكل</a></li>
+        <li><a class="treeview-item  mr-2" href="/admin/service/create"><i class="icon fa fa-plus-square "></i> إضافة خدمة</a></li>
+         <li><a class="treeview-item  mr-2" href="/admin/service"><i class="icon fa fa-plus-square "></i> الكل</a></li>
          </ul>
        </li>
        @endcan
-       @can('list slides')
-       <li class="treeview"><a class="app-menu__item {{{ (Request::is('/admin/slide*') ? 'active' : '') }}}" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-calendar-check-o">
-      </i><span class="app-menu__label"> slide </span><i class="treeview-indicator fa fa-angle-left"></i></a>
+       @can('list promotions')
+       <li class="treeview"><a class="app-menu__item {{{ (Request::is('/admin/promotion*') ? 'active' : '') }}}" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-calendar-check-o">
+      </i><span class="app-menu__label"> العروض </span><i class="treeview-indicator fa fa-angle-left"></i></a>
       <ul class="treeview-menu">
-        <li><a class="treeview-item  mr-2" href="/admin/slide"><i class="icon fa fa-plus-square "></i> slide</a></li>
+        <li><a class="treeview-item  mr-2" href="/admin/promotion"><i class="icon fa fa-plus-square "></i> promotion</a></li>
         </ul>
       </li>
      @endcan
-     <li class="treeview"><a class="app-menu__item {{{ (Request::is('/admin/contact*') ? 'active' : '') }}}" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-calendar-check-o">
-    </i><span class="app-menu__label"> التواصل معنا </span><i class="treeview-indicator fa fa-angle-left"></i></a>
-    <ul class="treeview-menu">
-      <li><a class="treeview-item  mr-2" href="/admin/contact"><i class="icon fa fa-plus-square "></i>الكل</a></li>
-      </ul>
-    </li>
-      @can('list orders')
-      <li class="treeview"><a class="app-menu__item {{{ (Request::is('/admin/order*') ? 'active' : '') }}}" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-calendar-check-o">
-      </i><span class="app-menu__label"> طلبيات </span><i class="treeview-indicator fa fa-angle-left"></i></a>
+
+      @can('list reservations')
+      <li class="treeview"><a class="app-menu__item {{{ (Request::is('/admin/reservation*') ? 'active' : '') }}}" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-calendar-check-o">
+      </i><span class="app-menu__label"> الحجوزات </span><i class="treeview-indicator fa fa-angle-left"></i></a>
       <ul class="treeview-menu">
-        <li><a class="treeview-item  mr-2" href="/admin/order"><i class="icon fa fa-plus-square "></i> الكل</a></li>
+        <li><a class="treeview-item  mr-2" href="/admin/reservation"><i class="icon fa fa-plus-square "></i> الكل</a></li>
         </ul>
       </li>
       @endcan

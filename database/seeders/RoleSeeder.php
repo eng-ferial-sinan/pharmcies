@@ -28,36 +28,33 @@ class RoleSeeder extends Seeder
         $role1->givePermissionTo('list settings');
         $role1->givePermissionTo('edit settings');
 
-        $role1->givePermissionTo('add category');
-        $role1->givePermissionTo('edit category');
-        $role1->givePermissionTo('delete category');
-        $role1->givePermissionTo('list categories');
+        $role1->givePermissionTo('add salon');
+        $role1->givePermissionTo('edit salon');
+        $role1->givePermissionTo('delete salon');
+        $role1->givePermissionTo('list salons');
 
-        $role1->givePermissionTo('add product');
-        $role1->givePermissionTo('edit product');
-        $role1->givePermissionTo('delete product');
-        $role1->givePermissionTo('list products');
+        $role1->givePermissionTo('add service');
+        $role1->givePermissionTo('edit service');
+        $role1->givePermissionTo('delete service');
+        $role1->givePermissionTo('list services');
 
-        $role1->givePermissionTo('list orders');
-        $role1->givePermissionTo('add order');
-        $role1->givePermissionTo('edit order');
-        $role1->givePermissionTo('delete order');
+        $role1->givePermissionTo('list reservations');
+        $role1->givePermissionTo('add reservation');
+        $role1->givePermissionTo('edit reservation');
+        $role1->givePermissionTo('delete reservation');
        
-        $role1->givePermissionTo('list slides');
-        $role1->givePermissionTo('add slide');
-        $role1->givePermissionTo('edit slide');
-        $role1->givePermissionTo('delete slide');
+        $role1->givePermissionTo('list promotions');
+        $role1->givePermissionTo('add promotion');
+        $role1->givePermissionTo('edit promotion');
+        $role1->givePermissionTo('delete promotion');
 
 
 
         $role2 = Role::findOrCreate('عميل', 'web');
-        $role2->givePermissionTo('list orders');
-        $role2->givePermissionTo('add order');
-        $role2->givePermissionTo('edit order');
-        $role2->givePermissionTo('delete order');
-
-        $role2 = Role::findOrCreate('سائق', 'web');
-        $role2->givePermissionTo('list orders');
+        $role2->givePermissionTo('list reservations');
+        $role2->givePermissionTo('add reservation');
+        $role2->givePermissionTo('edit reservation');
+        $role2->givePermissionTo('delete reservation');
 
     }
 }

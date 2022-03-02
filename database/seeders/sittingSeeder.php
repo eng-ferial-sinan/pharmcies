@@ -17,7 +17,7 @@ class SittingSeeder extends Seeder
         //
         DB::table('settings')->insertOrIgnore([
             ['nameEn'=>"Online Store",
-            'nameAr'=>"المتجر الالكتروني",
+            'nameAr'=>"حجز صالون",
             'email'=>"company@admin.com",
             'address'=>"Sana",
             'phone'=>"00967000000",

@@ -18,8 +18,8 @@ class CreatePaymentsTable extends Migration
             $table->string('uuid');
             $table->json('data')->nullable();
             $table->unsignedBigInteger('method_id');
-            $table->unsignedBigInteger('order_id')->nullable();
-            $table->foreign('order_id')->references('id')->on('orders');
+            $table->unsignedBigInteger('reservation_id')->nullable();
+            $table->foreign('reservation_id')->references('id')->on('reservations');
             $table->foreign('method_id')->references('id')->on('payment_methods');
             $table->timestamps();
         });

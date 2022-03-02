@@ -29,28 +29,28 @@ class PermissionSeeder extends Seeder
 
             ['name' => 'list report','guard_name'=> 'web'],
 
-            ['name' => 'list categories','guard_name'=> 'web'],
-            ['name' => 'add category','guard_name'=> 'web'],
-            ['name' => 'edit category','guard_name'=> 'web'],
-            ['name' => 'delete category','guard_name'=> 'web'],
+            ['name' => 'list salons','guard_name'=> 'web'],
+            ['name' => 'add salon','guard_name'=> 'web'],
+            ['name' => 'edit salon','guard_name'=> 'web'],
+            ['name' => 'delete salon','guard_name'=> 'web'],
 
-            ['name' => 'list products','guard_name'=> 'web'],
-            ['name' => 'add product','guard_name'=> 'web'],
-            ['name' => 'edit product','guard_name'=> 'web'],
-            ['name' => 'delete product','guard_name'=> 'web'],
+            ['name' => 'list services','guard_name'=> 'web'],
+            ['name' => 'add service','guard_name'=> 'web'],
+            ['name' => 'edit service','guard_name'=> 'web'],
+            ['name' => 'delete service','guard_name'=> 'web'],
 
             ['name' => 'list settings','guard_name'=> 'web'],
             ['name' => 'edit settings','guard_name'=> 'web'],
 
-            ['name' => 'list orders','guard_name'=> 'web'],
-            ['name' => 'add order','guard_name'=> 'web'],
-            ['name' => 'edit order','guard_name'=> 'web'],
-            ['name' => 'delete order','guard_name'=> 'web'],
+            ['name' => 'list reservations','guard_name'=> 'web'],
+            ['name' => 'add reservation','guard_name'=> 'web'],
+            ['name' => 'edit reservation','guard_name'=> 'web'],
+            ['name' => 'delete reservation','guard_name'=> 'web'],
 
-            ['name' => 'list slides','guard_name'=> 'web'],
-            ['name' => 'add slide','guard_name'=> 'web'],
-            ['name' => 'edit slide','guard_name'=> 'web'],
-            ['name' => 'delete slide','guard_name'=> 'web'],
+            ['name' => 'list promotions','guard_name'=> 'web'],
+            ['name' => 'add promotion','guard_name'=> 'web'],
+            ['name' => 'edit promotion','guard_name'=> 'web'],
+            ['name' => 'delete promotion','guard_name'=> 'web'],
 
         ]);
     }

@@ -21,8 +21,11 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string("phone")->nullable(true);
             $table->string("url")->nullable(true);
-            $table->longText("token")->nullable(true);
+            $table->string("city")->nullable(true);
             $table->string("address")->nullable(true);
+            $table->string("lat")->nullable(true);
+            $table->string("lng")->nullable(true);
+            $table->longText("token")->nullable(true);
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes(); 

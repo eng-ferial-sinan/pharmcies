@@ -14,7 +14,7 @@
                @if(count(\Auth::user()->notifications)>0)
               <div class="app-notification__content">
               @foreach (\Auth::user()->notifications as $item)
-              <li><a class="app-notification__item {{($item->read_at ? '' : 'app-notification__unread')}}" href="/order/{{$item->data['id']}}"><span class="app-notification__icon"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x text-danger"></i><i class="fa fa-hdd-o fa-stack-1x fa-inverse"></i></span></span>
+              <li><a class="app-notification__item {{($item->read_at ? '' : 'app-notification__unread')}}" href="/admin/reservation"><span class="app-notification__icon"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x text-danger"></i><i class="fa fa-hdd-o fa-stack-1x fa-inverse"></i></span></span>
               <div >
                 <p class="app-notification__message">
                     {{$item->data['user']}}
@@ -30,7 +30,7 @@
               
               </div>
             </div>
-            <li class="app-notification__footer"><a href="/order">عرض الكل.</a></li>
+            <li class="app-notification__footer"><a href="/admin/reservation">عرض الكل.</a></li>
           </ul>
         </li>
         <!-- User Menu-->
