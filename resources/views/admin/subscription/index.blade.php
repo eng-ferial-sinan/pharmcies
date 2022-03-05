@@ -1,6 +1,6 @@
 @extends('admin.vadmin.lay')
 @section('title') - 
-إدارة الطلبيات
+إدارة الاشتراكات
 @endsection
 
 @section('content')
@@ -14,7 +14,7 @@
 
        </div></div>
 
-       @if(count($orders)>0)
+       @if(count($subscriptions)>0)
        <div class="row">
         <div class="col-md-12">
           <div class="tile">
@@ -23,14 +23,12 @@
               <table class="table table-hover table-bordered " id="sampleTable">
                 <thead>
                   <tr>
-                    <th>رقم الطلبية</th>
+                    <th>الرقم </th>
                     <th>طريقة الدفع </th>
                     <th>الزبون </th>
                     <th>السائق </th>
-                    <th>حالة الطلبية</th>
-                  
-                    <th>عرض</th>
-                    @can ('edit order')
+                    <th>حالة الاشتراك</th>
+                      @can ('edit order')
                     <th>-</th>
                     @endcan
                     {{-- @endcan --}}
@@ -38,30 +36,25 @@
                   </tr>
                 </thead>
                 <tbody>
-                @foreach($orders as $order)
+                @foreach($subscriptions as $subscription)
                  <tr>
                    
-                    <td>{{$order->id}}</td>
-                    <td>{{$order->paymentMethod?$order->paymentMethod->name:'-'}}</td>
-                    <td>{{$order->user?$order->user->name:"-"}}</td>
-                    <td>{{$order->driver?$order->driver->name:"لم يتم تعين سائق بعد"}}</td>
-                    <td>{{$order->status?$order->status->name:""}}</td>
-
-              <td>
-              <a href="\admin\order\{{$order->id}}" class="btn btn-success ">
-              <i class="fa fa-eye"></i></a>
+                    <td>{{$subscription->id}}</td>
+                    <td>{{$subscription->plan?$subscription->plan->name:'-'}}</td>
+                    <td>{{$subscription->user?$subscription->user->name:"-"}}</td>
+                    <td>{{$subscription->payment?$subscription->payment->name:"لم يتم تعين سائق بعد"}}</td>
+                    <td>{{$subscription->status?"مدفوع":"غير مدفوع"}}</td>
+                        @can ('edit subscription')
+                    <td>
+                        {!!Form::open(['action' => ['App\Http\Controllers\OrderController@destroy',$order->id],'method'=>'POST', 'class'=>'pull-right','onsubmit' => 'return ConfirmDelete()'])!!}
+                        {{Form::hidden('_method','DELETE')}}
+                          <button class ="btn btn-danger mr-3 ml-3" type="submit"><i class="fa fa-md fa-trash"></i>
+                          </button>
+                        {!!Form::close()!!}
                     </td>
-                    @can ('edit order')
-              <td>
-                    {!!Form::open(['action' => ['App\Http\Controllers\OrderController@destroy',$order->id],'method'=>'POST', 'class'=>'pull-right','onsubmit' => 'return ConfirmDelete()'])!!}
-                    {{Form::hidden('_method','DELETE')}}
-                       <button class ="btn btn-danger mr-3 ml-3" type="submit"><i class="fa fa-md fa-trash"></i>
-                       </button>
-                       {!!Form::close()!!}
-                    </td>
-                    @endcan
+                        @endcan
                   </tr>                   
-                  @endforeach
+                @endforeach
                    
                    
 

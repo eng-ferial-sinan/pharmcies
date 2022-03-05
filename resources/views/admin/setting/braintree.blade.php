@@ -12,7 +12,7 @@
     تعديل بيانات الدفع : 
     </h5>
  
-  <form action="/admin/braintree" method="post" class="form-horizontal" enctype="multipart/form-data">
+  <form action="/braintree" method="post" class="form-horizontal" enctype="multipart/form-data">
         {{ csrf_field() }}
              
         <div class="card mt-4">

@@ -22,8 +22,8 @@ Auth::routes();
         ['role:مدير','auth'],
     ], function ()
 {
-    Route::resource('/product',App\Http\Controllers\ProductController::class);
-    Route::resource('/order',App\Http\Controllers\OrderController::class);
+    Route::resource('/plans',App\Http\Controllers\PlanController::class);
+    Route::resource('/subscriptions',App\Http\Controllers\SubscriptionController::class);
     Route::get('/settings', [App\Http\Controllers\SettingController::class, 'index']);
     Route::post('/settings',[App\Http\Controllers\SettingController::class, 'update']);
     Route::get('/braintree', [App\Http\Controllers\SettingController::class, 'braintreeShow']);

@@ -19,7 +19,7 @@
                 <div class="panel-heading"></div>
                 <div class="panel-body" >
                 <h3>
-                <a href="/admin/member/create" class="btn btn-primary">انشاء 
+                <a href="/member/create" class="btn btn-primary">انشاء 
                  عضو</a>
                 </h3>
             </div>
@@ -59,7 +59,7 @@
                        @endif    
                    </td>                     
                    <td>
-                        <a href="/admin/member/{{$user->id}}/edit" class="btn btn-default">
+                        <a href="/member/{{$user->id}}/edit" class="btn btn-default">
                         <i class="fa fa-edit"></i>
                         التحرير</a>
                     </td>

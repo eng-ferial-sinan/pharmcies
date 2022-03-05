@@ -88,8 +88,6 @@ class SettingController extends Controller
     {
         // dd(1);
         $data=$request->validated();
-        $data['lat']=$request->input('map_1');
-        $data['lng']=$request->input('map_2');
         if ($request->hasFile('image')) {
             $imagename = $request->file('image');
             $fileNameToStore= "setting_" .time().'.jpg';

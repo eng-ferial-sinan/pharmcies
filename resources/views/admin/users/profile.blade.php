@@ -36,7 +36,7 @@ switch($name)
        
                <div class="tile user-settings">
                 <h4 class="line-head">تعديل البيانات الشخصية</h4>
-                <form action="/admin/profile/updated" method="POST" class="form-horizontal">
+                <form action="/profile/updated" method="POST" class="form-horizontal">
  {{ csrf_field() }}
                   <div class="row mb-4">
                     <div class="col-md-8">
@@ -102,7 +102,7 @@ switch($name)
             <h4 class="line-head">تعديل الصورة الشخصية</h4>
                    <div class="row mb-4">
                     <div class="col-md-8">
-                    <form action="/admin/profile/updated/saveimage" method="POST" class="form-horizontal" enctype="multipart/form-data">
+                    <form action="/profile/updated/saveimage" method="POST" class="form-horizontal" enctype="multipart/form-data">
  {{ csrf_field() }}
                       <label>رفع صورة </label>
                       <input class="form-control" type="file" name= "myimg">

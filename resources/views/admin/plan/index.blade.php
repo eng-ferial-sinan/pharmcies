@@ -9,16 +9,16 @@
                
                   <div class="row">
                 <div class="col-md-12">
-                  @can('add product')
-                  <a href="/admin/product/create" class="btn btn-info float-left">
-                                       <i class="fa fa-plus fa-2x"></i> اضافة منتج
+                  @can('add plan')
+                  <a href="/plans/create" class="btn btn-info float-left">
+                                       <i class="fa fa-plus fa-2x"></i> اضافة خطة
                                        
                     </a>
                   @endcan
 
        </div></div>
       
-       @if(count($products)>0)
+       @if(count($plans)>0)
        <div class="row">
         <div class="col-md-12">
           <div class="tile">
@@ -28,49 +28,53 @@
                 <thead>
                   <tr>
                     <th>#</th>
-                    <th>#</th>
                     <th>الاسم</th>
                     <th>الوصف</th>
-                    <th>الصنف</th>
                     <th>السعر</th>
                   
-                    @can('edit product')
+                    @can('edit plan')
                     <th>تعديل</th>
                     @endcan
-                    @can('delete product')
+                    @can('delete plan')
                     <th>حذف</th>
                     @endcan
 
                   </tr>
                 </thead>
                 <tbody>
-                @foreach($products as $product)
+                @foreach($plans as $plan)
                  <tr>
-                  <td>{{$product->id}}</td>
-                  <td><img src="{{$product->image}}" height="80" width="75"></td>
-                    <td>{{$product->name}}</td>
-                    <td>{{$product->desc}}</td>
-                    <td>{{$product->category?$product->category->name:''}}</td>
-                    <td>{{$product->price}}</td>
-                  @can('edit product')
+                  <td>{{$plan->id}}</td>
+                    <td>{{$plan->name}}</td>
+                    <td>
+                      عدد جهات الاتصال :{{$plan->number_of_contacts }}
+                        <br>
+                      عدد رسائل الانتظار :{{$plan->add_the_number_of_waiting_messages }}
+                    </td>
+                    <td>
+                          الاشتراك الشهري :{{$plan->monthly_subscription }}
+                          <br>
+                          الاشتراك السنوي :{{$plan->yearly_subscription }}
+                    </td>                  
+                      @can('edit plan')
                     <td> 
 
-                      <a href="/admin/product/{{$product->id}}/edit" class="btn btn-info float-left">
+                      <a href="/plans/{{$plan->id}}/edit" class="btn btn-info float-left">
                                                       <i class="fa fa-edit fa-2x"></i> تعديل
                                                       </a>
                                                       
                                        
-                                                    </td>
-               @endcan
-               @can('delete product')
-               <td>
-                    {!!Form::open(['action' => ['App\Http\Controllers\ProductController@destroy',$product->id],'method'=>'POST', 'class'=>'pull-right','onsubmit' => 'return ConfirmDelete()'])!!}
-                    {{Form::hidden('_method','DELETE')}}
-                       <button class ="btn btn-danger mr-3 ml-3" type="submit"><i class="fa fa-md fa-trash"></i>
-                       </button>
-                       {!!Form::close()!!}
                     </td>
-                    @endcan
+                      @endcan
+                      @can('delete plan')
+                    <td>
+                          {!!Form::open(['action' => ['App\Http\Controllers\PlanController@destroy',$plan->id],'method'=>'POST', 'class'=>'pull-right','onsubmit' => 'return ConfirmDelete()'])!!}
+                          {{Form::hidden('_method','DELETE')}}
+                            <button class ="btn btn-danger mr-3 ml-3" type="submit"><i class="fa fa-md fa-trash"></i>
+                            </button>
+                            {!!Form::close()!!}
+                    </td>
+                        @endcan
 
                     
                   </tr>
@@ -103,13 +107,6 @@
             
 @endsection
 @section('script')
-<script src="/js/repeater.js" type="text/javascript"></script>
-    <script>
-        /* Create Repeater */
-        $("#repeater").createRepeater({
-            showFirstItemToDefault: true,
-        });
-    </script>
  
  @endsection
        

@@ -10,20 +10,8 @@ class Setting extends Model
 {
     use HasFactory,SoftDeletes;
     
-    protected $fillable=[
-        'nameAr',
-        'nameEn',
-        'email',
-        'address',
-        'phone',
-        'lat',
-        'lng',
-        'google_plus',
-        'instagram',
-        'twitter',
-        'facebook',
-        'image',
-        ];
+    protected $guarded = [];
+    protected $with = [];
 
     public function getImageAttribute($value)
     {

@@ -9,7 +9,7 @@ class Payment extends Model
 {
     use HasFactory;
     protected $guarded = [];
-
+    protected $with = [];
     public function getDataAttribute($value)
     {
         return json_decode($value);

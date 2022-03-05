@@ -1,43 +1,6 @@
 @extends('admin.vadmin.lay')
 
 @section('content')
-@php
-function roleName1($name)
- {
-      
-switch($name)
-{
- case "medicine-list": $name = "عرض انواع ادوية"; break;
- case "medicine-create": $name = "انشاء دواء جديد";break;
- case "medicine-edit": $name = "تعديل دواء   ";break;
- case "medicine-delete": $name = "حذف دواء";break;
- case "user-list": $name = "عرض  المستخدمين"; break;
- case "user-create": $name = "انشاء مستخدم جديد";break;
- case "user-edit": $name = "تعديل  المستخدم  ";break;
- case "user-delete": $name = "حذف المستخدم";break;
- case "Pharmacy-list": $name = "عرض الصيدلايات "; break;
- case "Pharmacy-create": $name = "انشاء  صيدلية جديد";break;
- case "Pharmacy-edit": $name = "تعديل صيدلية    ";break;
- case "Pharmacy-delete": $name = "حذف صيدلية";break;
- case "category-list": $name = "عرض الاصناف "; break;
- case "category-create": $name = "انشاء صنف جديد ";break;
- case "category-edit": $name = "تعديل الصنف   ";break;
- case "category-delete": $name = "حذف الصنف";break;
- case "report-list": $name = "عرض  التقارير"; break;
- case "report-create": $name = "انشاء تقرير ";break;
- case "report-edit": $name = "تعديل  تقرير  ";break;
- case "report-delete": $name = "حذف تقرير";break;
- case "order-list": $name = "عرض  الطلبيات"; break;
- case "order-create": $name = "انشاء طلبية ";break;
- case "order-edit": $name = "تعديل  طلبية  ";break;
- case "order-delete": $name = "حذف طلبية";break;
-    
-}
-
-     return  $name;
-
- }
-@endphp
 
 
 

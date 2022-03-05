@@ -15,11 +15,11 @@ a {
 
   
   <div class="col-md-6 col-lg-3">
-    <a href="/admin/product">
+    <a href="/plans">
       <div class="widget-small info coloured-icon"><i class="icon fa fa-tag fa-3x"></i>
         <div class="info">
-          <h4>المنتجات</h4>
-          <p><b>{{\App\Models\Product::count()}}</b></p>
+          <h4>الخطط</h4>
+          <p><b>{{\App\Models\Plan::count()}}</b></p>
         </div>
       </div>
       </a>
@@ -27,11 +27,11 @@ a {
        
  
     <div class="col-md-6 col-lg-3">
-      <a href="/admin/order">
+      <a href="/subscriptions">
         <div class="widget-small info coloured-icon"><i class="icon fa fa-tag fa-3x"></i>
           <div class="info">
-            <h4>الطلبات</h4>
-            <p><b>{{\App\Models\Order::count()}}</b></p>
+            <h4>الاشتراكات</h4>
+            <p><b>{{\App\Models\Subscription::count()}}</b></p>
           </div>
         </div>
         </a>

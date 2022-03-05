@@ -21,7 +21,7 @@ class SubscriptionController extends Controller
     public function index()
     {
         $subscription = Subscription::all();
-        return view('admin.subscription.index')->with('Subscriptions',$subscription);
+        return view('admin.subscription.index')->with('subscriptions',$subscription);
     }
 
     /**
