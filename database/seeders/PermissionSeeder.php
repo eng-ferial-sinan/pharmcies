@@ -29,28 +29,19 @@ class PermissionSeeder extends Seeder
 
             ['name' => 'list report','guard_name'=> 'web'],
 
-            ['name' => 'list categories','guard_name'=> 'web'],
-            ['name' => 'add category','guard_name'=> 'web'],
-            ['name' => 'edit category','guard_name'=> 'web'],
-            ['name' => 'delete category','guard_name'=> 'web'],
-
-            ['name' => 'list products','guard_name'=> 'web'],
-            ['name' => 'add product','guard_name'=> 'web'],
-            ['name' => 'edit product','guard_name'=> 'web'],
-            ['name' => 'delete product','guard_name'=> 'web'],
+            ['name' => 'list plans','guard_name'=> 'web'],
+            ['name' => 'add plan','guard_name'=> 'web'],
+            ['name' => 'edit plan','guard_name'=> 'web'],
+            ['name' => 'delete plan','guard_name'=> 'web'],
 
             ['name' => 'list settings','guard_name'=> 'web'],
             ['name' => 'edit settings','guard_name'=> 'web'],
 
-            ['name' => 'list orders','guard_name'=> 'web'],
-            ['name' => 'add order','guard_name'=> 'web'],
-            ['name' => 'edit order','guard_name'=> 'web'],
-            ['name' => 'delete order','guard_name'=> 'web'],
+            ['name' => 'list subscriptions','guard_name'=> 'web'],
+            ['name' => 'add subscription','guard_name'=> 'web'],
+            ['name' => 'edit subscription','guard_name'=> 'web'],
+            ['name' => 'delete subscription','guard_name'=> 'web'],
 
-            ['name' => 'list slides','guard_name'=> 'web'],
-            ['name' => 'add slide','guard_name'=> 'web'],
-            ['name' => 'edit slide','guard_name'=> 'web'],
-            ['name' => 'delete slide','guard_name'=> 'web'],
 
         ]);
     }

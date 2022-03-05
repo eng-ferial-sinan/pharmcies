@@ -20,9 +20,11 @@ class CreateSittingsTable extends Migration
             $table->string('email')->nullable($value = true);
             $table->string('address')->nullable($value = true); 
             $table->string('phone')->nullable($value = true); 
-            $table->string("lat")->nullable(true);
-            $table->string("lng")->nullable(true);
             $table->string("image")->nullable(true);
+            $table->string("facebook")->nullable(true);
+            $table->string("twitter")->nullable(true);
+            $table->string("instagram")->nullable(true);
+            $table->string("google_plus")->nullable(true);
             $table->timestamps();
             $table->softDeletes(); 
 

@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Category;
+use App\Models\Plan;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -19,16 +20,20 @@ class DemoSeeder extends Seeder
     public function run()
     {
         //
-        Category::factory()->count(5)->create();
-        User::factory()->count(30)->create();
+        User::factory()->count(10)->create();
        
-        $categories=Category::all();
-        foreach($categories as $category)
-        {
-        Product::factory()->count(5)->create([
-          'category_id'=> $category->id
+        
+        Plan::factory()->create([
+          'name'=> 'free',
+          'customize_scheduling_frequency'=> 0,
+          'unlimited_characters'=> 0,
+          'monthly_subscription'=> 0,
+          'yearly_subscription'=> 0
         ]);
-        }
+       
+        Plan::factory()->create([
+          'name'=> 'pro',    
+        ]);
 
     }
 }

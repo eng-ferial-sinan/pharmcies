@@ -8,6 +8,8 @@ use App\Models\Setting ;
 use App\Models\Product ;
 use App\Models\Category;
 use App\Http\Controllers\Controller;
+use App\Models\Plan;
+
 class HomeController extends Controller
 {
     /**
@@ -17,17 +19,27 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        $category_date = $request->input('category_date')?$request->input('category_date'):date('Y-m-d');
-        $product_date = $request->input('product_date')?$request->input('product_date'):date('Y-m-d');
+        $plan_date = $request->input('plan_date')?$request->input('plan_date'):date('Y-m-d');
        
                 $data=array() ;
                 $deleted=array() ;
-                $data['categories']= Category::select('id','name','image','sort','updated_at as date')->where('updated_at','>',$category_date)->get() ;
-                $data['products'] = Product::select('id','name','desc','image','category_id','price','sort','updated_at as date')->where('updated_at','>',$product_date)->get();
-                $data['settings']= Setting::select('id','nameAr','nameEn','email','address','phone','updated_at as date')->first();
+                $data['plans'] = Plan::select('id','name',
+                'send_messages_automatically',
+                'message_reminder',
+                'unlimited_messages',
+                'attached_photos_video',
+                'remove_ads',
+                'choose_multiple_contacts',
+                'unlimited_characters',
+                'customize_scheduling_frequency',
+                'number_of_contacts',
+                'add_the_number_of_waiting_messages',
+                'monthly_subscription',
+                'yearly_subscription',
+                'updated_at as date')->where('updated_at','>',$plan_date)->get();
+                 $data['settings']= Setting::select('id','nameAr','nameEn','email','address','phone','updated_at as date')->first();
                   //======================================== deleted
-                  $deleted['categories']= Category::withTrashed()->select('id')->whereNotNull('deleted_at')->where('updated_at','>',$category_date)->get() ;
-                  $deleted['products']= Product::withTrashed()->select('id')->whereNotNull('deleted_at')->where('updated_at','>',$product_date)->get() ;
+                  $deleted['plans']= Plan::withTrashed()->select('id')->whereNotNull('deleted_at')->where('updated_at','>',$plan_date)->get() ;
 
         return response()->json(array('data'=>$data,'deleted'=>$deleted ),200);
     }

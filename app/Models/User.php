@@ -58,6 +58,16 @@ class User extends Authenticatable
     {
         return $value?url($value):url("no_image.jpg");
     }
+    public function subscription()
+    {
+        return $this->hasMany(Subscription::class);
+    }
+    public function availableSubscription()
+    {
+        return $this->subscription()
+            ->whereDate('start_date', '<=', date("Y-m-d"))
+            ->whereDate('end_date', '>=', date("Y-m-d"));
+    }
 
     public function generateToken()
     {

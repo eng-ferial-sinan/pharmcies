@@ -6,30 +6,21 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Order extends Model
+class Subscription extends Model
 {
     use HasFactory,SoftDeletes;
 
-
-    public function orderProduct()
-    {
-        return $this->hasMany('App\Models\OrderProduct');
-    }
     public function user()
     {
         return $this->belongsTo('App\Models\User');
     }
-    public function driver()
+    public function plan()
     {
-        return $this->belongsTo('App\Models\User','driver_id');
+        return $this->belongsTo('App\Models\Plan','plan_id');
     }
     public function status()
     {
         return $this->belongsTo('App\Models\Status');
-    }
-    public function paymentMethod()
-    {
-        return $this->belongsTo(PaymentMethod::class,'method_id');
     }
     public function payment()
     {

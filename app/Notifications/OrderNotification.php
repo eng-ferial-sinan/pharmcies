@@ -4,11 +4,11 @@ namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
-use App\Models\Order;
+use App\Models\Subscription;
 use NotificationChannels\OneSignal\OneSignalChannel;
 use NotificationChannels\OneSignal\OneSignalMessage;
 
-class OrderNotification extends Notification
+class SubscriptionNotification extends Notification
 {
     use Queueable;
 
@@ -17,12 +17,12 @@ class OrderNotification extends Notification
      *
      * @return void
      */
-    private $order;
+    private $subscription;
 
-    public function __construct(order $order)
+    public function __construct(Subscription $subscription)
     {
 
-        $this->order=$order;
+        $this->subscription=$subscription;
         //
     }
 
@@ -40,19 +40,19 @@ class OrderNotification extends Notification
 
     public function toOneSignal($notifiable)
     {
-        $url = route('order.show', $this->order->id);
+        $url = route('subscription.show', $this->subscription->id);
 
            return OneSignalMessage::create()
-            ->setSubject("الطلب رقم {$this->order->id} طلب جديد.")
+            ->setSubject("الاشتراك  رقم {$this->subscription->id} اشتراك  جديد.")
             ->setBody("اضغط هنا لمعرفة المزيد .")
             ->setUrl($url);
     }
     public function toDatabase($notifiable)
     {
         return [
-            'id'=>$this->order->id,
-            'user'=>$this->order->user?$this->order->user->name:'',
-            'date'=>$this->order->created_at,
+            'id'=>$this->subscription->id,
+            'user'=>$this->subscription->user?$this->subscription->user->name:'',
+            'date'=>$this->subscription->created_at,
         ];
     }
     /**

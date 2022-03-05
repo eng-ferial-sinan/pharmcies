@@ -85,11 +85,8 @@ class UserController extends Controller
     {
 	   $response['data']=array();
 	   $response['status']=false;
-			   
-	   $token=$request->header('token');
-	   $user=User::where('token',$token)->first();
-	   if ($user) 
-	   {
+			 
+	   $user=auth()->user();
 		$validator = Validator::make($request->all(), [
        'email' => 'nullable|string|email|unique:users,id,'.$user->id,
 	   'password' => 'nullable|string|confirmed',
@@ -112,22 +109,13 @@ class UserController extends Controller
 	   $response['status']=true;
        $response['user']=$user;
 		return response()->json($response,200);
-	  }
-	 return response()->json($response,200);
-
+	 
     }
     public function dataUser(Request $request)    
 	{
-		$response['status']=false;
-		$token=$request->header('token');
-
-		$user=User::where('token',$token)->first();
-		if ($user) 
-		{
-			$response['user']=$user;
-			$response['status']=true;
-			
-		}
+		$user=auth()->user();
+		$response['user']=$user;
+		$response['status']=true;	
 		return response()->json($response,200);
 			 
 	}
@@ -136,21 +124,12 @@ class UserController extends Controller
     {
 		$masseges=array() ;
 		$response['status']=false;
-		$token=$request->header('token');
-
-		$usertoken=User::where('token',$token)->first();
-		if ($usertoken)
-			{
-			$usertoken->update([
-				'token'=>null
-			]);
-			$response['messages']="تم تسجيل الخروج بنجاح";
-			$response['status']=true;
-		} else
-			{
-			$response['messages']="الحساب غير موجود";
-			$response['status']=false;
-		}
+		$usertoken=auth()->user();
+		$usertoken->update([
+			'token'=>null
+		]);
+		$response['messages']="تم تسجيل الخروج بنجاح";
+		$response['status']=true;
 		return response()->json($response,200);
     }
 }
