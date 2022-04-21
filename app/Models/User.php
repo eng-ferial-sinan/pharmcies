@@ -49,6 +49,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
     
+    public function salon()
+    {
+        return $this->hasOne('App\Models\Salon');
+    }
+
     public function routeNotificationForOneSignal()
     {
         return ['include_external_user_ids' => [(string)$this->id]];
